@@ -17,7 +17,7 @@ and plots of model data.
 
 Key equations and background for every technique are also published as a
 static site (built with MkDocs):
-**https://oxford-emat-lab.github.io/semicon_characterisation/**
+**https://oxford-emat-lab.github.io/semiconductor-characterisation/**
 
 The site is built from [`docs/`](docs/) and deployed automatically by
 [`.github/workflows/deploy-docs.yml`](.github/workflows/deploy-docs.yml)
