@@ -11,8 +11,9 @@ Each technique has:
   full derivation, code, and plots,
 - a **helper Python module** with the underlying physics functions, kept
   separate so the notebook itself stays short and readable,
-- a **page on this site** with the key equations, for quick reference
-  without running any code.
+- a **page on this site**, which *is* that notebook — the same
+  explanations, numbered equations, code cells and figures, rendered for
+  reading without running anything.
 
 ## Techniques
 

@@ -150,22 +150,76 @@ this only works once the repository is public on GitHub and the
 
 ## Building the documentation site locally
 
+The technique pages on the site **are** the notebooks: `docs/eqe.md` and
+`docs/tlm.md` are generated from the `.ipynb` files by
+[`tools/nb2md.py`](tools/nb2md.py), so the published page carries the same
+explanations, numbered equations, code cells and figures. Only
+`docs/index.md` is hand-written.
+
 ```bash
 pip install -r requirements-docs.txt
-mkdocs serve   # http://127.0.0.1:8000
+./tools/build_docs.sh serve    # regenerate pages, then serve on :8000
+./tools/build_docs.sh          # regenerate pages, then mkdocs build --strict
 ```
+
+Do not edit `docs/eqe.md` or `docs/tlm.md` directly — they are overwritten.
+Edit the notebook instead (for EQE, edit `EQE/build_notebook.py` and re-run
+it), then re-run `tools/build_docs.sh`. Notebook cells tagged
+`hide-in-docs` are skipped on the site; the EQE notebook uses this to hide
+its Colab setup cell.
+
+The GitHub Actions workflow regenerates the pages before deploying, so the
+site cannot drift from the notebooks.
+
+### Why not the mkdocs-jupyter plugin?
+
+[`mkdocs-jupyter`](https://github.com/danielfrg/mkdocs-jupyter) renders
+`.ipynb` files directly and is a perfectly good option. To use it instead,
+add it to `requirements-docs.txt` and set:
+
+```yaml
+plugins:
+  - mkdocs-jupyter:
+      include_source: true
+      execute: false          # notebooks are already executed
+
+nav:
+  - External Quantum Efficiency (EQE): EQE/eqe_analysis.ipynb
+```
+
+The converter is used here for two reasons. It produces plain markdown, so
+the site does not depend on the plugin API — relevant because MkDocs 2.0 is
+slated to drop plugin support entirely (which would also affect the
+Material theme). And it needs nothing beyond the Python standard library,
+so the docs build has no extra dependency.
 
 ## Figures
 
-Diagram placeholders (`EQE/figures/*.jpg`) are auto-generated stand-ins
-with a "TO BE REPLACED" label. Replace them with real JPEGs exported from
-PowerPoint, keeping the same filenames so the notebook and docs site pick
-them up automatically:
+The EQE diagrams live in [`EQE/figures.pptx`](EQE/figures.pptx), one per
+slide, built from **native PowerPoint shapes** (rectangles, arrows, text
+boxes) rather than flat images — so they can be edited directly in
+PowerPoint:
 
-- `fig_cell_structure.jpg` — Al-BSF vs. PERC solar cell cross-section
-- `fig_collection_efficiency.jpg` — collection-efficiency profile sketch
-- `fig_albsf_vs_perc.jpg` — Al-BSF vs. PERC rear-side comparison
-- `fig_measurement_setup.jpg` — DSR measurement setup schematic
+| Slide | Exported as | Shows |
+|---|---|---|
+| 1 | `fig_cell_structure.jpg` | c-Si cell cross-section, depth axis |
+| 2 | `fig_optical_losses.jpg` | photon accounting; EQE vs IQE |
+| 3 | `fig_collection_efficiency.jpg` | penetration depth vs collection |
+| 4 | `fig_albsf_vs_perc.jpg` | Al-BSF vs PERC rear side |
+| 5 | `fig_measurement_setup.jpg` | DSR measurement schematic |
+
+After editing the deck, re-export the JPEGs used by the notebook and the
+docs site:
+
+```bash
+cd EQE
+./export_figures.sh      # needs LibreOffice + poppler-utils + ImageMagick
+```
+
+The script writes `EQE/figures/*.jpg` and copies them to `docs/assets/`.
+To regenerate the deck itself from source instead, run
+`node make_figures.js` (see [`EQE/make_figures.js`](EQE/make_figures.js)),
+then re-run the export.
 
 ## License
 

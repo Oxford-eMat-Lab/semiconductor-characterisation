@@ -1,31 +1,28 @@
 """
 eqe_helper.py
 --------------
-Helper functions for the External Quantum Efficiency (EQE) teaching notebook.
+Helper functions for the External Quantum Efficiency (EQE) teaching
+notebook, `eqe_analysis.ipynb`. Equation numbers quoted in the docstrings
+below, e.g. "Eq. (5)", refer to the numbered equations in that notebook.
 
 Scope
 -----
 These functions implement simplified, 1-D physical models of a crystalline
 silicon solar cell (absorption, carrier generation, carrier collection,
-reflection, spectral responsivity) that are good enough to reproduce the
-*shape* and *trends* seen in real EQE / spectral-responsivity measurements.
+reflection, spectral response) that are good enough to reproduce the
+*shape* and *trends* seen in real EQE measurements.
 
 They are written for teaching, not for precision solar-cell metrology:
   - the absorption coefficient of silicon is a coarse interpolation of
-    literature values (not the full tabulated dataset of Green (2008) /
-    Schinke et al. (2015)),
+    published values, not a full tabulated dataset,
   - the AM1.5G spectrum is a smoothed analytic approximation, not the
-    tabulated IEC 60904-3 reference spectrum,
+    tabulated standard reference spectrum,
+  - the reflectance is a shape model, not a thin-film optics calculation,
   - carrier transport is 1-D and uses constant (depth-independent)
     material parameters.
 
-References
-----------
-- Schinke, C. et al., "Analysis of the Quantum Efficiency of Silicon Solar
-  Cells" (lab manual), Leibniz Universitaet Hannover / ISFH.
-- Bothe, K. et al., "Accuracy of Simplifications for Spectral Responsivity
-  Measurements of Solar Cells", IEEE J. Photovolt. 8(2), 2018.
-- Quokka3 Modelling Guide (optics: T_ext-Z model, EQE = T_ext * IQE).
+For quantitative work, replace `alpha_silicon` and `am15g_simplified` with
+tabulated reference data, and use a device simulator for the optics.
 """
 
 import numpy as np
@@ -174,12 +171,26 @@ def generation_profile(z_um, wavelength_nm, R=0.0):
 
 
 # ---------------------------------------------------------------------------
-# Collection efficiency (base region), Eq. (10)-(11) of the lab manual
+# Collection efficiency in the base region, notebook Eq. (7)-(8)
 # ---------------------------------------------------------------------------
+def diffusion_length_um(D_cm2_s, tau_us):
+    """
+    Minority-carrier diffusion length L = sqrt(D tau), notebook Eq. (6),
+    returned in micrometres.
+
+    D_cm2_s : diffusion constant, cm^2/s.
+    tau_us : carrier lifetime, microseconds.
+    """
+    D_cm2_s = np.asarray(D_cm2_s, dtype=float)
+    tau_s = np.asarray(tau_us, dtype=float) * 1e-6
+    L_cm = np.sqrt(D_cm2_s * tau_s)
+    return L_cm * 1e4  # cm -> um
+
+
 def effective_diffusion_length_um(L_um, W_um, S_cm_s, D_cm2_s):
     """
     Effective diffusion length L_eff, accounting for rear surface
-    recombination velocity S (Eq. 11):
+    recombination velocity S, notebook Eq. (8):
 
         L_eff = L * [S sinh(W/L) + D cosh(W/L)] / [S cosh(W/L) + D sinh(W/L)]
 
@@ -198,7 +209,7 @@ def effective_diffusion_length_um(L_um, W_um, S_cm_s, D_cm2_s):
 
 def collection_efficiency(z_um, L_um, W_um, S_cm_s, D_cm2_s=27.0):
     """
-    Collection probability eta_c(z) in the base region (Eq. 10):
+    Collection probability eta_c(z) in the base region, notebook Eq. (7):
 
         eta_c(z) = cosh(z/L) - (L/L_eff) * sinh(z/L)
 
@@ -225,8 +236,9 @@ def front_surface_transmission(wavelength_nm, edge_nm=380.0, width_nm=45.0):
     collection right at its own z=0 (the front junction), so this factor
     supplies the missing front-region loss as a smooth step, rising from
     ~0 at deep UV to ~1 by the visible range. This reproduces the well
-    known suppressed "blue response" of real EQE curves (cf. Fig. 5 of the
-    lab manual) without modelling the emitter transport explicitly.
+    known suppressed "blue response" of real EQE curves without modelling
+    the emitter transport explicitly. It plays the role of the parasitic
+    front-layer absorption A_ext in notebook Eq. (4).
     """
     wavelength_nm = np.asarray(wavelength_nm, dtype=float)
     return 1.0 / (1.0 + np.exp(-(wavelength_nm - edge_nm) / (width_nm / 4.0)))
@@ -305,9 +317,8 @@ def arc_reflectance(wavelength_nm, R_min=0.03, lambda_min_nm=600.0,
     coating (ARC): a Gaussian-shaped dip centred at `lambda_min_nm` (the
     ARC design wavelength) rising towards `R_uv` in the UV, plus a gradual
     increase above `R_rear_onset_nm` representing weak absorption / escaped
-    light reaching the rear surface at long wavelengths (cf. Fig. 5 of the
-    lab manual). This is a shape model for teaching, not a thin-film optics
-    calculation.
+    light reaching the rear surface at long wavelengths. This is a shape
+    model for teaching, not a thin-film optics calculation.
     """
     wavelength_nm = np.asarray(wavelength_nm, dtype=float)
     dip = R_uv - (R_uv - R_min) * np.exp(
@@ -320,7 +331,79 @@ def arc_reflectance(wavelength_nm, R_min=0.03, lambda_min_nm=600.0,
 
 
 # ---------------------------------------------------------------------------
-# Short-circuit current density from EQE (Eq. 16-17)
+# Internal quantum efficiency, notebook Eq. (10)-(11)
+# ---------------------------------------------------------------------------
+def iqe_from_eqe(eqe, reflectance):
+    """
+    Internal quantum efficiency from a measured EQE and reflectance,
+    notebook Eq. (10):
+
+        IQE(lambda) = EQE(lambda) / (1 - R(lambda))
+
+    IQE counts collected carriers per photon that *entered* the cell, so it
+    divides out the reflection loss and isolates the electrical behaviour
+    (absorption depth + carrier collection) from the front-surface optics.
+
+    eqe : EQE values (0-1).
+    reflectance : matching reflectance values (0-1), scalar or array.
+
+    Note: this common form charges all non-reflected light to the absorber.
+    Where parasitic absorption A_ext in the front layers is significant
+    (short wavelengths), use `external_transmission` and Eq. (11) instead,
+    otherwise IQE is under-estimated in the UV/blue.
+    """
+    eqe = np.asarray(eqe, dtype=float)
+    reflectance = np.asarray(reflectance, dtype=float)
+    denom = 1.0 - reflectance
+    with np.errstate(divide="ignore", invalid="ignore"):
+        iqe = np.where(denom > 1e-9, eqe / denom, np.nan)
+    return iqe
+
+
+def external_transmission(wavelength_nm, reflectance=None,
+                           front_edge_nm=380.0, front_width_nm=45.0):
+    """
+    External transmission T_ext, notebook Eq. (4):
+
+        T_ext(lambda) = 1 - R(lambda) - A_ext(lambda)
+
+    i.e. the fraction of incident photons that actually reach the absorber,
+    after front-surface reflection R and parasitic absorption A_ext in the
+    coating / emitter. Here it is built as
+    (1 - R) * `front_surface_transmission`, consistent with the loss terms
+    used by `eqe_spectrum`, so that EQE = T_ext * IQE holds (Eq. 11).
+    """
+    wavelength_nm = np.atleast_1d(np.asarray(wavelength_nm, dtype=float))
+    if reflectance is None:
+        R = arc_reflectance(wavelength_nm)
+    else:
+        R = np.broadcast_to(np.asarray(reflectance, dtype=float),
+                            wavelength_nm.shape)
+    T_front = front_surface_transmission(wavelength_nm, edge_nm=front_edge_nm,
+                                          width_nm=front_width_nm)
+    return np.clip((1.0 - R) * T_front, 0.0, 1.0)
+
+
+def iqe_spectrum(wavelength_nm, **kwargs):
+    """
+    Internal quantum efficiency of the modelled cell, computed as
+    EQE / (1 - R) (notebook Eq. 10) using the same model parameters as
+    `eqe_spectrum` (which accepts W_um, L_um, S_cm_s, D_cm2_s,
+    reflectance, front_edge_nm, front_width_nm).
+    """
+    wavelength_nm = np.atleast_1d(np.asarray(wavelength_nm, dtype=float))
+    reflectance = kwargs.get("reflectance", None)
+    if reflectance is None:
+        R = arc_reflectance(wavelength_nm)
+    else:
+        R = np.broadcast_to(np.asarray(reflectance, dtype=float),
+                            wavelength_nm.shape)
+    eqe = eqe_spectrum(wavelength_nm, **kwargs)
+    return iqe_from_eqe(eqe, R)
+
+
+# ---------------------------------------------------------------------------
+# Short-circuit current density from EQE, notebook Eq. (14)
 # ---------------------------------------------------------------------------
 def jsc_from_eqe(wavelength_nm, eqe, spectrum_W_m2_nm=None):
     """
@@ -342,20 +425,42 @@ def jsc_from_eqe(wavelength_nm, eqe, spectrum_W_m2_nm=None):
 
 
 # ---------------------------------------------------------------------------
-# Spectral responsivity <-> EQE conversion (Eq. 27-28)
+# Spectral response <-> EQE conversion, notebook Eq. (12)-(13)
 # ---------------------------------------------------------------------------
 def responsivity_from_eqe(wavelength_nm, eqe):
-    """Spectral responsivity s(lambda) = EQE * q * lambda / (h c), in A/W."""
+    """
+    Spectral response (spectral responsivity) from EQE, notebook Eq. (12):
+
+        SR(lambda) = EQE(lambda) * q * lambda / (h c)
+
+    in A/W. The extra factor of lambda is why SR rises with wavelength even
+    where EQE is flat: a longer-wavelength photon carries less energy, so
+    one watt of light contains more photons.
+    """
     wavelength_nm = np.asarray(wavelength_nm, dtype=float)
     wl_m = wavelength_nm * 1e-9
     return np.asarray(eqe, dtype=float) * Q * wl_m / (H * C0)
 
 
 def eqe_from_responsivity(wavelength_nm, responsivity_A_W):
-    """Inverse of `responsivity_from_eqe`: EQE(lambda) = s(lambda) * h c / (q lambda)."""
+    """
+    EQE from spectral response, notebook Eq. (13):
+
+        EQE(lambda) = SR(lambda) * h c / (q lambda)
+
+    the inverse of `responsivity_from_eqe`. This is the conversion applied
+    to a measured SR curve to obtain EQE.
+    """
     wavelength_nm = np.asarray(wavelength_nm, dtype=float)
     wl_m = wavelength_nm * 1e-9
     return np.asarray(responsivity_A_W, dtype=float) * H * C0 / (Q * wl_m)
+
+
+# "Spectral response" and "spectral responsivity" are used interchangeably
+# for the same quantity; these aliases let either name be used in the
+# notebook without ambiguity.
+spectral_response_from_eqe = responsivity_from_eqe
+eqe_from_spectral_response = eqe_from_responsivity
 
 
 # ---------------------------------------------------------------------------
@@ -367,8 +472,8 @@ def synthetic_dsr_measurement(wavelength_nm, eqe_true, noise_level=0.01,
     """
     Generate a synthetic "measured" differential spectral responsivity
     curve from a true EQE spectrum: converts to responsivity, applies a
-    (relative) calibration scaling factor C_ref/C_test (see Eq. 22-25 of
-    the lab manual) and adds Gaussian noise.
+    (relative) calibration scaling factor C_ref/C_test (notebook Eq. (15)
+    and the surrounding discussion) and adds Gaussian noise.
 
     Returns the noisy, mis-scaled responsivity array s_tilde(lambda), in A/W.
     """
