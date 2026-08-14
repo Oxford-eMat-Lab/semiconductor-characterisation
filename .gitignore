@@ -10,8 +10,14 @@ site/
 # your machine. Regenerate one with `node make_figures.js` if you lose it.
 figures.pptx
 
+# The scripts that originally generated the notebooks. The .ipynb files are
+# now the source of truth and are edited directly, so these are kept local
+# only - running one would overwrite the notebook it built.
+build_notebook.py
+
 # Staging area for files removed from the project. Delete when you are happy.
 _to_delete/
+
 
 #literature folder where knoweldge of techcniques is kept
 literature/

@@ -83,7 +83,7 @@ import sys
 import subprocess
 
 if "google.colab" in sys.modules and not os.path.exists("tlm_helper.py"):
-    REPO_URL = "https://github.com/Oxford-eMat-Lab/semiconductor-characterisation.git"
+    REPO_URL = "https://github.com/YOUR_GH_USERNAME/semicon_characterisation.git"
     subprocess.run(["git", "clone", "-q", REPO_URL, "/content/semicon"], check=True)
     os.chdir("/content/semicon/TLM")
     print("Colab setup complete, working directory:", os.getcwd())
@@ -444,12 +444,15 @@ Fit $R_T = mL + b$ and unpack it — Eq. (10) term by term:
 $$
 R_S = m\,W \tag{12}
 $$
+
 $$
 R_C = \frac{b}{2} \tag{13}
 $$
+
 $$
 L_T = \frac{b}{2m} \tag{14}
 $$
+
 $$
 \rho_C = R_S L_T^2 \tag{15}
 $$

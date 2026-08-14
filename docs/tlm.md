@@ -423,12 +423,15 @@ Fit $R_T = mL + b$ and unpack it — Eq. (10) term by term:
 $$
 R_S = m\,W \tag{12}
 $$
+
 $$
 R_C = \frac{b}{2} \tag{13}
 $$
+
 $$
 L_T = \frac{b}{2m} \tag{14}
 $$
+
 $$
 \rho_C = R_S L_T^2 \tag{15}
 $$
