@@ -19,7 +19,7 @@ Each technique has:
 
 | Technique | What it extracts | Notebook | Docs |
 |---|---|---|---|
-| Transfer Length Method (TLM) | Sheet resistance, contact resistance, transfer length, specific contact resistivity | [`TLM/contact_res_v2.ipynb`](https://github.com/YOUR_GH_USERNAME/semicon_characterisation/blob/main/TLM/contact_res_v2.ipynb) | [TLM](tlm.md) |
+| Transfer Length Method (TLM) | Sheet resistance, contact resistance, transfer length, specific contact resistivity | [`TLM/tlm_analysis.ipynb`](https://github.com/YOUR_GH_USERNAME/semicon_characterisation/blob/main/TLM/tlm_analysis.ipynb) | [TLM](tlm.md) |
 | External Quantum Efficiency (EQE) | Spectral response, absorption/collection behaviour, short-circuit current density | [`EQE/eqe_analysis.ipynb`](https://github.com/YOUR_GH_USERNAME/semicon_characterisation/blob/main/EQE/eqe_analysis.ipynb) | [EQE](eqe.md) |
 
 See the repository [README](https://github.com/YOUR_GH_USERNAME/semicon_characterisation#readme)

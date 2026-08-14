@@ -1,12 +1,34 @@
-<!-- GENERATED FILE - do not edit. Produced from TLM/tlm_analysis.ipynb by tools/nb2md.py (see tools/build_docs.sh). -->
+"""
+Builds TLM/tlm_analysis.ipynb from the cell definitions below, and executes
+each code cell in-process (matplotlib Agg backend) to embed real outputs -
+equivalent to `jupyter nbconvert --execute` where a Jupyter kernel isn't
+available to run directly.
 
-!!! info "Generated from a Jupyter notebook"
-    This page is `TLM/tlm_analysis.ipynb`, rendered with its stored outputs.
-    [Run it in Google Colab](https://colab.research.google.com/github/YOUR_GH_USERNAME/semicon_characterisation/blob/main/TLM/tlm_analysis.ipynb) or
-    [view the notebook on GitHub](https://github.com/YOUR_GH_USERNAME/semicon_characterisation/blob/main/TLM/tlm_analysis.ipynb).
+Edit the md()/code() calls below, then re-run:  python3 build_notebook.py
+"""
+import base64
+import io
+import json
+import sys
+import contextlib
+
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+
+CELLS = []
 
 
-# Contact Resistance and the Transfer Length Method (TLM)
+def md(src):
+    CELLS.append({"cell_type": "markdown", "source": src})
+
+
+def code(src=None, tags=None):
+    CELLS.append({"cell_type": "code", "source": src, "tags": tags or []})
+
+
+# =====================================================================
+md(r"""# Contact Resistance and the Transfer Length Method (TLM)
 
 Every measurement of a semiconductor layer is made *through* a contact. The
 number a probe station reports is therefore always a sum: the resistance of
@@ -41,15 +63,34 @@ This notebook builds the method up in order:
 | 12 | How do I run this on my own measurements? |
 
 <div align="center">
-   <img src="../assets/fig_tlm_resistance_chain.jpg" width="640">
+   <img src="./figures/fig_tlm_resistance_chain.jpg" width="640">
 </div>
 
 Equations are numbered (1), (2), ... and referred to by those numbers
 throughout. All physics and fitting functions live in
-[`tlm_helper.py`](https://github.com/YOUR_GH_USERNAME/semicon_characterisation/blob/main/TLM/tlm_helper.py), so the notebook itself stays short;
+[`tlm_helper.py`](./tlm_helper.py), so the notebook itself stays short;
 that module's docstrings point back to these equation numbers.
+""")
 
-## 1. What a two-probe measurement contains
+# ---------------------------------------------------------------------
+code(tags=["hide-in-docs"], src=r"""# --- Google Colab setup -------------------------------------------------
+# Colab opens this notebook file on its own, without the rest of the
+# repository, so tlm_helper.py and figures/ would be missing. This cell
+# clones the repo and switches into the TLM folder when (and only when)
+# running on Colab. It does nothing when you run the notebook locally.
+import os
+import sys
+import subprocess
+
+if "google.colab" in sys.modules and not os.path.exists("tlm_helper.py"):
+    REPO_URL = "https://github.com/YOUR_GH_USERNAME/semicon_characterisation.git"
+    subprocess.run(["git", "clone", "-q", REPO_URL, "/content/semicon"], check=True)
+    os.chdir("/content/semicon/TLM")
+    print("Colab setup complete, working directory:", os.getcwd())
+""")
+
+# =====================================================================
+md(r"""## 1. What a two-probe measurement contains
 
 Put two metal contacts on a conducting layer, force a current through one
 and out of the other, and measure the voltage. The resistance you get is a
@@ -73,8 +114,10 @@ $$
 
 Two unknowns, one measurement. Nothing in a single reading tells you how
 the total splits between them — which is exactly the problem TLM solves.
+""")
 
-## 2. What the layer alone contributes
+# =====================================================================
+md(r"""## 2. What the layer alone contributes
 
 The semiconductor term is set by the **sheet resistance** of the layer,
 
@@ -99,9 +142,10 @@ been patterned ($L/W$).
 The cell below shows what each of the three inputs does to a measured I-V
 curve of a contact-free strip. Note which ones change the slope and by how
 much.
+""")
 
-```python
-import numpy as np
+# ---------------------------------------------------------------------
+code(r"""import numpy as np
 import matplotlib.pyplot as plt
 import tlm_helper as th
 
@@ -135,16 +179,10 @@ plt.tight_layout(); plt.show()
 print(f"baseline sheet resistance R_S = {Rs0:.0f} ohm/sq")
 print(f"strip resistance at L = 1 mm, W = 5 mm: "
       f"{th.strip_resistance(Rs0, 1.0, 5.0):.1f} ohm")
-```
+""")
 
-```text
-baseline sheet resistance R_S = 100 ohm/sq
-strip resistance at L = 1 mm, W = 5 mm: 20.0 ohm
-```
-
-![Output 1](assets/nb/tlm_analysis_01.png)
-
-Three different knobs, one visible effect: the slope. A single I-V
+# =====================================================================
+md(r"""Three different knobs, one visible effect: the slope. A single I-V
 curve cannot tell you *which* of them changed — and, once contacts are
 added, it cannot tell you whether the layer or the interface is
 responsible either.
@@ -167,15 +205,17 @@ zero. That is the whole trick: the two contributions have different
 dependences on $L$, so varying $L$ separates them.
 
 <div align="center">
-   <img src="../assets/fig_tlm_structure.jpg" width="680">
+   <img src="./figures/fig_tlm_structure.jpg" width="680">
 </div>
 
 A TLM test structure is built to do exactly this: one isolated strip of the
 layer under test, a row of identical contacts on top of it, and a set of
 different gaps between neighbouring contacts. Every neighbouring pair gives
 one point on the line.
+""")
 
-## 4. Where the current actually crosses
+# =====================================================================
+md(r"""## 4. Where the current actually crosses
 
 $R_C$ on its own is not a useful figure of merit: make the contact bigger
 and $R_C$ falls, so quoting it says as much about the mask as about the
@@ -196,7 +236,7 @@ the metal as soon as it can. Current **crowds** at the leading edge of the
 contact and dies away underneath it.
 
 <div align="center">
-   <img src="../assets/fig_tlm_crowding.jpg" width="760">
+   <img src="./figures/fig_tlm_crowding.jpg" width="760">
 </div>
 
 Solving the distributed network of sheet resistance and interface
@@ -208,8 +248,10 @@ $$
 
 with $x$ measured from the leading edge. So the drawn contact length is not
 what matters — the decay length is.
+""")
 
-## 5. The transfer length
+# =====================================================================
+md(r"""## 5. The transfer length
 
 The decay length in Eq. (6) is the **transfer length**
 
@@ -239,9 +281,10 @@ $$
 There is a practical consequence in Eq. (8): extending a contact beyond a
 few $L_T$ adds area but no current path. The cell below shows both the
 decay and where the resistance stops improving.
+""")
 
-```python
-Rs = 250.0        # ohm/sq, a typical doped emitter
+# ---------------------------------------------------------------------
+code(r"""Rs = 250.0        # ohm/sq, a typical doped emitter
 W = 10.0          # mm, contact width
 
 fig, (axL, axR) = plt.subplots(1, 2, figsize=(11, 3.6))
@@ -275,17 +318,10 @@ for rho_c in [1e-4, 1e-3, 1e-2]:
     LT = th.transfer_length_mm(rho_c, Rs)
     print(f"rho_C = {rho_c:.0e} ohm.cm^2  ->  L_T = {LT*1e3:6.1f} um, "
           f"R_C = {th.contact_resistance(Rs, LT, W):.3f} ohm")
-```
+""")
 
-```text
-rho_C = 1e-04 ohm.cm^2  ->  L_T =    6.3 um, R_C = 0.158 ohm
-rho_C = 1e-03 ohm.cm^2  ->  L_T =   20.0 um, R_C = 0.500 ohm
-rho_C = 1e-02 ohm.cm^2  ->  L_T =   63.2 um, R_C = 1.581 ohm
-```
-
-![Output 2](assets/nb/tlm_analysis_02.png)
-
-## 6. The TLM equation
+# =====================================================================
+md(r"""## 6. The TLM equation
 
 Substituting Eq. (9) into Eq. (4) collapses everything into one line:
 
@@ -303,21 +339,23 @@ Plot $R_T$ against $L$ and read off:
 | combined | $\rho_C = R_S L_T^2$ |
 
 <div align="center">
-   <img src="../assets/fig_tlm_plot.jpg" width="720">
+   <img src="./figures/fig_tlm_plot.jpg" width="720">
 </div>
 
 Note what the $x$-intercept means physically. The line does not hit zero
 resistance at zero spacing — it hits zero at a *negative* spacing, as if the
 current had to travel an extra $L_T$ under each contact. That is precisely
 what it does.
+""")
 
-## 7. Making the measurement
+# =====================================================================
+md(r"""## 7. Making the measurement
 
 Each point on that line comes from a voltage sweep across one pair of
 contacts.
 
 <div align="center">
-   <img src="../assets/fig_tlm_measurement.jpg" width="720">
+   <img src="./figures/fig_tlm_measurement.jpg" width="720">
 </div>
 
 Two details decide whether the extraction will be any good:
@@ -335,9 +373,10 @@ The cell below generates a synthetic dataset from the model above — known
 $R_S$ and $\rho_C$, so the extraction can be checked against the truth —
 with realistic current noise and a small random error on the actual
 contact spacings.
+""")
 
-```python
-spacings_mm = np.array([0.2, 0.4, 0.8, 1.6, 3.2])
+# ---------------------------------------------------------------------
+code(r"""spacings_mm = np.array([0.2, 0.4, 0.8, 1.6, 3.2])
 
 data = th.synthetic_tlm_dataset(
     spacings_mm,
@@ -360,19 +399,10 @@ for i, L in enumerate(data['spacings_mm']):
 plt.xlabel('Voltage (V)'); plt.ylabel('Current (mA)')
 plt.legend(fontsize=9); plt.title('one sweep per spacing')
 plt.tight_layout(); plt.show()
-```
+""")
 
-```text
-ground truth used to generate the data:
-   Rs_ohm_sq        250
-   rho_c_ohm_cm2    0.0015
-   LT_mm            0.02449
-   Rc_ohm           0.6124
-```
-
-![Output 3](assets/nb/tlm_analysis_03.png)
-
-## 8. From sweeps to one resistance per spacing
+# =====================================================================
+md(r"""## 8. From sweeps to one resistance per spacing
 
 Each sweep is reduced by fitting
 
@@ -387,9 +417,10 @@ which will be used to weight the TLM fit later.
 Before averaging anything, check that each curve is actually a straight
 line. The $R^2$ of the fit is a cheap, quantitative version of "the I-V
 looked fine".
+""")
 
-```python
-L, R_mean, R_std, R_all = th.resistances_per_spacing(data)   # Eq. (11)
+# ---------------------------------------------------------------------
+code(r"""L, R_mean, R_std, R_all = th.resistances_per_spacing(data)   # Eq. (11)
 
 print(f"{'L (mm)':>8}  {'R_T (Ω)':>10}  {'spread (Ω)':>11}  {'min R²':>8}")
 for i, Li in enumerate(L):
@@ -403,20 +434,10 @@ plt.xlabel('contact spacing, $L$ (mm)')
 plt.ylabel('total resistance, $R_T$ (Ω)')
 plt.title('the TLM plot, before fitting')
 plt.grid(alpha=0.3); plt.tight_layout(); plt.show()
-```
+""")
 
-```text
-  L (mm)     R_T (Ω)   spread (Ω)    min R²
-    0.20       6.352       0.1708   1.00000
-    0.40      11.248       0.1152   1.00000
-    0.80      21.255       0.1058   1.00000
-    1.60      41.244       0.1201   1.00000
-    3.20      81.223       0.1572   1.00000
-```
-
-![Output 4](assets/nb/tlm_analysis_04.png)
-
-## 9. The extraction
+# =====================================================================
+md(r"""## 9. The extraction
 
 Fit $R_T = mL + b$ and unpack it — Eq. (10) term by term:
 
@@ -445,9 +466,10 @@ both:
 
 $W$ enters Eqs. (12) and (15) directly, so measure the contact width rather
 than trusting the mask drawing.
+""")
 
-```python
-res = th.fit_tlm(L, R_mean, W_mm=data['W_mm'], sigma_ohm=R_std)
+# ---------------------------------------------------------------------
+code(r"""res = th.fit_tlm(L, R_mean, W_mm=data['W_mm'], sigma_ohm=R_std)
 print(res.summary())
 
 truth = data['truth']
@@ -471,26 +493,10 @@ plt.xlabel('contact spacing, $L$ (mm)')
 plt.ylabel('total resistance, $R_T$ (Ω)')
 plt.legend(fontsize=9); plt.grid(alpha=0.3)
 plt.tight_layout(); plt.show()
-```
+""")
 
-```text
-TLM extraction
---------------
-  fit           R_T = 24.98 * L + 1.282   (R^2 = 1.00000)
-  contact width W       = 10 mm
-  sheet resist. R_S     = 249.8 +/- 0.18 ohm/sq
-  contact res.  R_C     = 0.6409 +/- 0.013 ohm
-  transfer len. L_T     = 0.02566 +/- 0.00053 mm
-  contact resy. rho_C   = 0.001645 +/- 6.8e-05 ohm.cm^2
-
-recovered / true:
-   R_S    0.999
-   rho_C  1.096
-```
-
-![Output 5](assets/nb/tlm_analysis_05.png)
-
-Look at the two ratios printed above. The sheet resistance comes back
+# =====================================================================
+md(r"""Look at the two ratios printed above. The sheet resistance comes back
 within a fraction of a percent of the value used to generate the data;
 $\rho_C$ is out by around ten percent — from the *same* fit, on the *same*
 data. That asymmetry is not an accident, and it is the central practical
@@ -516,9 +522,10 @@ entirely in $b$ and is invisible in the quality of the fit.
 Because $\rho_C$ depends on the square of a fitted ratio, its error
 distribution is skewed rather than Gaussian, so a Monte-Carlo over the
 measured scatter is more honest than a $\pm$ number.
+""")
 
-```python
-mc = th.monte_carlo_uncertainty(L, R_mean, R_std, W_mm=data['W_mm'],
+# ---------------------------------------------------------------------
+code(r"""mc = th.monte_carlo_uncertainty(L, R_mean, R_std, W_mm=data['W_mm'],
                                 n_trials=4000, seed=3)
 
 fig, (a1, a2) = plt.subplots(1, 2, figsize=(10.5, 3.4))
@@ -537,23 +544,18 @@ for key, unit, scale in [('Rs_ohm_sq', 'Ω/sq', 1), ('rho_c_ohm_cm2', 'mΩ cm²'
     print(f"{key:15s} median {np.median(v):8.4g} {unit:8s} "
           f"68% interval [{lo:.4g}, {hi:.4g}]  "
           f"(±{100*(hi-lo)/2/np.median(v):.1f}%)")
-```
+""")
 
-```text
-Rs_ohm_sq       median    249.7 Ω/sq     68% interval [249.1, 250.3]  (±0.2%)
-rho_c_ohm_cm2   median    1.692 mΩ cm²   68% interval [1.459, 1.942]  (±14.3%)
-```
-
-![Output 6](assets/nb/tlm_analysis_06.png)
-
-A second, more insidious error is a **systematic offset** on $R_T$:
+# ---------------------------------------------------------------------
+md(r"""A second, more insidious error is a **systematic offset** on $R_T$:
 every point shifted by the same amount. The fit stays perfectly straight,
 $R^2$ stays at 1, and only $\rho_C$ moves. The cell below adds a 0.2 Ω
 probe resistance — the kind of thing two-wire probing gives you for
 free — and refits.
+""")
 
-```python
-offsets = [0.0, 0.1, 0.2, 0.5]
+# ---------------------------------------------------------------------
+code(r"""offsets = [0.0, 0.1, 0.2, 0.5]
 print(f"{'offset (Ω)':>11}  {'R_S (Ω/sq)':>11}  {'rho_C (mΩcm²)':>14}  {'R²':>8}")
 for off in offsets:
     r = th.fit_tlm(L, R_mean + off, W_mm=data['W_mm'], sigma_ohm=R_std)
@@ -562,20 +564,10 @@ for off in offsets:
 
 print(f"\ntrue rho_C = {truth['rho_c_ohm_cm2']*1e3:.3f} mΩcm²")
 print("R_S is untouched; rho_C is not, and the fit quality never warns you.")
-```
+""")
 
-```text
- offset (Ω)   R_S (Ω/sq)   rho_C (mΩcm²)        R²
-       0.00        249.8           1.645   1.00000
-       0.10        249.8           1.911   1.00000
-       0.20        249.8           2.198   1.00000
-       0.50        249.8           3.178   1.00000
-
-true rho_C = 1.500 mΩcm²
-R_S is untouched; rho_C is not, and the fit quality never warns you.
-```
-
-## 11. When TLM breaks down
+# =====================================================================
+md(r"""## 11. When TLM breaks down
 
 The extraction assumes:
 
@@ -604,9 +596,10 @@ and a meaningless $\rho_C$.
 
 `tlm_helper.tlm_validity_report` checks the first family of problems
 mechanically; the second needs looking at the I-V curves.
+""")
 
-```python
-# --- failure mode 1: spacings too small to pin down a long L_T ---
+# ---------------------------------------------------------------------
+code(r"""# --- failure mode 1: spacings too small to pin down a long L_T ---
 bad = th.synthetic_tlm_dataset(
     np.array([0.10, 0.15, 0.20, 0.25, 0.30]),   # all spacings tiny
     Rs_ohm_sq=250.0, rho_c_ohm_cm2=5e-2,        # and a poor contact
@@ -621,27 +614,10 @@ print(f"\ntrue L_T = {bad['truth']['LT_mm']:.3f} mm, "
 print("\nvalidity report:")
 for w in th.tlm_validity_report(res_b):
     print("  ! " + w)
-```
+""")
 
-```text
-TLM extraction
---------------
-  fit           R_T = 25.2 * L + 7.074   (R^2 = 0.99976)
-  contact width W       = 10 mm
-  sheet resist. R_S     = 252 +/- 1.6 ohm/sq
-  contact res.  R_C     = 3.537 +/- 0.016 ohm
-  transfer len. L_T     = 0.1404 +/- 0.0015 mm
-  contact resy. rho_C   = 0.04966 +/- 0.0011 ohm.cm^2
-
-true L_T = 0.141 mm, largest spacing = 0.30 mm
-
-validity report:
-  ! L_T = 0.14 mm is 47% of the largest spacing (0.3 mm). The intercept is then mostly extrapolation; rho_C from this fit is unreliable. Measure larger spacings, so that L_max is several times L_T.
-  ! Spacings span only a factor 3.0. A short lever arm makes the extrapolated intercept noisy.
-```
-
-```python
-# --- failure mode 2: a rectifying contact ---
+# ---------------------------------------------------------------------
+code(r"""# --- failure mode 2: a rectifying contact ---
 V = np.linspace(-0.3, 0.3, 301)
 I_ohmic = th.iv_curve(V, 250.0, 1.0, 10.0, LT_mm=0.02)
 I_schottky = th.iv_curve_schottky(V, R_ohm=25.0, I_sat=2e-3, n=2.0)
@@ -661,21 +637,10 @@ for vw in [(-0.05, 0.05), (-0.15, 0.15), (-0.3, 0.3)]:
 
 print("\nThe ohmic device gives the same resistance whatever window you fit.")
 print("The rectifying one does not - and there is no single right answer.")
-```
+""")
 
-```text
- fit window (V)   R from ohmic   R from rectifying
-  ±0.05                  26.00               42.82
-  ±0.15                  26.00               28.51
-  ±0.30                  26.00               25.39
-
-The ohmic device gives the same resistance whatever window you fit.
-The rectifying one does not - and there is no single right answer.
-```
-
-![Output 7](assets/nb/tlm_analysis_07.png)
-
-## 12. Running this on your own data
+# =====================================================================
+md(r"""## 12. Running this on your own data
 
 `tlm_helper.load_tlm_folder` reads a directory of measured I-V files into
 exactly the structure `synthetic_tlm_dataset` produces, so everything above
@@ -704,30 +669,19 @@ Before trusting any number that comes out:
 
 The cell below runs the whole chain end to end on the synthetic dataset,
 which is the same three lines you would run on your own folder.
+""")
 
-```python
-res_final, L_f, R_f, S_f, warnings = th.analyse_tlm(data)
+# ---------------------------------------------------------------------
+code(r"""res_final, L_f, R_f, S_f, warnings = th.analyse_tlm(data)
 
 print(res_final.summary())
 print("\nvalidity report:", "nothing flagged" if not warnings else "")
 for w in warnings:
     print("  ! " + w)
-```
+""")
 
-```text
-TLM extraction
---------------
-  fit           R_T = 24.98 * L + 1.282   (R^2 = 1.00000)
-  contact width W       = 10 mm
-  sheet resist. R_S     = 249.8 +/- 0.18 ohm/sq
-  contact res.  R_C     = 0.6409 +/- 0.013 ohm
-  transfer len. L_T     = 0.02566 +/- 0.00053 mm
-  contact resy. rho_C   = 0.001645 +/- 6.8e-05 ohm.cm^2
-
-validity report: nothing flagged
-```
-
-## Summary of equations
+# =====================================================================
+md(r"""## Summary of equations
 
 | # | Equation | Meaning |
 |---|---|---|
@@ -750,3 +704,94 @@ validity report: nothing flagged
 
 Symbols: $L$ contact spacing, $W$ contact width, $d$ contact length,
 $m$ fitted slope, $b$ fitted intercept.
+""")
+
+
+# =====================================================================
+# Notebook assembly: execute each code cell and embed its outputs.
+# =====================================================================
+def run_and_capture(source, namespace):
+    """Execute `source` in `namespace`, capturing stdout text and any
+    matplotlib figures created, returning a list of nbformat-style
+    outputs."""
+    outputs = []
+    buf = io.StringIO()
+    plt.close("all")
+    with contextlib.redirect_stdout(buf):
+        exec(compile(source, "<cell>", "exec"), namespace)
+
+    text = buf.getvalue()
+    if text:
+        outputs.append({
+            "output_type": "stream",
+            "name": "stdout",
+            "text": text.splitlines(keepends=True),
+        })
+
+    for num in plt.get_fignums():
+        fig = plt.figure(num)
+        png_buf = io.BytesIO()
+        fig.savefig(png_buf, format="png", dpi=110, bbox_inches="tight")
+        png_b64 = base64.b64encode(png_buf.getvalue()).decode("ascii")
+        outputs.append({
+            "output_type": "display_data",
+            "data": {"image/png": png_b64, "text/plain": ["<Figure>"]},
+            "metadata": {},
+        })
+    plt.close("all")
+    return outputs
+
+
+def build_notebook(cells_def, out_path):
+    namespace = {}
+    nb_cells = []
+    exec_count = 0
+
+    for cell in cells_def:
+        src = cell["source"].strip("\n")
+        src_lines = [l + "\n" for l in src.split("\n")]
+        if src_lines:
+            src_lines[-1] = src_lines[-1].rstrip("\n")
+
+        if cell["cell_type"] == "markdown":
+            nb_cells.append({
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": src_lines,
+            })
+        else:
+            exec_count += 1
+            outputs = run_and_capture(src, namespace)
+            nb_cells.append({
+                "cell_type": "code",
+                "metadata": {"tags": cell.get("tags", [])} if cell.get("tags") else {},
+                "execution_count": exec_count,
+                "outputs": outputs,
+                "source": src_lines,
+            })
+            print(f"[executed cell {exec_count}] ok, {len(outputs)} output(s)")
+
+    notebook = {
+        "cells": nb_cells,
+        "metadata": {
+            "kernelspec": {
+                "display_name": "Python 3",
+                "language": "python",
+                "name": "python3",
+            },
+            "language_info": {
+                "name": "python",
+                "version": sys.version.split()[0],
+            },
+        },
+        "nbformat": 4,
+        "nbformat_minor": 5,
+    }
+
+    with open(out_path, "w") as f:
+        json.dump(notebook, f, indent=1)
+    print(f"Wrote {out_path} ({len(nb_cells)} cells)")
+
+
+if __name__ == "__main__":
+    build_notebook(CELLS, "tlm_analysis.ipynb")

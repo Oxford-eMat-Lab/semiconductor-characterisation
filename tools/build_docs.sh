@@ -6,7 +6,7 @@
 #
 # docs/index.md is hand-written; docs/eqe.md and docs/tlm.md are generated
 # from the notebooks and should not be edited directly - edit the notebook
-# (for EQE, edit EQE/build_notebook.py and re-run it) and run this again.
+# (edit <TECHNIQUE>/build_notebook.py and re-run it) and run this again.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -18,10 +18,10 @@ python3 tools/nb2md.py EQE/eqe_analysis.ipynb docs/eqe.md \
   --rewrite './eqe_helper.py='"$REPO_URL"'/blob/main/EQE/eqe_helper.py' \
   --repo-url "$REPO_URL"
 
-python3 tools/nb2md.py TLM/contact_res_v2.ipynb docs/tlm.md \
+python3 tools/nb2md.py TLM/tlm_analysis.ipynb docs/tlm.md \
   --assets docs/assets/nb --assets-url assets/nb \
-  --rewrite './tlm2.jpg=../assets/tlm2.jpg' \
-  --rewrite './tlm3.jpg=../assets/tlm3.jpg' \
+  --rewrite './figures/=../assets/' \
+  --rewrite './tlm_helper.py='"$REPO_URL"'/blob/main/TLM/tlm_helper.py' \
   --repo-url "$REPO_URL"
 
 if [ "${1:-build}" = "serve" ]; then
