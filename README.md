@@ -5,27 +5,24 @@ semiconductor / solar-cell characterisation techniques — starting from
 the basics and working through the equations, with short code examples
 and plots of model data.
 
-> Replace `YOUR_GH_USERNAME` below with the actual GitHub username/org
-> once this repository is pushed to GitHub, so the Colab and docs links
-> resolve correctly.
-
 ## Techniques
 
 | Technique | Notebook | Open in Colab |
 |---|---|---|
-| Transfer Length Method (TLM) — contact resistance | [`TLM/tlm_analysis.ipynb`](TLM/tlm_analysis.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/YOUR_GH_USERNAME/semicon_characterisation/blob/main/TLM/tlm_analysis.ipynb) |
-| External Quantum Efficiency (EQE) — solar cell spectral response | [`EQE/eqe_analysis.ipynb`](EQE/eqe_analysis.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/YOUR_GH_USERNAME/semicon_characterisation/blob/main/EQE/eqe_analysis.ipynb) |
+| Transfer Length Method (TLM) — contact resistance | [`TLM/tlm_analysis.ipynb`](TLM/tlm_analysis.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Oxford-eMat-Lab/semiconductor-characterisation/blob/main/TLM/tlm_analysis.ipynb) |
+| External Quantum Efficiency (EQE) — solar cell spectral response | [`EQE/eqe_analysis.ipynb`](EQE/eqe_analysis.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Oxford-eMat-Lab/semiconductor-characterisation/blob/main/EQE/eqe_analysis.ipynb) |
 
 ## Documentation site
 
 Key equations and background for every technique are also published as a
 static site (built with MkDocs):
-**https://YOUR_GH_USERNAME.github.io/semicon_characterisation/**
+**https://oxford-emat-lab.github.io/semiconductor-characterisation/**
 
 The site is built from [`docs/`](docs/) and deployed automatically by
 [`.github/workflows/deploy-docs.yml`](.github/workflows/deploy-docs.yml)
-on every push to `main` that touches `docs/` or `mkdocs.yml`. To enable
-it: **Settings → Pages → Source: GitHub Actions** (one-time repo setting).
+on every push to `main`. To enable it: **Settings → Pages → Source:
+GitHub Actions** (one-time repo setting). The workflow builds the site and
+publishes it with the official Pages actions — no `gh-pages` branch is used.
 
 ## Repository structure
 
@@ -161,8 +158,7 @@ Colab opens the notebook file on its own, *without* the rest of the
 repository, so the first cell of each notebook clones this repo and
 switches into its folder to make the helper module and `figures/`
 available. Run the cells in order and it is handled automatically — but
-this only works once the repository is public on GitHub and the
-`YOUR_GH_USERNAME` placeholder in that cell has been replaced.
+this requires the repository to be public on GitHub.
 
 ## Building the documentation site locally
 

@@ -70,7 +70,7 @@ import sys
 import subprocess
 
 if "google.colab" in sys.modules and not os.path.exists("eqe_helper.py"):
-    REPO_URL = "https://github.com/YOUR_GH_USERNAME/semicon_characterisation.git"
+    REPO_URL = "https://github.com/Oxford-eMat-Lab/semiconductor-characterisation.git"
     subprocess.run(["git", "clone", "-q", REPO_URL, "/content/semicon"], check=True)
     os.chdir("/content/semicon/EQE")
     print("Colab setup complete, working directory:", os.getcwd())

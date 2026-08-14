@@ -1,19 +1,38 @@
 name: Deploy MkDocs site
 
+# Builds the MkDocs site and publishes it with the official GitHub Pages
+# actions. Requires: Settings -> Pages -> Source = "GitHub Actions".
+#
+# This replaces the older `mkdocs gh-deploy` approach, which pushed to a
+# `gh-pages` branch and therefore needed Source = "Deploy from a branch".
+# Having that workflow and the default `static.yml` active at the same time
+# is what previously stopped the site from publishing correctly.
+
 on:
   push:
     branches: [main]
     paths:
       - "docs/**"
       - "mkdocs.yml"
+      - "tools/**"
+      - "EQE/**"
+      - "TLM/**"
+      - "requirements-docs.txt"
       - ".github/workflows/deploy-docs.yml"
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two deployments at once, but let an in-flight one finish.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,5 +44,28 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements-docs.txt
 
+      - name: Regenerate notebook pages and build
+        # Rebuilds docs/eqe.md and docs/tlm.md from the notebooks so the
+        # published site can never drift from them, then builds with
+        # --strict so broken links fail the job.
+        env:
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+        run: bash tools/build_docs.sh build
+
+      - uses: actions/configure-pages@v5
+
+      - name: Upload the built site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
-        run: mkdocs gh-deploy --force
+        id: deployment
+        uses: actions/deploy-pages@v4

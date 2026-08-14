@@ -1,7 +1,8 @@
 site_name: Semiconductor Characterisation Techniques
+site_url: https://oxford-emat-lab.github.io/semiconductor-characterisation/
 site_description: Interactive notebooks explaining the physical principles behind semiconductor characterisation techniques.
-repo_url: https://github.com/YOUR_GH_USERNAME/semicon_characterisation
-repo_name: semicon_characterisation
+repo_url: https://github.com/Oxford-eMat-Lab/semiconductor-characterisation
+repo_name: Oxford-eMat-Lab/semiconductor-characterisation
 
 theme:
   name: material

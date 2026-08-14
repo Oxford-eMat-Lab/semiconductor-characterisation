@@ -2,8 +2,8 @@
 
 !!! info "Generated from a Jupyter notebook"
     This page is `EQE/eqe_analysis.ipynb`, rendered with its stored outputs.
-    [Run it in Google Colab](https://colab.research.google.com/github/YOUR_GH_USERNAME/semicon_characterisation/blob/main/EQE/eqe_analysis.ipynb) or
-    [view the notebook on GitHub](https://github.com/YOUR_GH_USERNAME/semicon_characterisation/blob/main/EQE/eqe_analysis.ipynb).
+    [Run it in Google Colab](https://colab.research.google.com/github/Oxford-eMat-Lab/semiconductor-characterisation/blob/main/EQE/eqe_analysis.ipynb) or
+    [view the notebook on GitHub](https://github.com/Oxford-eMat-Lab/semiconductor-characterisation/blob/main/EQE/eqe_analysis.ipynb).
 
 
 # External Quantum Efficiency (EQE) of Solar Cells
@@ -33,7 +33,7 @@ This notebook builds the technique up from first principles:
 
 Equations are numbered (1), (2), ... and referred to by those numbers
 throughout. All physics functions live in
-[`eqe_helper.py`](https://github.com/YOUR_GH_USERNAME/semicon_characterisation/blob/main/EQE/eqe_helper.py), so the notebook itself stays short;
+[`eqe_helper.py`](https://github.com/Oxford-eMat-Lab/semiconductor-characterisation/blob/main/EQE/eqe_helper.py), so the notebook itself stays short;
 that module's docstrings point back to these equation numbers.
 
 ## 1. Photons and the useful wavelength range

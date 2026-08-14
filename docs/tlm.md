@@ -2,8 +2,8 @@
 
 !!! info "Generated from a Jupyter notebook"
     This page is `TLM/tlm_analysis.ipynb`, rendered with its stored outputs.
-    [Run it in Google Colab](https://colab.research.google.com/github/YOUR_GH_USERNAME/semicon_characterisation/blob/main/TLM/tlm_analysis.ipynb) or
-    [view the notebook on GitHub](https://github.com/YOUR_GH_USERNAME/semicon_characterisation/blob/main/TLM/tlm_analysis.ipynb).
+    [Run it in Google Colab](https://colab.research.google.com/github/Oxford-eMat-Lab/semiconductor-characterisation/blob/main/TLM/tlm_analysis.ipynb) or
+    [view the notebook on GitHub](https://github.com/Oxford-eMat-Lab/semiconductor-characterisation/blob/main/TLM/tlm_analysis.ipynb).
 
 
 # Contact Resistance and the Transfer Length Method (TLM)
@@ -46,7 +46,7 @@ This notebook builds the method up in order:
 
 Equations are numbered (1), (2), ... and referred to by those numbers
 throughout. All physics and fitting functions live in
-[`tlm_helper.py`](https://github.com/YOUR_GH_USERNAME/semicon_characterisation/blob/main/TLM/tlm_helper.py), so the notebook itself stays short;
+[`tlm_helper.py`](https://github.com/Oxford-eMat-Lab/semiconductor-characterisation/blob/main/TLM/tlm_helper.py), so the notebook itself stays short;
 that module's docstrings point back to these equation numbers.
 
 ## 1. What a two-probe measurement contains

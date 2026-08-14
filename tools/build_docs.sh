@@ -10,7 +10,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-REPO_URL="${REPO_URL:-https://github.com/YOUR_GH_USERNAME/semicon_characterisation}"
+REPO_URL="${REPO_URL:-https://github.com/Oxford-eMat-Lab/semiconductor-characterisation}"
 
 python3 tools/nb2md.py EQE/eqe_analysis.ipynb docs/eqe.md \
   --assets docs/assets/nb --assets-url assets/nb \

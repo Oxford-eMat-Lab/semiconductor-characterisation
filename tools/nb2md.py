@@ -73,10 +73,15 @@ def convert(nb_path, md_path, assets_dir, assets_url, rewrites, repo_url,
     os.makedirs(os.path.dirname(md_path) or ".", exist_ok=True)
 
     stem = os.path.splitext(os.path.basename(nb_path))[0]
-    # clear this notebook's previously generated images
+    # Clear this notebook's previously generated images. Stale files are
+    # only a tidiness problem - every image still in use is rewritten
+    # below - so a filesystem that refuses deletes must not fail the build.
     for old in os.listdir(assets_dir):
         if old.startswith(stem + "_") and old.endswith(".png"):
-            os.remove(os.path.join(assets_dir, old))
+            try:
+                os.remove(os.path.join(assets_dir, old))
+            except OSError as exc:
+                print(f"  note: could not remove stale {old} ({exc.strerror})")
 
     parts = [
         f"<!-- GENERATED FILE - do not edit. Produced from {nb_path} by "
