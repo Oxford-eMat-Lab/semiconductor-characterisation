@@ -411,6 +411,60 @@ function textBox(slide, text, x, y, w, h, fill, opts = {}) {
     5.00, 4.62, 4.60, { fontSize: 10.5, italic: true, color: C.muted, h: 0.48 });
 }
 
+/* =====================================================================
+ * SLIDE 6 - how to update these figures
+ * This slide documents the workflow; it is NOT exported as a figure.
+ * ===================================================================== */
+{
+  const s = pres.addSlide();
+  title(s, "How to update these figures");
+
+  const mono = (txt, x, y, w, opts = {}) => s.addText(txt, {
+    x, y, w, h: opts.h || 0.26, fontSize: opts.fontSize || 10.5,
+    bold: opts.bold || false, color: opts.color || C.text,
+    fontFace: "Courier New", margin: 0, valign: "middle",
+  });
+
+  // --- step 1 -----------------------------------------------------------
+  box(s, 0.45, 0.95, 4.45, 2.05, C.panel, { line: "C7CDD4" });
+  label(s, "1  ·  Edit, then export", 0.62, 1.06, 4.1, { fontSize: 12, bold: true });
+  label(s, "Edit any slide in this deck, then export every slide as JPEG\nat about 150 dpi  (File \u2192 Export \u2192 JPEG \u2192 All slides).",
+    0.62, 1.36, 4.15, { fontSize: 10.5, h: 0.55 });
+  label(s, "Simpler: run this in the EQE folder \u2014 it renders every slide\nand copies the JPEGs to both places for you:",
+    0.62, 1.96, 4.15, { fontSize: 10, italic: true, color: C.muted, h: 0.45 });
+  mono("./export_figures.sh", 0.62, 2.46, 4.1, { bold: true, color: "0F5132" });
+
+  // --- step 2 -----------------------------------------------------------
+  box(s, 5.10, 0.95, 4.45, 2.05, C.panel, { line: "C7CDD4" });
+  label(s, "2  ·  Save each JPEG in BOTH folders", 5.27, 1.06, 4.1, { fontSize: 12, bold: true });
+  label(s, "Same file name in each. Miss the second one and the website\nkeeps showing the old picture.",
+    5.27, 1.36, 4.15, { fontSize: 10.5, h: 0.45 });
+  mono("EQE/figures/<name>.jpg", 5.27, 1.88, 4.1, { bold: true });
+  label(s, "used by the Jupyter notebook", 5.27, 2.12, 4.1, { fontSize: 9.5, color: C.muted });
+  mono("docs/assets/<name>.jpg", 5.27, 2.40, 4.1, { bold: true });
+  label(s, "used by the documentation website", 5.27, 2.62, 4.1, { fontSize: 9.5, color: C.muted });
+
+  // --- slide -> file name table ----------------------------------------
+  label(s, "Slide \u2192 file name", 0.45, 3.20, 4.0, { fontSize: 12, bold: true });
+  const row = (i, slide, name) => {
+    const y = 3.54 + i * 0.30;
+    if (i % 2 === 0) box(s, 0.45, y, 9.10, 0.30, "F4F6F8", { line: "F4F6F8" });
+    label(s, slide, 0.62, y, 1.2, { fontSize: 10.5, color: C.muted });
+    mono(name, 1.85, y, 4.5, { fontSize: 10.5 });
+  };
+  row(0, "Slide 1", "fig_cell_structure.jpg");
+  row(1, "Slide 2", "fig_optical_losses.jpg");
+  row(2, "Slide 3", "fig_collection_efficiency.jpg");
+  row(3, "Slide 4", "fig_albsf_vs_perc.jpg");
+  row(4, "Slide 5", "fig_measurement_setup.jpg");
+
+  label(s,
+    "This .pptx is deliberately not tracked by git \u2014 it is your local working copy. " +
+    "The exported .jpg files are what the repository and the website use, so those are the ones to commit.",
+    0.45, 5.08, 9.10, { fontSize: 10, italic: true, color: C.muted, h: 0.45 });
+}
+
+
 pres.writeFile({ fileName: "figures.pptx" }).then(() => {
   console.log("wrote figures.pptx");
 });

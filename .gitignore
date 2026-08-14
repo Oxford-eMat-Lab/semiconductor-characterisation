@@ -4,3 +4,11 @@ __pycache__/
 .ipynb_checkpoints/
 .venv/
 site/
+
+# Local-only working copies. The exported .jpg files in <TECH>/figures/ and
+# docs/assets/ are the tracked artefacts; the decks that produce them stay on
+# your machine. Regenerate one with `node make_figures.js` if you lose it.
+figures.pptx
+
+# Staging area for files removed from the project. Delete when you are happy.
+_to_delete/
