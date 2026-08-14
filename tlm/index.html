@@ -1,0 +1,1397 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Interactive notebooks explaining the physical principles behind semiconductor characterisation techniques.">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../eqe/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Transfer Length Method (TLM) - Semiconductor Characterisation Techniques</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#contact-resistance-and-the-transfer-length-method-tlm" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Semiconductor Characterisation Techniques" class="md-header__button md-logo" aria-label="Semiconductor Characterisation Techniques" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Semiconductor Characterisation Techniques
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Transfer Length Method (TLM)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/YOUR_GH_USERNAME/semicon_characterisation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    semicon_characterisation
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Semiconductor Characterisation Techniques" class="md-nav__button md-logo" aria-label="Semiconductor Characterisation Techniques" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Semiconductor Characterisation Techniques
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/YOUR_GH_USERNAME/semicon_characterisation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    semicon_characterisation
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transfer Length Method (TLM)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transfer Length Method (TLM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-what-a-two-probe-measurement-contains" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. What a two-probe measurement contains
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-what-the-layer-alone-contributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. What the layer alone contributes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-why-the-contact-term-does-not-vanish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Why the contact term does not vanish
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-where-the-current-actually-crosses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Where the current actually crosses
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-the-transfer-length" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. The transfer length
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-the-tlm-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. The TLM equation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-making-the-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Making the measurement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-from-sweeps-to-one-resistance-per-spacing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. From sweeps to one resistance per spacing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-the-extraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. The extraction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-which-errors-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Which errors matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-when-tlm-breaks-down" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. When TLM breaks down
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-running-this-on-your-own-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Running this on your own data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-of-equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary of equations
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eqe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    External Quantum Efficiency (EQE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<!-- GENERATED FILE - do not edit. Produced from TLM/tlm_analysis.ipynb by tools/nb2md.py (see tools/build_docs.sh). -->
+
+<div class="admonition info">
+<p class="admonition-title">Generated from a Jupyter notebook</p>
+<p>This page is <code>TLM/tlm_analysis.ipynb</code>, rendered with its stored outputs.
+<a href="https://colab.research.google.com/github/YOUR_GH_USERNAME/semicon_characterisation/blob/main/TLM/tlm_analysis.ipynb">Run it in Google Colab</a> or
+<a href="https://github.com/YOUR_GH_USERNAME/semicon_characterisation/blob/main/TLM/tlm_analysis.ipynb">view the notebook on GitHub</a>.</p>
+</div>
+<h1 id="contact-resistance-and-the-transfer-length-method-tlm">Contact Resistance and the Transfer Length Method (TLM)<a class="headerlink" href="#contact-resistance-and-the-transfer-length-method-tlm" title="Permanent link">&para;</a></h1>
+<p>Every measurement of a semiconductor layer is made <em>through</em> a contact. The
+number a probe station reports is therefore always a sum: the resistance of
+the layer you wanted to measure, plus the resistance of getting current
+into and out of it. Those two are not separable from a single measurement.</p>
+<p>The Transfer Length Method separates them, using nothing more than a set of
+identical contacts placed at different distances apart. From one straight
+line it returns four quantities:</p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Quantity</th>
+<th>Units</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(R_S\)</span></td>
+<td>sheet resistance of the layer</td>
+<td><span class="arithmatex">\(\Omega/\square\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(R_C\)</span></td>
+<td>resistance of one contact</td>
+<td><span class="arithmatex">\(\Omega\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(L_T\)</span></td>
+<td>transfer length</td>
+<td>mm</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\rho_C\)</span></td>
+<td>specific contact resistivity</td>
+<td><span class="arithmatex">\(\Omega\,\text{cm}^2\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>This notebook builds the method up in order:</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Question answered</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>What does a two-probe measurement actually contain?</td>
+</tr>
+<tr>
+<td>2</td>
+<td>What does the layer alone contribute?</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Why does the contact term not vanish as the spacing shrinks?</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Where does current actually cross the interface?</td>
+</tr>
+<tr>
+<td>5</td>
+<td>What is the transfer length, and what sets it?</td>
+</tr>
+<tr>
+<td>6</td>
+<td>How do those pieces combine into the TLM equation?</td>
+</tr>
+<tr>
+<td>7-8</td>
+<td>How is the measurement made, and reduced to one number per spacing?</td>
+</tr>
+<tr>
+<td>9</td>
+<td>How are <span class="arithmatex">\(R_S\)</span>, <span class="arithmatex">\(R_C\)</span>, <span class="arithmatex">\(L_T\)</span> and <span class="arithmatex">\(\rho_C\)</span> extracted, with uncertainties?</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Which errors matter, and how much?</td>
+</tr>
+<tr>
+<td>11</td>
+<td>When does the method break down, and how would you know?</td>
+</tr>
+<tr>
+<td>12</td>
+<td>How do I run this on my own measurements?</td>
+</tr>
+</tbody>
+</table>
+<div align="center">
+   <img src="../assets/fig_tlm_resistance_chain.jpg" width="640">
+</div>
+
+<p>Equations are numbered (1), (2), ... and referred to by those numbers
+throughout. All physics and fitting functions live in
+<a href="https://github.com/YOUR_GH_USERNAME/semicon_characterisation/blob/main/TLM/tlm_helper.py"><code>tlm_helper.py</code></a>, so the notebook itself stays short;
+that module's docstrings point back to these equation numbers.</p>
+<h2 id="1-what-a-two-probe-measurement-contains">1. What a two-probe measurement contains<a class="headerlink" href="#1-what-a-two-probe-measurement-contains" title="Permanent link">&para;</a></h2>
+<p>Put two metal contacts on a conducting layer, force a current through one
+and out of the other, and measure the voltage. The resistance you get is a
+series chain:</p>
+<div class="arithmatex">\[
+R_T = 2R_m + 2R_C + R_{\text{semi}} \tag{1}
+\]</div>
+<ul>
+<li><span class="arithmatex">\(R_m\)</span> — resistance of the metal itself and of the leads,</li>
+<li><span class="arithmatex">\(R_C\)</span> — resistance of <strong>one</strong> metal/semiconductor interface,</li>
+<li><span class="arithmatex">\(R_{\text{semi}}\)</span> — resistance of the semiconductor between the contacts.</li>
+</ul>
+<p>The metal term is small (metals are orders of magnitude more conductive
+than a doped semiconductor layer) and, with four-wire probing, the leads
+are excluded from the measurement altogether. So Eq. (1) is used as</p>
+<div class="arithmatex">\[
+R_T \simeq 2R_C + R_{\text{semi}}
+\]</div>
+<p>Two unknowns, one measurement. Nothing in a single reading tells you how
+the total splits between them — which is exactly the problem TLM solves.</p>
+<h2 id="2-what-the-layer-alone-contributes">2. What the layer alone contributes<a class="headerlink" href="#2-what-the-layer-alone-contributes" title="Permanent link">&para;</a></h2>
+<p>The semiconductor term is set by the <strong>sheet resistance</strong> of the layer,</p>
+<div class="arithmatex">\[
+R_S = \frac{\rho}{t} \tag{2}
+\]</div>
+<p>where <span class="arithmatex">\(\rho\)</span> is the bulk resistivity (<span class="arithmatex">\(\Omega\,\text{cm}\)</span>) and <span class="arithmatex">\(t\)</span> the
+layer thickness. <span class="arithmatex">\(R_S\)</span> has units of <span class="arithmatex">\(\Omega/\square\)</span> — ohms per square —
+because any <em>square</em> patch of the layer has the same edge-to-edge
+resistance whatever its size. A rectangle of length <span class="arithmatex">\(L\)</span> and width <span class="arithmatex">\(W\)</span> is
+just <span class="arithmatex">\(L/W\)</span> squares in series:</p>
+<div class="arithmatex">\[
+R_{\text{semi}} = R_S \frac{L}{W} \tag{3}
+\]</div>
+<p>Sheet resistance is the natural way to describe a thin layer: it separates
+what the material is (<span class="arithmatex">\(\rho\)</span>) and how thick it is (<span class="arithmatex">\(t\)</span>) from how it has
+been patterned (<span class="arithmatex">\(L/W\)</span>).</p>
+<p>The cell below shows what each of the three inputs does to a measured I-V
+curve of a contact-free strip. Note which ones change the slope and by how
+much.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tlm_helper</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">th</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">})</span>
+
+<span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
+<span class="n">rho0</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">L0</span><span class="p">,</span> <span class="n">W0</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="mf">100e-7</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">5.0</span>    <span class="c1"># ohm.cm, cm, mm, mm</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">rho</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">5e-4</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="mf">2e-3</span><span class="p">]:</span>                        <span class="c1"># Eq. (2)</span>
+    <span class="n">Rs</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">sheet_resistance</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">t0</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">th</span><span class="o">.</span><span class="n">iv_curve</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">Rs</span><span class="p">,</span> <span class="n">L0</span><span class="p">,</span> <span class="n">W0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">rho</span><span class="o">*</span><span class="mf">1e3</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> mΩ cm&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;bulk resistivity $</span><span class="se">\\</span><span class="s1">rho$&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">50e-7</span><span class="p">,</span> <span class="mf">100e-7</span><span class="p">,</span> <span class="mf">500e-7</span><span class="p">]:</span>                     <span class="c1"># Eq. (2)</span>
+    <span class="n">Rs</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">sheet_resistance</span><span class="p">(</span><span class="n">rho0</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">th</span><span class="o">.</span><span class="n">iv_curve</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">Rs</span><span class="p">,</span> <span class="n">L0</span><span class="p">,</span> <span class="n">W0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">t</span><span class="o">*</span><span class="mf">1e7</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1"> nm&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;layer thickness $t$&#39;</span><span class="p">)</span>
+
+<span class="n">Rs0</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">sheet_resistance</span><span class="p">(</span><span class="n">rho0</span><span class="p">,</span> <span class="n">t0</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">L</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]:</span>                             <span class="c1"># Eq. (3)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">th</span><span class="o">.</span><span class="n">iv_curve</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">Rs0</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">W0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">L</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> mm&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;contact spacing $L$&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Voltage (V)&#39;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Current (A)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;baseline sheet resistance R_S = </span><span class="si">{</span><span class="n">Rs0</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ohm/sq&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;strip resistance at L = 1 mm, W = 5 mm: &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">th</span><span class="o">.</span><span class="n">strip_resistance</span><span class="p">(</span><span class="n">Rs0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">)</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> ohm&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>baseline sheet resistance R_S = 100 ohm/sq
+strip resistance at L = 1 mm, W = 5 mm: 20.0 ohm
+</code></pre></div>
+<p><img alt="Output 1" src="../assets/nb/tlm_analysis_01.png" /></p>
+<p>Three different knobs, one visible effect: the slope. A single I-V
+curve cannot tell you <em>which</em> of them changed — and, once contacts are
+added, it cannot tell you whether the layer or the interface is
+responsible either.</p>
+<h2 id="3-why-the-contact-term-does-not-vanish">3. Why the contact term does not vanish<a class="headerlink" href="#3-why-the-contact-term-does-not-vanish" title="Permanent link">&para;</a></h2>
+<p>Combining Eqs. (1) and (3) gives the relation TLM is built on:</p>
+<div class="arithmatex">\[
+R_T(L) = R_S \frac{L}{W} + 2R_C \tag{4}
+\]</div>
+<p>Measure <span class="arithmatex">\(R_T\)</span> at several contact spacings <span class="arithmatex">\(L\)</span> and this is a straight line:</p>
+<ul>
+<li>the <strong>slope</strong> is <span class="arithmatex">\(R_S/W\)</span> — the layer,</li>
+<li>the <strong>intercept</strong> at <span class="arithmatex">\(L = 0\)</span> is <span class="arithmatex">\(2R_C\)</span> — the contacts.</li>
+</ul>
+<p>The contact term is the part that <em>survives</em> extrapolating the spacing to
+zero. That is the whole trick: the two contributions have different
+dependences on <span class="arithmatex">\(L\)</span>, so varying <span class="arithmatex">\(L\)</span> separates them.</p>
+<div align="center">
+   <img src="../assets/fig_tlm_structure.jpg" width="680">
+</div>
+
+<p>A TLM test structure is built to do exactly this: one isolated strip of the
+layer under test, a row of identical contacts on top of it, and a set of
+different gaps between neighbouring contacts. Every neighbouring pair gives
+one point on the line.</p>
+<h2 id="4-where-the-current-actually-crosses">4. Where the current actually crosses<a class="headerlink" href="#4-where-the-current-actually-crosses" title="Permanent link">&para;</a></h2>
+<p><span class="arithmatex">\(R_C\)</span> on its own is not a useful figure of merit: make the contact bigger
+and <span class="arithmatex">\(R_C\)</span> falls, so quoting it says as much about the mask as about the
+process. The transferable quantity is the <strong>specific contact resistivity</strong></p>
+<div class="arithmatex">\[
+\rho_C = R_C\, A_{\text{eff}} \tag{5}
+\]</div>
+<p>in <span class="arithmatex">\(\Omega\,\text{cm}^2\)</span> — the resistance of a unit area of interface.
+Lower is better.</p>
+<p>That leaves the question of what <span class="arithmatex">\(A_{\text{eff}}\)</span> is. In an idealised bar
+with contacts on the end faces it is obvious. In a real planar structure
+the contact sits on <em>top</em> of the layer, and current does not enter it
+uniformly: it takes the least-resistive route, which means crossing into
+the metal as soon as it can. Current <strong>crowds</strong> at the leading edge of the
+contact and dies away underneath it.</p>
+<div align="center">
+   <img src="../assets/fig_tlm_crowding.jpg" width="760">
+</div>
+
+<p>Solving the distributed network of sheet resistance and interface
+resistance under the contact gives an exponential decay,</p>
+<div class="arithmatex">\[
+I(x) = I_0\, e^{-x/L_T} \tag{6}
+\]</div>
+<p>with <span class="arithmatex">\(x\)</span> measured from the leading edge. So the drawn contact length is not
+what matters — the decay length is.</p>
+<h2 id="5-the-transfer-length">5. The transfer length<a class="headerlink" href="#5-the-transfer-length" title="Permanent link">&para;</a></h2>
+<p>The decay length in Eq. (6) is the <strong>transfer length</strong></p>
+<div class="arithmatex">\[
+L_T = \sqrt{\frac{\rho_C}{R_S}} \tag{7}
+\]</div>
+<p>Read it as a competition between two paths: travelling further sideways in
+the sheet (cost set by <span class="arithmatex">\(R_S\)</span>) versus crossing the interface here and now
+(cost set by <span class="arithmatex">\(\rho_C\)</span>). A good contact — small <span class="arithmatex">\(\rho_C\)</span> — pulls current in
+almost immediately and has a short <span class="arithmatex">\(L_T\)</span>; a poor contact lets current run
+far under the metal before crossing.</p>
+<p><span class="arithmatex">\(L_T\)</span> answers the area question. The effective area is the contact width
+times one transfer length,</p>
+<div class="arithmatex">\[
+A_{\text{eff}} = L_T W \tag{8}
+\]</div>
+<p>so one contact has resistance</p>
+<div class="arithmatex">\[
+R_C = \frac{\rho_C}{L_T W} = \frac{R_S L_T}{W} \tag{9}
+\]</div>
+<p>There is a practical consequence in Eq. (8): extending a contact beyond a
+few <span class="arithmatex">\(L_T\)</span> adds area but no current path. The cell below shows both the
+decay and where the resistance stops improving.</p>
+<div class="highlight"><pre><span></span><code><span class="n">Rs</span> <span class="o">=</span> <span class="mf">250.0</span>        <span class="c1"># ohm/sq, a typical doped emitter</span>
+<span class="n">W</span> <span class="o">=</span> <span class="mf">10.0</span>          <span class="c1"># mm, contact width</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">axL</span><span class="p">,</span> <span class="n">axR</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">))</span>
+
+<span class="c1"># --- left: current decay under the contact, for three contact qualities</span>
+<span class="n">x_um</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">rho_c</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">1e-4</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">]:</span>
+    <span class="n">LT</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">transfer_length_mm</span><span class="p">(</span><span class="n">rho_c</span><span class="p">,</span> <span class="n">Rs</span><span class="p">)</span>                       <span class="c1"># Eq. (7)</span>
+    <span class="n">axL</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_um</span><span class="p">,</span> <span class="n">th</span><span class="o">.</span><span class="n">current_under_contact</span><span class="p">(</span><span class="n">x_um</span> <span class="o">*</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="n">LT</span><span class="p">),</span>   <span class="c1"># Eq. (6)</span>
+             <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">rho_C$ = </span><span class="si">{</span><span class="n">rho_c</span><span class="si">:</span><span class="s1">.0e</span><span class="si">}</span><span class="s1"> Ω cm², $L_T$ = </span><span class="si">{</span><span class="n">LT</span><span class="o">*</span><span class="mf">1e3</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1"> µm&#39;</span><span class="p">)</span>
+<span class="n">axL</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;distance into the contact, $x$ (µm)&#39;</span><span class="p">)</span>
+<span class="n">axL</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$I(x)/I_0$&#39;</span><span class="p">)</span>
+<span class="n">axL</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mf">8.5</span><span class="p">);</span> <span class="n">axL</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;current crowding&#39;</span><span class="p">)</span>
+
+<span class="c1"># --- right: why long contacts stop helping</span>
+<span class="n">d_um</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">rho_c</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">1e-4</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">]:</span>
+    <span class="n">LT</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">transfer_length_mm</span><span class="p">(</span><span class="n">rho_c</span><span class="p">,</span> <span class="n">Rs</span><span class="p">)</span>
+    <span class="n">Rc_d</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">contact_resistance</span><span class="p">(</span><span class="n">Rs</span><span class="p">,</span> <span class="n">LT</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">d_mm</span><span class="o">=</span><span class="n">d_um</span> <span class="o">*</span> <span class="mf">1e-3</span><span class="p">)</span>   <span class="c1"># Eq. (9), full form</span>
+    <span class="n">axR</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">d_um</span><span class="p">,</span> <span class="n">Rc_d</span> <span class="o">/</span> <span class="n">th</span><span class="o">.</span><span class="n">contact_resistance</span><span class="p">(</span><span class="n">Rs</span><span class="p">,</span> <span class="n">LT</span><span class="p">,</span> <span class="n">W</span><span class="p">),</span>
+             <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;$L_T$ = </span><span class="si">{</span><span class="n">LT</span><span class="o">*</span><span class="mf">1e3</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1"> µm&#39;</span><span class="p">)</span>
+<span class="n">axR</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">axR</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;drawn contact length, $d$ (µm)&#39;</span><span class="p">)</span>
+<span class="n">axR</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$R_C(d)</span><span class="se">\\</span><span class="s1"> /</span><span class="se">\\</span><span class="s1"> R_C(d </span><span class="se">\\</span><span class="s1">gg L_T)$&#39;</span><span class="p">)</span>
+<span class="n">axR</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span> <span class="n">axR</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mf">8.5</span><span class="p">)</span>
+<span class="n">axR</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;contact length beyond ~3 $L_T$ buys nothing&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">rho_c</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">1e-4</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">]:</span>
+    <span class="n">LT</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">transfer_length_mm</span><span class="p">(</span><span class="n">rho_c</span><span class="p">,</span> <span class="n">Rs</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rho_C = </span><span class="si">{</span><span class="n">rho_c</span><span class="si">:</span><span class="s2">.0e</span><span class="si">}</span><span class="s2"> ohm.cm^2  -&gt;  L_T = </span><span class="si">{</span><span class="n">LT</span><span class="o">*</span><span class="mf">1e3</span><span class="si">:</span><span class="s2">6.1f</span><span class="si">}</span><span class="s2"> um, &quot;</span>
+          <span class="sa">f</span><span class="s2">&quot;R_C = </span><span class="si">{</span><span class="n">th</span><span class="o">.</span><span class="n">contact_resistance</span><span class="p">(</span><span class="n">Rs</span><span class="p">,</span><span class="w"> </span><span class="n">LT</span><span class="p">,</span><span class="w"> </span><span class="n">W</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ohm&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>rho_C = 1e-04 ohm.cm^2  -&gt;  L_T =    6.3 um, R_C = 0.158 ohm
+rho_C = 1e-03 ohm.cm^2  -&gt;  L_T =   20.0 um, R_C = 0.500 ohm
+rho_C = 1e-02 ohm.cm^2  -&gt;  L_T =   63.2 um, R_C = 1.581 ohm
+</code></pre></div>
+<p><img alt="Output 2" src="../assets/nb/tlm_analysis_02.png" /></p>
+<h2 id="6-the-tlm-equation">6. The TLM equation<a class="headerlink" href="#6-the-tlm-equation" title="Permanent link">&para;</a></h2>
+<p>Substituting Eq. (9) into Eq. (4) collapses everything into one line:</p>
+<div class="arithmatex">\[
+R_T(L) = \frac{R_S}{W}\left(L + 2L_T\right) \tag{10}
+\]</div>
+<p>Plot <span class="arithmatex">\(R_T\)</span> against <span class="arithmatex">\(L\)</span> and read off:</p>
+<table>
+<thead>
+<tr>
+<th>Feature of the line</th>
+<th>Gives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>slope</td>
+<td><span class="arithmatex">\(R_S / W\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(y\)</span>-intercept</td>
+<td><span class="arithmatex">\(2R_C\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(x\)</span>-intercept</td>
+<td><span class="arithmatex">\(-2L_T\)</span></td>
+</tr>
+<tr>
+<td>combined</td>
+<td><span class="arithmatex">\(\rho_C = R_S L_T^2\)</span></td>
+</tr>
+</tbody>
+</table>
+<div align="center">
+   <img src="../assets/fig_tlm_plot.jpg" width="720">
+</div>
+
+<p>Note what the <span class="arithmatex">\(x\)</span>-intercept means physically. The line does not hit zero
+resistance at zero spacing — it hits zero at a <em>negative</em> spacing, as if the
+current had to travel an extra <span class="arithmatex">\(L_T\)</span> under each contact. That is precisely
+what it does.</p>
+<h2 id="7-making-the-measurement">7. Making the measurement<a class="headerlink" href="#7-making-the-measurement" title="Permanent link">&para;</a></h2>
+<p>Each point on that line comes from a voltage sweep across one pair of
+contacts.</p>
+<div align="center">
+   <img src="../assets/fig_tlm_measurement.jpg" width="720">
+</div>
+
+<p>Two details decide whether the extraction will be any good:</p>
+<ul>
+<li><strong>Four-wire probing.</strong> The force leads carry the current; separate sense
+  leads measure the voltage where no current flows through them, so probe
+  and lead resistance drop out. In two-wire mode that resistance is the
+  same at every spacing — it adds straight into the intercept and is
+  indistinguishable from contact resistance.</li>
+<li><strong>A sweep, not a single point.</strong> Fitting the slope of <span class="arithmatex">\(I(V)\)</span> rejects any
+  current offset, and the <em>shape</em> of the curve is the evidence that the
+  contact is ohmic at all.</li>
+</ul>
+<p>The cell below generates a synthetic dataset from the model above — known
+<span class="arithmatex">\(R_S\)</span> and <span class="arithmatex">\(\rho_C\)</span>, so the extraction can be checked against the truth —
+with realistic current noise and a small random error on the actual
+contact spacings.</p>
+<div class="highlight"><pre><span></span><code><span class="n">spacings_mm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">])</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">synthetic_tlm_dataset</span><span class="p">(</span>
+    <span class="n">spacings_mm</span><span class="p">,</span>
+    <span class="n">Rs_ohm_sq</span><span class="o">=</span><span class="mf">250.0</span><span class="p">,</span>          <span class="c1"># the layer we are pretending to measure</span>
+    <span class="n">rho_c_ohm_cm2</span><span class="o">=</span><span class="mf">1.5e-3</span><span class="p">,</span>     <span class="c1"># the contact we are pretending to have</span>
+    <span class="n">W_mm</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>
+    <span class="n">n_repeats</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>              <span class="c1"># four nominally identical structures each</span>
+    <span class="n">noise_pA</span><span class="o">=</span><span class="mf">400.0</span><span class="p">,</span>           <span class="c1"># source-meter current noise</span>
+    <span class="n">spacing_error_um</span><span class="o">=</span><span class="mf">8.0</span><span class="p">,</span>     <span class="c1"># lithography / probe placement error</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ground truth used to generate the data:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;truth&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="n">k</span><span class="si">:</span><span class="s2">16s</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">5.6</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">L</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;spacings_mm&#39;</span><span class="p">]):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;V&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;L = </span><span class="si">{</span><span class="n">L</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> mm&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Voltage (V)&#39;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Current (mA)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;one sweep per spacing&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ground truth used to generate the data:
+   Rs_ohm_sq        250
+   rho_c_ohm_cm2    0.0015
+   LT_mm            0.02449
+   Rc_ohm           0.6124
+</code></pre></div>
+<p><img alt="Output 3" src="../assets/nb/tlm_analysis_03.png" /></p>
+<h2 id="8-from-sweeps-to-one-resistance-per-spacing">8. From sweeps to one resistance per spacing<a class="headerlink" href="#8-from-sweeps-to-one-resistance-per-spacing" title="Permanent link">&para;</a></h2>
+<p>Each sweep is reduced by fitting</p>
+<div class="arithmatex">\[
+I = \frac{V}{R_T} + I_{\text{offset}} \tag{11}
+\]</div>
+<p>and taking <span class="arithmatex">\(R_T\)</span> from the slope. Repeated structures at the same spacing
+are then averaged, and their spread becomes the error bar on that point —
+which will be used to weight the TLM fit later.</p>
+<p>Before averaging anything, check that each curve is actually a straight
+line. The <span class="arithmatex">\(R^2\)</span> of the fit is a cheap, quantitative version of "the I-V
+looked fine".</p>
+<div class="highlight"><pre><span></span><code><span class="n">L</span><span class="p">,</span> <span class="n">R_mean</span><span class="p">,</span> <span class="n">R_std</span><span class="p">,</span> <span class="n">R_all</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">resistances_per_spacing</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>   <span class="c1"># Eq. (11)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;L (mm)&#39;</span><span class="si">:</span><span class="s2">&gt;8</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="s1">&#39;R_T (Ω)&#39;</span><span class="si">:</span><span class="s2">&gt;10</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="s1">&#39;spread (Ω)&#39;</span><span class="si">:</span><span class="s2">&gt;11</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="s1">&#39;min R²&#39;</span><span class="si">:</span><span class="s2">&gt;8</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">Li</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">th</span><span class="o">.</span><span class="n">iv_linearity</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;V&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+             <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Li</span><span class="si">:</span><span class="s2">8.2f</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">R_mean</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">10.3f</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">R_std</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">11.4f</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">r2</span><span class="si">:</span><span class="s2">8.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">5.6</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">R_mean</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">R_std</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">capsize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C3&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;contact spacing, $L$ (mm)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;total resistance, $R_T$ (Ω)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;the TLM plot, before fitting&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>  L (mm)     R_T (Ω)   spread (Ω)    min R²
+    0.20       6.352       0.1708   1.00000
+    0.40      11.248       0.1152   1.00000
+    0.80      21.255       0.1058   1.00000
+    1.60      41.244       0.1201   1.00000
+    3.20      81.223       0.1572   1.00000
+</code></pre></div>
+<p><img alt="Output 4" src="../assets/nb/tlm_analysis_04.png" /></p>
+<h2 id="9-the-extraction">9. The extraction<a class="headerlink" href="#9-the-extraction" title="Permanent link">&para;</a></h2>
+<p>Fit <span class="arithmatex">\(R_T = mL + b\)</span> and unpack it — Eq. (10) term by term:</p>
+<div class="arithmatex">\[
+R_S = m\,W \tag{12}
+$$
+$$
+R_C = \frac{b}{2} \tag{13}
+$$
+$$
+L_T = \frac{b}{2m} \tag{14}
+$$
+$$
+\rho_C = R_S L_T^2 \tag{15}
+\]</div>
+<p>Two things are worth doing properly here, and <code>tlm_helper.fit_tlm</code> does
+both:</p>
+<ul>
+<li><strong>Weight the fit</strong> by the measured spread at each spacing, so a noisy
+  point does not drag the intercept.</li>
+<li><strong>Propagate the fit covariance</strong>, not just the individual standard
+  errors. The slope and intercept of a line fitted over a limited range are
+  strongly anti-correlated, and <span class="arithmatex">\(L_T\)</span> depends on their <em>ratio</em>; ignoring
+  the correlation overstates its uncertainty.</li>
+</ul>
+<p><span class="arithmatex">\(W\)</span> enters Eqs. (12) and (15) directly, so measure the contact width rather
+than trusting the mask drawing.</p>
+<div class="highlight"><pre><span></span><code><span class="n">res</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">fit_tlm</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">R_mean</span><span class="p">,</span> <span class="n">W_mm</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;W_mm&#39;</span><span class="p">],</span> <span class="n">sigma_ohm</span><span class="o">=</span><span class="n">R_std</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+
+<span class="n">truth</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;truth&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">recovered / true:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   R_S    </span><span class="si">{</span><span class="n">res</span><span class="o">.</span><span class="n">Rs_ohm_sq</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">truth</span><span class="p">[</span><span class="s1">&#39;Rs_ohm_sq&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   rho_C  </span><span class="si">{</span><span class="n">res</span><span class="o">.</span><span class="n">rho_c_ohm_cm2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">truth</span><span class="p">[</span><span class="s1">&#39;rho_c_ohm_cm2&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># the plot, with the two intercepts marked</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">2.5</span> <span class="o">*</span> <span class="n">res</span><span class="o">.</span><span class="n">LT_mm</span><span class="p">,</span> <span class="n">L</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1.05</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">6.2</span><span class="p">,</span> <span class="mf">4.1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">R_mean</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">R_std</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">capsize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C3&#39;</span><span class="p">,</span>
+             <span class="n">label</span><span class="o">=</span><span class="s1">&#39;measured&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">slope_ohm_per_mm</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">res</span><span class="o">.</span><span class="n">intercept_ohm</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C4&#39;</span><span class="p">,</span>
+         <span class="n">label</span><span class="o">=</span><span class="s1">&#39;fit&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">intercept_ohm</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.4&#39;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;$2R_C$ = </span><span class="si">{</span><span class="n">res</span><span class="o">.</span><span class="n">intercept_ohm</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1"> Ω&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">res</span><span class="o">.</span><span class="n">LT_mm</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;$-2L_T$ = </span><span class="si">{</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">res</span><span class="o">.</span><span class="n">LT_mm</span><span class="o">*</span><span class="mf">1e3</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1"> µm&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;contact spacing, $L$ (mm)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;total resistance, $R_T$ (Ω)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>TLM extraction
+--------------
+  fit           R_T = 24.98 * L + 1.282   (R^2 = 1.00000)
+  contact width W       = 10 mm
+  sheet resist. R_S     = 249.8 +/- 0.18 ohm/sq
+  contact res.  R_C     = 0.6409 +/- 0.013 ohm
+  transfer len. L_T     = 0.02566 +/- 0.00053 mm
+  contact resy. rho_C   = 0.001645 +/- 6.8e-05 ohm.cm^2
+
+recovered / true:
+   R_S    0.999
+   rho_C  1.096
+</code></pre></div>
+<p><img alt="Output 5" src="../assets/nb/tlm_analysis_05.png" /></p>
+<p>Look at the two ratios printed above. The sheet resistance comes back
+within a fraction of a percent of the value used to generate the data;
+<span class="arithmatex">\(\rho_C\)</span> is out by around ten percent — from the <em>same</em> fit, on the <em>same</em>
+data. That asymmetry is not an accident, and it is the central practical
+fact about TLM.</p>
+<h2 id="10-which-errors-matter">10. Which errors matter<a class="headerlink" href="#10-which-errors-matter" title="Permanent link">&para;</a></h2>
+<p><span class="arithmatex">\(R_S\)</span> comes from the <strong>slope</strong>, which is constrained by every point across
+the whole range of spacings. <span class="arithmatex">\(\rho_C\)</span> comes from the <strong>intercept</strong>, an
+extrapolation beyond the smallest spacing measured, and then gets squared:</p>
+<div class="arithmatex">\[
+\rho_C = R_S L_T^2 = (mW)\left(\frac{b}{2m}\right)^2 = \frac{W b^2}{4m}
+\quad\Rightarrow\quad
+\frac{\Delta\rho_C}{\rho_C} \approx 2\,\frac{\Delta b}{b} \tag{16}
+\]</div>
+<p>A 10% error on the intercept is a 20% error on <span class="arithmatex">\(\rho_C\)</span>. Anything that
+adds a constant offset to every measured <span class="arithmatex">\(R_T\)</span> — two-wire probing, a
+contact resistance in the probe tips, a systematic spacing error — lands
+entirely in <span class="arithmatex">\(b\)</span> and is invisible in the quality of the fit.</p>
+<p>Because <span class="arithmatex">\(\rho_C\)</span> depends on the square of a fitted ratio, its error
+distribution is skewed rather than Gaussian, so a Monte-Carlo over the
+measured scatter is more honest than a <span class="arithmatex">\(\pm\)</span> number.</p>
+<div class="highlight"><pre><span></span><code><span class="n">mc</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">monte_carlo_uncertainty</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">R_mean</span><span class="p">,</span> <span class="n">R_std</span><span class="p">,</span> <span class="n">W_mm</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;W_mm&#39;</span><span class="p">],</span>
+                                <span class="n">n_trials</span><span class="o">=</span><span class="mi">4000</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">10.5</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">))</span>
+<span class="n">a1</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mc</span><span class="p">[</span><span class="s1">&#39;Rs_ohm_sq&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">)</span>
+<span class="n">a1</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">truth</span><span class="p">[</span><span class="s1">&#39;Rs_ohm_sq&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">)</span>
+<span class="n">a1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$R_S$ (Ω/sq)&#39;</span><span class="p">);</span> <span class="n">a1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;trials&#39;</span><span class="p">);</span> <span class="n">a1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+
+<span class="n">a2</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mc</span><span class="p">[</span><span class="s1">&#39;rho_c_ohm_cm2&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e3</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+<span class="n">a2</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">truth</span><span class="p">[</span><span class="s1">&#39;rho_c_ohm_cm2&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">)</span>
+<span class="n">a2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">rho_C$ (mΩ cm²)&#39;</span><span class="p">);</span> <span class="n">a2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">scale</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">&#39;Rs_ohm_sq&#39;</span><span class="p">,</span> <span class="s1">&#39;Ω/sq&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;rho_c_ohm_cm2&#39;</span><span class="p">,</span> <span class="s1">&#39;mΩ cm²&#39;</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">)]:</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">mc</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">*</span> <span class="n">scale</span>
+    <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">84</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">:</span><span class="s2">15s</span><span class="si">}</span><span class="s2"> median </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="si">:</span><span class="s2">8.4g</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">unit</span><span class="si">:</span><span class="s2">8s</span><span class="si">}</span><span class="s2"> &quot;</span>
+          <span class="sa">f</span><span class="s2">&quot;68% interval [</span><span class="si">{</span><span class="n">lo</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">hi</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2">]  &quot;</span>
+          <span class="sa">f</span><span class="s2">&quot;(±</span><span class="si">{</span><span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="n">hi</span><span class="o">-</span><span class="n">lo</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Rs_ohm_sq       median    249.7 Ω/sq     68% interval [249.1, 250.3]  (±0.2%)
+rho_c_ohm_cm2   median    1.692 mΩ cm²   68% interval [1.459, 1.942]  (±14.3%)
+</code></pre></div>
+<p><img alt="Output 6" src="../assets/nb/tlm_analysis_06.png" /></p>
+<p>A second, more insidious error is a <strong>systematic offset</strong> on <span class="arithmatex">\(R_T\)</span>:
+every point shifted by the same amount. The fit stays perfectly straight,
+<span class="arithmatex">\(R^2\)</span> stays at 1, and only <span class="arithmatex">\(\rho_C\)</span> moves. The cell below adds a 0.2 Ω
+probe resistance — the kind of thing two-wire probing gives you for
+free — and refits.</p>
+<div class="highlight"><pre><span></span><code><span class="n">offsets</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;offset (Ω)&#39;</span><span class="si">:</span><span class="s2">&gt;11</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="s1">&#39;R_S (Ω/sq)&#39;</span><span class="si">:</span><span class="s2">&gt;11</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="s1">&#39;rho_C (mΩcm²)&#39;</span><span class="si">:</span><span class="s2">&gt;14</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="s1">&#39;R²&#39;</span><span class="si">:</span><span class="s2">&gt;8</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">off</span> <span class="ow">in</span> <span class="n">offsets</span><span class="p">:</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">fit_tlm</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">R_mean</span> <span class="o">+</span> <span class="n">off</span><span class="p">,</span> <span class="n">W_mm</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;W_mm&#39;</span><span class="p">],</span> <span class="n">sigma_ohm</span><span class="o">=</span><span class="n">R_std</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">off</span><span class="si">:</span><span class="s2">11.2f</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">Rs_ohm_sq</span><span class="si">:</span><span class="s2">11.1f</span><span class="si">}</span><span class="s2">  &quot;</span>
+          <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">rho_c_ohm_cm2</span><span class="o">*</span><span class="mf">1e3</span><span class="si">:</span><span class="s2">14.3f</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">r_squared</span><span class="si">:</span><span class="s2">8.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">true rho_C = </span><span class="si">{</span><span class="n">truth</span><span class="p">[</span><span class="s1">&#39;rho_c_ohm_cm2&#39;</span><span class="p">]</span><span class="o">*</span><span class="mf">1e3</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mΩcm²&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;R_S is untouched; rho_C is not, and the fit quality never warns you.&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code> offset (Ω)   R_S (Ω/sq)   rho_C (mΩcm²)        R²
+       0.00        249.8           1.645   1.00000
+       0.10        249.8           1.911   1.00000
+       0.20        249.8           2.198   1.00000
+       0.50        249.8           3.178   1.00000
+
+true rho_C = 1.500 mΩcm²
+R_S is untouched; rho_C is not, and the fit quality never warns you.
+</code></pre></div>
+<h2 id="11-when-tlm-breaks-down">11. When TLM breaks down<a class="headerlink" href="#11-when-tlm-breaks-down" title="Permanent link">&para;</a></h2>
+<p>The extraction assumes:</p>
+<ol>
+<li>the sheet resistance is uniform, and the same under the contacts as
+   between them;</li>
+<li>all contacts are identical;</li>
+<li>metal and lead resistance are negligible;</li>
+<li>current flow is one-dimensional along the strip (contacts span the full
+   width of an isolated mesa);</li>
+<li>the contacts are ohmic, so <span class="arithmatex">\(R_T\)</span> is well defined;</li>
+<li><span class="arithmatex">\(R_T\)</span> vs <span class="arithmatex">\(L\)</span> is linear over the measured range.</li>
+</ol>
+<p>Two failures dominate in practice.</p>
+<p><strong>The transfer length is not small compared with the spacings.</strong> The
+intercept is an extrapolation from the smallest <span class="arithmatex">\(L\)</span> measured down to zero.
+If <span class="arithmatex">\(L_T\)</span> is a large fraction of <span class="arithmatex">\(L_{\max}\)</span>, that extrapolation — and hence
+<span class="arithmatex">\(\rho_C\)</span> — is barely constrained by the data. A working rule: the largest
+spacing should be several times <span class="arithmatex">\(L_T\)</span>, and the smallest spacing should be
+as small as the process allows.</p>
+<p><strong>The contacts are not ohmic.</strong> A rectifying interface gives an S-shaped
+I-V, and the "resistance" you extract then depends on the voltage window
+you happened to sweep. Fitting a line to it produces a number, no warning,
+and a meaningless <span class="arithmatex">\(\rho_C\)</span>.</p>
+<p><code>tlm_helper.tlm_validity_report</code> checks the first family of problems
+mechanically; the second needs looking at the I-V curves.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># --- failure mode 1: spacings too small to pin down a long L_T ---</span>
+<span class="n">bad</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">synthetic_tlm_dataset</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">]),</span>   <span class="c1"># all spacings tiny</span>
+    <span class="n">Rs_ohm_sq</span><span class="o">=</span><span class="mf">250.0</span><span class="p">,</span> <span class="n">rho_c_ohm_cm2</span><span class="o">=</span><span class="mf">5e-2</span><span class="p">,</span>        <span class="c1"># and a poor contact</span>
+    <span class="n">W_mm</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">noise_pA</span><span class="o">=</span><span class="mf">400.0</span><span class="p">,</span> <span class="n">spacing_error_um</span><span class="o">=</span><span class="mf">8.0</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+
+<span class="n">L_b</span><span class="p">,</span> <span class="n">R_b</span><span class="p">,</span> <span class="n">S_b</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">resistances_per_spacing</span><span class="p">(</span><span class="n">bad</span><span class="p">)</span>
+<span class="n">res_b</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">fit_tlm</span><span class="p">(</span><span class="n">L_b</span><span class="p">,</span> <span class="n">R_b</span><span class="p">,</span> <span class="n">W_mm</span><span class="o">=</span><span class="n">bad</span><span class="p">[</span><span class="s1">&#39;W_mm&#39;</span><span class="p">],</span> <span class="n">sigma_ohm</span><span class="o">=</span><span class="n">S_b</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">res_b</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">true L_T = </span><span class="si">{</span><span class="n">bad</span><span class="p">[</span><span class="s1">&#39;truth&#39;</span><span class="p">][</span><span class="s1">&#39;LT_mm&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> mm, &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;largest spacing = </span><span class="si">{</span><span class="n">L_b</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mm&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">validity report:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">th</span><span class="o">.</span><span class="n">tlm_validity_report</span><span class="p">(</span><span class="n">res_b</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  ! &quot;</span> <span class="o">+</span> <span class="n">w</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>TLM extraction
+--------------
+  fit           R_T = 25.2 * L + 7.074   (R^2 = 0.99976)
+  contact width W       = 10 mm
+  sheet resist. R_S     = 252 +/- 1.6 ohm/sq
+  contact res.  R_C     = 3.537 +/- 0.016 ohm
+  transfer len. L_T     = 0.1404 +/- 0.0015 mm
+  contact resy. rho_C   = 0.04966 +/- 0.0011 ohm.cm^2
+
+true L_T = 0.141 mm, largest spacing = 0.30 mm
+
+validity report:
+  ! L_T = 0.14 mm is 47% of the largest spacing (0.3 mm). The intercept is then mostly extrapolation; rho_C from this fit is unreliable. Measure larger spacings, so that L_max is several times L_T.
+  ! Spacings span only a factor 3.0. A short lever arm makes the extrapolated intercept noisy.
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># --- failure mode 2: a rectifying contact ---</span>
+<span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mi">301</span><span class="p">)</span>
+<span class="n">I_ohmic</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">iv_curve</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="mf">250.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="n">LT_mm</span><span class="o">=</span><span class="mf">0.02</span><span class="p">)</span>
+<span class="n">I_schottky</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">iv_curve_schottky</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">R_ohm</span><span class="o">=</span><span class="mf">25.0</span><span class="p">,</span> <span class="n">I_sat</span><span class="o">=</span><span class="mf">2e-3</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">5.6</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">I_ohmic</span> <span class="o">*</span> <span class="mf">1e3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;ohmic contact&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">I_schottky</span> <span class="o">*</span> <span class="mf">1e3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;rectifying contact&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Voltage (V)&#39;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Current (mA)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;fit window (V)&#39;</span><span class="si">:</span><span class="s2">&gt;15</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="s1">&#39;R from ohmic&#39;</span><span class="si">:</span><span class="s2">&gt;13</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="s1">&#39;R from rectifying&#39;</span><span class="si">:</span><span class="s2">&gt;18</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">vw</span> <span class="ow">in</span> <span class="p">[(</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)]:</span>
+    <span class="n">r_o</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">resistance_from_iv</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">I_ohmic</span><span class="p">,</span> <span class="n">V_window</span><span class="o">=</span><span class="n">vw</span><span class="p">)</span>
+    <span class="n">r_s</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">resistance_from_iv</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">I_schottky</span><span class="p">,</span> <span class="n">V_window</span><span class="o">=</span><span class="n">vw</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  ±</span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">vw</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">          </span><span class="si">{</span><span class="n">r_o</span><span class="si">:</span><span class="s2">13.2f</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">r_s</span><span class="si">:</span><span class="s2">18.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The ohmic device gives the same resistance whatever window you fit.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The rectifying one does not - and there is no single right answer.&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code> fit window (V)   R from ohmic   R from rectifying
+  ±0.05                  26.00               42.82
+  ±0.15                  26.00               28.51
+  ±0.30                  26.00               25.39
+
+The ohmic device gives the same resistance whatever window you fit.
+The rectifying one does not - and there is no single right answer.
+</code></pre></div>
+<p><img alt="Output 7" src="../assets/nb/tlm_analysis_07.png" /></p>
+<h2 id="12-running-this-on-your-own-data">12. Running this on your own data<a class="headerlink" href="#12-running-this-on-your-own-data" title="Permanent link">&para;</a></h2>
+<p><code>tlm_helper.load_tlm_folder</code> reads a directory of measured I-V files into
+exactly the structure <code>synthetic_tlm_dataset</code> produces, so everything above
+works unchanged on real measurements:</p>
+<div class="highlight"><pre><span></span><code><span class="n">data</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">load_tlm_folder</span><span class="p">(</span><span class="s1">&#39;./my_measurements&#39;</span><span class="p">,</span> <span class="n">W_mm</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span>
+<span class="n">res</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">R_mean</span><span class="p">,</span> <span class="n">R_std</span><span class="p">,</span> <span class="n">warnings</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">analyse_tlm</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+<span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">warnings</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;!&#39;</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+</code></pre></div>
+<p>It expects one CSV per contact spacing, with the spacing in the file name
+(<code>sample1_2.5mm.csv</code> → 2.5 mm), and one or more voltage/current column
+pairs per file — one pair per repeated structure at that spacing. Exporters
+that write a third column between sweeps are handled with
+<code>columns_per_sweep=3</code>.</p>
+<p>Before trusting any number that comes out:</p>
+<ul>
+<li>check every I-V curve is straight (<code>th.iv_linearity</code>, section 11);</li>
+<li>confirm the measurement was four-wire, or subtract the probe resistance;</li>
+<li>measure <span class="arithmatex">\(W\)</span> rather than taking it from the mask;</li>
+<li>read the validity report, and compare <span class="arithmatex">\(L_T\)</span> with your smallest spacing.</li>
+</ul>
+<p>The cell below runs the whole chain end to end on the synthetic dataset,
+which is the same three lines you would run on your own folder.</p>
+<div class="highlight"><pre><span></span><code><span class="n">res_final</span><span class="p">,</span> <span class="n">L_f</span><span class="p">,</span> <span class="n">R_f</span><span class="p">,</span> <span class="n">S_f</span><span class="p">,</span> <span class="n">warnings</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">analyse_tlm</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">res_final</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">validity report:&quot;</span><span class="p">,</span> <span class="s2">&quot;nothing flagged&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">warnings</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">warnings</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  ! &quot;</span> <span class="o">+</span> <span class="n">w</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>TLM extraction
+--------------
+  fit           R_T = 24.98 * L + 1.282   (R^2 = 1.00000)
+  contact width W       = 10 mm
+  sheet resist. R_S     = 249.8 +/- 0.18 ohm/sq
+  contact res.  R_C     = 0.6409 +/- 0.013 ohm
+  transfer len. L_T     = 0.02566 +/- 0.00053 mm
+  contact resy. rho_C   = 0.001645 +/- 6.8e-05 ohm.cm^2
+
+validity report: nothing flagged
+</code></pre></div>
+<h2 id="summary-of-equations">Summary of equations<a class="headerlink" href="#summary-of-equations" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Equation</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1)</td>
+<td><span class="arithmatex">\(R_T = 2R_m + 2R_C + R_{\text{semi}}\)</span></td>
+<td>what a two-probe measurement contains</td>
+</tr>
+<tr>
+<td>(2)</td>
+<td><span class="arithmatex">\(R_S = \rho/t\)</span></td>
+<td>sheet resistance of a thin layer</td>
+</tr>
+<tr>
+<td>(3)</td>
+<td><span class="arithmatex">\(R_{\text{semi}} = R_S L/W\)</span></td>
+<td>resistance of <span class="arithmatex">\(L/W\)</span> squares</td>
+</tr>
+<tr>
+<td>(4)</td>
+<td><span class="arithmatex">\(R_T = R_S L/W + 2R_C\)</span></td>
+<td>linear TLM relation</td>
+</tr>
+<tr>
+<td>(5)</td>
+<td><span class="arithmatex">\(\rho_C = R_C A_{\text{eff}}\)</span></td>
+<td>definition of specific contact resistivity</td>
+</tr>
+<tr>
+<td>(6)</td>
+<td><span class="arithmatex">\(I(x) = I_0 e^{-x/L_T}\)</span></td>
+<td>current decay under the contact</td>
+</tr>
+<tr>
+<td>(7)</td>
+<td><span class="arithmatex">\(L_T = \sqrt{\rho_C/R_S}\)</span></td>
+<td>transfer length</td>
+</tr>
+<tr>
+<td>(8)</td>
+<td><span class="arithmatex">\(A_{\text{eff}} = L_T W\)</span></td>
+<td>effective current-transfer area</td>
+</tr>
+<tr>
+<td>(9)</td>
+<td><span class="arithmatex">\(R_C = \rho_C/(L_T W) = R_S L_T/W\)</span></td>
+<td>resistance of one contact</td>
+</tr>
+<tr>
+<td>(10)</td>
+<td><span class="arithmatex">\(R_T = (R_S/W)(L + 2L_T)\)</span></td>
+<td>the TLM equation</td>
+</tr>
+<tr>
+<td>(11)</td>
+<td><span class="arithmatex">\(I = V/R_T + I_{\text{offset}}\)</span></td>
+<td>reducing one sweep to one resistance</td>
+</tr>
+<tr>
+<td>(12)</td>
+<td><span class="arithmatex">\(R_S = mW\)</span></td>
+<td>sheet resistance from the slope</td>
+</tr>
+<tr>
+<td>(13)</td>
+<td><span class="arithmatex">\(R_C = b/2\)</span></td>
+<td>contact resistance from the intercept</td>
+</tr>
+<tr>
+<td>(14)</td>
+<td><span class="arithmatex">\(L_T = b/(2m)\)</span></td>
+<td>transfer length from both</td>
+</tr>
+<tr>
+<td>(15)</td>
+<td><span class="arithmatex">\(\rho_C = R_S L_T^2\)</span></td>
+<td>the number to report</td>
+</tr>
+<tr>
+<td>(16)</td>
+<td><span class="arithmatex">\(\Delta\rho_C/\rho_C \approx 2\,\Delta b/b\)</span></td>
+<td>why the intercept dominates the error</td>
+</tr>
+</tbody>
+</table>
+<p>Symbols: <span class="arithmatex">\(L\)</span> contact spacing, <span class="arithmatex">\(W\)</span> contact width, <span class="arithmatex">\(d\)</span> contact length,
+<span class="arithmatex">\(m\)</span> fitted slope, <span class="arithmatex">\(b\)</span> fitted intercept.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

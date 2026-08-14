@@ -1,0 +1,1418 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Interactive notebooks explaining the physical principles behind semiconductor characterisation techniques.">
+      
+      
+      
+      
+        <link rel="prev" href="../tlm/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>External Quantum Efficiency (EQE) - Semiconductor Characterisation Techniques</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#external-quantum-efficiency-eqe-of-solar-cells" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Semiconductor Characterisation Techniques" class="md-header__button md-logo" aria-label="Semiconductor Characterisation Techniques" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Semiconductor Characterisation Techniques
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              External Quantum Efficiency (EQE)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/YOUR_GH_USERNAME/semicon_characterisation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    semicon_characterisation
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Semiconductor Characterisation Techniques" class="md-nav__button md-logo" aria-label="Semiconductor Characterisation Techniques" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Semiconductor Characterisation Techniques
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/YOUR_GH_USERNAME/semicon_characterisation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    semicon_characterisation
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tlm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transfer Length Method (TLM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    External Quantum Efficiency (EQE)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    External Quantum Efficiency (EQE)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-photons-and-the-useful-wavelength-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Photons and the useful wavelength range
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-absorption-how-deep-does-the-light-go" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Absorption: how deep does the light go?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-where-do-the-incident-photons-go" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Where do the incident photons go?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-generation-and-collection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Generation and collection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-external-quantum-efficiency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. External quantum efficiency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-internal-quantum-efficiency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Internal quantum efficiency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-spectral-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Spectral response
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-short-circuit-current-from-eqe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Short-circuit current from EQE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-reading-a-real-device-front-vs-rear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Reading a real device: front vs rear
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-measuring-spectral-response-and-the-dsr-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Measuring: spectral response and the DSR method
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-from-relative-to-absolute-eqe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. From relative to absolute EQE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-linearity-and-bias-ramp-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Linearity and bias-ramp measurements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-assumptions-and-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Assumptions and limitations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-of-equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary of equations
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<!-- GENERATED FILE - do not edit. Produced from EQE/eqe_analysis.ipynb by tools/nb2md.py (see tools/build_docs.sh). -->
+
+<div class="admonition info">
+<p class="admonition-title">Generated from a Jupyter notebook</p>
+<p>This page is <code>EQE/eqe_analysis.ipynb</code>, rendered with its stored outputs.
+<a href="https://colab.research.google.com/github/YOUR_GH_USERNAME/semicon_characterisation/blob/main/EQE/eqe_analysis.ipynb">Run it in Google Colab</a> or
+<a href="https://github.com/YOUR_GH_USERNAME/semicon_characterisation/blob/main/EQE/eqe_analysis.ipynb">view the notebook on GitHub</a>.</p>
+</div>
+<h1 id="external-quantum-efficiency-eqe-of-solar-cells">External Quantum Efficiency (EQE) of Solar Cells<a class="headerlink" href="#external-quantum-efficiency-eqe-of-solar-cells" title="Permanent link">&para;</a></h1>
+<p>A solar cell turns photons into current. How well it does that depends
+strongly on the <strong>wavelength</strong> of the light. Quantum efficiency
+measurements resolve the conversion process wavelength by wavelength, and
+are the standard way to find out <em>where</em> in a cell the losses happen.</p>
+<p>This notebook builds the technique up from first principles:</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Question answered</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1-2</td>
+<td>How deep does light of a given wavelength go?</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Where do the incident photons end up?</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Which generated carriers survive to be collected?</td>
+</tr>
+<tr>
+<td>5</td>
+<td>What is EQE, and what shapes its curve?</td>
+</tr>
+<tr>
+<td>6</td>
+<td>What is IQE, and why separate it from EQE?</td>
+</tr>
+<tr>
+<td>7</td>
+<td>What is spectral response, and why is it what we measure?</td>
+</tr>
+<tr>
+<td>8</td>
+<td>How do we get <span class="arithmatex">\(J_{sc}\)</span> back out of an EQE curve?</td>
+</tr>
+<tr>
+<td>9</td>
+<td>What do EQE and IQE reveal about a real device?</td>
+</tr>
+<tr>
+<td>10-12</td>
+<td>How is the measurement actually performed and calibrated?</td>
+</tr>
+</tbody>
+</table>
+<div align="center">
+   <img src="../assets/fig_cell_structure.jpg" width="620">
+</div>
+
+<p>Equations are numbered (1), (2), ... and referred to by those numbers
+throughout. All physics functions live in
+<a href="https://github.com/YOUR_GH_USERNAME/semicon_characterisation/blob/main/EQE/eqe_helper.py"><code>eqe_helper.py</code></a>, so the notebook itself stays short;
+that module's docstrings point back to these equation numbers.</p>
+<h2 id="1-photons-and-the-useful-wavelength-range">1. Photons and the useful wavelength range<a class="headerlink" href="#1-photons-and-the-useful-wavelength-range" title="Permanent link">&para;</a></h2>
+<p>The energy carried by one photon is</p>
+<div class="arithmatex">\[
+E_{\text{phot}}(\lambda) = \frac{hc}{\lambda} \tag{1}
+\]</div>
+<p>with <span class="arithmatex">\(h\)</span> the Planck constant and <span class="arithmatex">\(c\)</span> the speed of light. Short wavelength
+= high energy.</p>
+<p>To generate an electron-hole pair, a photon needs at least the bandgap
+energy <span class="arithmatex">\(E_g\)</span>. For silicon <span class="arithmatex">\(E_g = 1.12\ \text{eV}\)</span>, which by (1)
+corresponds to <span class="arithmatex">\(\lambda \approx 1107\ \text{nm}\)</span> — the <strong>absorption
+edge</strong>. Longer wavelengths pass through without generating carriers, so
+the useful range for a silicon cell is roughly 300-1200 nm.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">eqe_helper</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">eh</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">})</span>
+
+<span class="n">wavelength_nm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">280</span><span class="p">,</span> <span class="mi">1250</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">E_photon</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">photon_energy_eV</span><span class="p">(</span><span class="n">wavelength_nm</span><span class="p">)</span>      <span class="c1"># Eq. (1)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wavelength_nm</span><span class="p">,</span> <span class="n">E_photon</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">eh</span><span class="o">.</span><span class="n">LAMBDA_G_NM</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Si absorption edge, </span><span class="si">{</span><span class="n">eh</span><span class="o">.</span><span class="n">LAMBDA_G_NM</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1"> nm&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">eh</span><span class="o">.</span><span class="n">EG_SI_EV</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$E_g$ = 1.12 eV&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Photon energy (eV)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p><img alt="Output 1" src="../assets/nb/eqe_analysis_01.png" /></p>
+<h2 id="2-absorption-how-deep-does-the-light-go">2. Absorption: how deep does the light go?<a class="headerlink" href="#2-absorption-how-deep-does-the-light-go" title="Permanent link">&para;</a></h2>
+<p>Inside the semiconductor, the photon flux decays exponentially with depth
+<span class="arithmatex">\(z\)</span> (Lambert-Beer):</p>
+<div class="arithmatex">\[
+\Phi(\lambda, z) = \Phi_0(\lambda)\, e^{-\alpha(\lambda)\, z} \tag{2}
+\]</div>
+<p>where <span class="arithmatex">\(\alpha(\lambda)\)</span> is the <strong>absorption coefficient</strong>. The depth at
+which the flux has fallen to <span class="arithmatex">\(1/e \approx 37\%\)</span> is the <strong>absorption
+length</strong>:</p>
+<div class="arithmatex">\[
+L_\alpha(\lambda) = \frac{1}{\alpha(\lambda)} \tag{3}
+\]</div>
+<p>Silicon has an <em>indirect</em> bandgap: absorption near <span class="arithmatex">\(E_g\)</span> needs phonon
+assistance, so <span class="arithmatex">\(\alpha\)</span> decreases gradually over hundreds of nm rather
+than cutting off sharply. Across 300-1200 nm it varies by <strong>six orders of
+magnitude</strong> — the single most important fact behind the shape of an EQE
+curve.</p>
+<div class="highlight"><pre><span></span><code><span class="n">wl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">280</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">alpha_silicon</span><span class="p">(</span><span class="n">wl</span><span class="p">)</span>             <span class="c1"># 1/cm</span>
+<span class="n">L_alpha</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">absorption_length_um</span><span class="p">(</span><span class="n">wl</span><span class="p">)</span>    <span class="c1"># um, Eq. (3)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">))</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">eh</span><span class="o">.</span><span class="n">LAMBDA_G_NM</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\alpha$ (cm$^{-1}$)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Absorption coefficient&#39;</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">L_alpha</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">160</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;-.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C3&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;cell thickness, 160 $</span><span class="se">\\</span><span class="s1">mu$m&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">eh</span><span class="o">.</span><span class="n">LAMBDA_G_NM</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$L_\alpha$ ($\mu$m)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Absorption length&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">wl_i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">300</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">1100</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">wl_i</span><span class="si">:</span><span class="s2">5d</span><span class="si">}</span><span class="s2"> nm : L_alpha = </span><span class="si">{</span><span class="n">eh</span><span class="o">.</span><span class="n">absorption_length_um</span><span class="p">(</span><span class="n">wl_i</span><span class="p">)</span><span class="si">:</span><span class="s2">10.3f</span><span class="si">}</span><span class="s2"> um&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>  300 nm : L_alpha =      0.010 um
+  500 nm : L_alpha =      1.000 um
+  800 nm : L_alpha =     25.000 um
+ 1000 nm : L_alpha =    294.118 um
+ 1100 nm : L_alpha =   1666.667 um
+</code></pre></div>
+<p><img alt="Output 2" src="../assets/nb/eqe_analysis_02.png" /></p>
+<p>Read the right-hand plot against the cell thickness line:</p>
+<ul>
+<li><strong>300 nm</strong>: <span class="arithmatex">\(L_\alpha \approx 0.01\ \mu\text{m}\)</span>. All the light is
+  absorbed in the first few tens of nm — inside the coating and emitter,
+  right at the front surface.</li>
+<li><strong>800 nm</strong>: <span class="arithmatex">\(L_\alpha \approx 25\ \mu\text{m}\)</span>. Absorbed comfortably
+  inside the base, well away from both surfaces. This is the cell's
+  sweet spot.</li>
+<li><strong>1100 nm</strong>: <span class="arithmatex">\(L_\alpha \gg W\)</span>. Most light crosses the whole cell and
+  reaches the rear, where it may escape or be reflected back.</li>
+</ul>
+<p>So <strong>wavelength selects depth</strong>, and depth decides which loss mechanism
+the carriers will meet. That is what makes a wavelength-resolved
+measurement so diagnostic.</p>
+<h2 id="3-where-do-the-incident-photons-go">3. Where do the incident photons go?<a class="headerlink" href="#3-where-do-the-incident-photons-go" title="Permanent link">&para;</a></h2>
+<p>Before any carrier physics, some photons never reach the absorber at all.
+Of the light arriving at the cell, a fraction <span class="arithmatex">\(R\)</span> is <strong>reflected</strong>, and a
+fraction <span class="arithmatex">\(A_{\text{ext}}\)</span> is <strong>parasitically absorbed</strong> in layers that
+generate no usable current (the anti-reflection coating, the metal
+fingers, the heavily doped emitter). What is left is transmitted into the
+absorber — the <strong>external transmission</strong>:</p>
+<div class="arithmatex">\[
+T_{\text{ext}}(\lambda) = 1 - R(\lambda) - A_{\text{ext}}(\lambda) \tag{4}
+\]</div>
+<div align="center">
+   <img src="../assets/fig_optical_losses.jpg" width="640">
+</div>
+
+<p>This split is the reason two different efficiencies are needed. One
+counts carriers per <em>incident</em> photon (EQE, Section 5); the other counts
+carriers per photon that <em>got in</em> (IQE, Section 6). Keeping them apart is
+what lets you tell an optical problem from an electrical one.</p>
+<div class="highlight"><pre><span></span><code><span class="n">wl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+
+<span class="n">R</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">arc_reflectance</span><span class="p">(</span><span class="n">wl</span><span class="p">)</span>                  <span class="c1"># front-surface reflectance</span>
+<span class="n">T_ext</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">external_transmission</span><span class="p">(</span><span class="n">wl</span><span class="p">)</span>        <span class="c1"># Eq. (4)</span>
+<span class="n">A_ext</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">R</span> <span class="o">-</span> <span class="n">T_ext</span>                       <span class="c1"># parasitic absorption</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">6.5</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">stackplot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">A_ext</span><span class="p">,</span> <span class="n">T_ext</span><span class="p">,</span>
+              <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;$R$  (reflected)&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;$A_</span><span class="si">{ext}</span><span class="s1">$  (parasitically absorbed)&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;$T_</span><span class="si">{ext}</span><span class="s1">$  (into the absorber)&#39;</span><span class="p">],</span>
+              <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#d95f02&#39;</span><span class="p">,</span> <span class="s1">&#39;#7570b3&#39;</span><span class="p">,</span> <span class="s1">&#39;#1b9e77&#39;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.85</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Fraction of incident photons&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">wl</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">wl</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">framealpha</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Photon accounting at the front surface&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p><img alt="Output 3" src="../assets/nb/eqe_analysis_03.png" /></p>
+<p>The anti-reflection coating works best near its design wavelength
+(~600 nm here), where almost everything gets in. In the UV, parasitic
+absorption dominates. At long wavelengths reflection rises again, because
+weakly absorbed light reaches the rear surface and can leave the cell.</p>
+<h2 id="4-generation-and-collection">4. Generation and collection<a class="headerlink" href="#4-generation-and-collection" title="Permanent link">&para;</a></h2>
+<p>Every absorbed photon generates one electron-hole pair. The generation
+rate per unit depth follows by differentiating (2):</p>
+<div class="arithmatex">\[
+g(\lambda, z) = -\frac{d\Phi}{dz}
+= \big(1-R(\lambda)\big)\,\Phi_0(\lambda)\,\alpha(\lambda)\, e^{-\alpha(\lambda) z} \tag{5}
+\]</div>
+<p>Generating a carrier is not enough — it must reach a contact before it
+recombines. A minority carrier with diffusion constant <span class="arithmatex">\(D\)</span> and lifetime
+<span class="arithmatex">\(\tau\)</span> travels, on average, a <strong>diffusion length</strong></p>
+<div class="arithmatex">\[
+L = \sqrt{D\tau} \tag{6}
+\]</div>
+<p>before recombining. The probability that a carrier generated at depth <span class="arithmatex">\(z\)</span>
+is actually collected is the <strong>collection efficiency</strong>:</p>
+<div class="arithmatex">\[
+\eta_c(z) = \cosh\!\left(\frac{z}{L}\right)
+          - \frac{L}{L_{\text{eff}}}\,\sinh\!\left(\frac{z}{L}\right) \tag{7}
+\]</div>
+<div class="arithmatex">\[
+L_{\text{eff}} = L\,
+\frac{S\sinh(W/L) + D\cosh(W/L)}{S\cosh(W/L) + D\sinh(W/L)} \tag{8}
+\]</div>
+<p>where <span class="arithmatex">\(W\)</span> is the base thickness and <span class="arithmatex">\(S\)</span> the <strong>rear surface recombination
+velocity</strong>. Two knobs matter: a longer <span class="arithmatex">\(L\)</span> (better bulk material) and a
+smaller <span class="arithmatex">\(S\)</span> (better rear passivation) both raise <span class="arithmatex">\(\eta_c\)</span> deep in the
+cell.</p>
+<div align="center">
+   <img src="../assets/fig_collection_efficiency.jpg" width="620">
+</div>
+
+<div class="highlight"><pre><span></span><code><span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>   <span class="c1"># depth, um</span>
+<span class="n">W</span> <span class="o">=</span> <span class="mf">160.0</span>                       <span class="c1"># base thickness, um</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">))</span>
+
+<span class="c1"># Generation profiles, Eq. (5) - log scale, decay lengths span decades</span>
+<span class="k">for</span> <span class="n">wl_i</span><span class="p">,</span> <span class="n">style</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="mi">400</span><span class="p">,</span> <span class="mi">700</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">]):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">eh</span><span class="o">.</span><span class="n">generation_profile</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">wl_i</span><span class="p">),</span> <span class="n">style</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">wl_i</span><span class="si">}</span><span class="s1"> nm&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Depth, $z$ ($\mu$m)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$g(z)$ (normalised, $\mu$m$^{-1}$)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Where carriers are generated, Eq. (5)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+
+<span class="c1"># Collection efficiency, Eq. (7), for different diffusion lengths</span>
+<span class="k">for</span> <span class="n">L_i</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">W</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="n">W</span><span class="p">,</span> <span class="mf">4.0</span> <span class="o">*</span> <span class="n">W</span><span class="p">]:</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">eh</span><span class="o">.</span><span class="n">collection_efficiency</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">L_um</span><span class="o">=</span><span class="n">L_i</span><span class="p">,</span> <span class="n">W_um</span><span class="o">=</span><span class="n">W</span><span class="p">,</span> <span class="n">S_cm_s</span><span class="o">=</span><span class="mf">100.0</span><span class="p">),</span>
+                 <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;L = </span><span class="si">{</span><span class="n">L_i</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">W</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> W&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Depth, $z$ ($\mu$m)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\eta_c(z)$&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Whether they survive, Eq. (7)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">);</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;L = sqrt(D*tau) for D=27 cm^2/s, tau=100 us : &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">eh</span><span class="o">.</span><span class="n">diffusion_length_um</span><span class="p">(</span><span class="mf">27.0</span><span class="p">,</span><span class="w"> </span><span class="mf">100.0</span><span class="p">)</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> um   [Eq. (6)]&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>L = sqrt(D*tau) for D=27 cm^2/s, tau=100 us : 520 um   [Eq. (6)]
+</code></pre></div>
+<p><img alt="Output 4" src="../assets/nb/eqe_analysis_04.png" /></p>
+<p>Put the two panels together and the whole technique follows: blue
+light generates carriers where <span class="arithmatex">\(\eta_c\)</span> is high but the front losses are
+worst; red light generates them deep, where <span class="arithmatex">\(\eta_c\)</span> has decayed.</p>
+<h2 id="5-external-quantum-efficiency">5. External quantum efficiency<a class="headerlink" href="#5-external-quantum-efficiency" title="Permanent link">&para;</a></h2>
+<p><strong>EQE is the fraction of incident photons that produce a collected
+electron.</strong> Weighting the generation profile (5) by the collection
+efficiency (7) and integrating over the cell thickness:</p>
+<div class="arithmatex">\[
+\text{EQE}(\lambda) = \frac{1}{\Phi_0(\lambda)}\int_0^{W} g(\lambda,z)\,\eta_c(z)\, dz \tag{9}
+\]</div>
+<p>EQE is dimensionless and lies between 0 and 1. It is "external" because
+it is referenced to the photons arriving at the cell — reflection losses
+included, and therefore counted against the cell.</p>
+<div class="highlight"><pre><span></span><code><span class="n">wl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+
+<span class="n">eqe</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">eqe_spectrum</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">W_um</span><span class="o">=</span><span class="mf">160.0</span><span class="p">,</span> <span class="n">L_um</span><span class="o">=</span><span class="mf">250.0</span><span class="p">,</span> <span class="n">S_cm_s</span><span class="o">=</span><span class="mf">100.0</span><span class="p">)</span>   <span class="c1"># Eq. (9)</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">arc_reflectance</span><span class="p">(</span><span class="n">wl</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">4.2</span><span class="p">))</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">eqe</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;EQE&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">);</span> <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;EQE&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">);</span> <span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelcolor</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">)</span>
+
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Reflectance $R$&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">);</span> <span class="n">ax2</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelcolor</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;front-surface</span><span class="se">\n</span><span class="s1">losses&#39;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mi">350</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;plateau:</span><span class="se">\n</span><span class="s1">near-ideal&#39;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;weak absorption</span><span class="se">\n</span><span class="s1">+ rear losses&#39;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mi">1080</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;EQE and reflectance of the modelled cell&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p><img alt="Output 5" src="../assets/nb/eqe_analysis_05.png" /></p>
+<p>The three regions of every silicon EQE curve:</p>
+<ul>
+<li><strong>UV / blue (300-450 nm)</strong>: light is absorbed in the coating and
+  emitter. Parasitic absorption and heavy front recombination make EQE
+  low. This region reports on <strong>front surface quality</strong>.</li>
+<li><strong>Plateau (450-900 nm)</strong>: light enters easily (ARC minimum) and is
+  absorbed in the base, where collection is efficient. EQE approaches its
+  maximum. The gentle slope tracks the rise in <span class="arithmatex">\(R\)</span>.</li>
+<li><strong>Near-IR (&gt;950 nm)</strong>: <span class="arithmatex">\(\alpha\)</span> collapses, so light is absorbed deep,
+  weakly, or not at all. This region reports on <strong>bulk lifetime and rear
+  surface</strong>.</li>
+</ul>
+<h2 id="6-internal-quantum-efficiency">6. Internal quantum efficiency<a class="headerlink" href="#6-internal-quantum-efficiency" title="Permanent link">&para;</a></h2>
+<p>EQE mixes two very different things: how much light <em>gets into</em> the cell
+(optics) and how well the carriers it makes are <em>collected</em>
+(electronics). A cell can have poor EQE simply because its coating
+reflects badly — with nothing wrong electrically.</p>
+<p><strong>IQE removes the optical loss.</strong> It counts collected electrons per
+photon that actually entered the cell:</p>
+<div class="arithmatex">\[
+\text{IQE}(\lambda) = \frac{\text{EQE}(\lambda)}{1 - R(\lambda)} \tag{10}
+\]</div>
+<p>This is the form used in practice, because <span class="arithmatex">\(R(\lambda)\)</span> is measured with
+a spectrophotometer alongside the EQE. Accounting for parasitic
+absorption as well, using <span class="arithmatex">\(T_{\text{ext}}\)</span> from (4), gives the more
+complete statement:</p>
+<div class="arithmatex">\[
+\text{EQE}(\lambda) = T_{\text{ext}}(\lambda)\cdot \text{IQE}(\lambda) \tag{11}
+\]</div>
+<p>In words: <strong>EQE = (how much light gets in) × (how well it is converted).</strong>
+Since <span class="arithmatex">\(R \ge 0\)</span>, IQE is always <span class="arithmatex">\(\ge\)</span> EQE, and an ideal absorber region
+would give <span class="arithmatex">\(\text{IQE} \to 1\)</span> wherever the light is fully absorbed.</p>
+<div class="highlight"><pre><span></span><code><span class="n">wl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+
+<span class="c1"># Same cell, two different anti-reflection coatings (an OPTICAL change only)</span>
+<span class="n">R_good</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">arc_reflectance</span><span class="p">(</span><span class="n">wl</span><span class="p">)</span>                              <span class="c1"># good ARC</span>
+<span class="n">R_poor</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">arc_reflectance</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">R_min</span><span class="o">=</span><span class="mf">0.18</span><span class="p">,</span> <span class="n">R_uv</span><span class="o">=</span><span class="mf">0.42</span><span class="p">)</span>       <span class="c1"># poor ARC</span>
+
+<span class="n">eqe_good</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">eqe_spectrum</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">L_um</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">S_cm_s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">reflectance</span><span class="o">=</span><span class="n">R_good</span><span class="p">)</span>
+<span class="n">eqe_poor</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">eqe_spectrum</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">L_um</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">S_cm_s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">reflectance</span><span class="o">=</span><span class="n">R_poor</span><span class="p">)</span>
+
+<span class="n">iqe_good</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">iqe_from_eqe</span><span class="p">(</span><span class="n">eqe_good</span><span class="p">,</span> <span class="n">R_good</span><span class="p">)</span>     <span class="c1"># Eq. (10)</span>
+<span class="n">iqe_poor</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">iqe_from_eqe</span><span class="p">(</span><span class="n">eqe_poor</span><span class="p">,</span> <span class="n">R_poor</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">eqe_good</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;good ARC&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">eqe_poor</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;poor ARC&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;EQE  — differs&#39;</span><span class="p">);</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Efficiency&#39;</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">iqe_good</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;good ARC&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">iqe_poor</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;poor ARC&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;IQE — identical&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jsc, good ARC : </span><span class="si">{</span><span class="n">eh</span><span class="o">.</span><span class="n">jsc_from_eqe</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span><span class="w"> </span><span class="n">eqe_good</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mA/cm^2&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jsc, poor ARC : </span><span class="si">{</span><span class="n">eh</span><span class="o">.</span><span class="n">jsc_from_eqe</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span><span class="w"> </span><span class="n">eqe_poor</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mA/cm^2&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;IQE curves agree:&quot;</span><span class="p">,</span>
+      <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">iqe_good</span><span class="p">[</span><span class="n">wl</span> <span class="o">&gt;</span> <span class="mi">350</span><span class="p">],</span> <span class="n">iqe_poor</span><span class="p">[</span><span class="n">wl</span> <span class="o">&gt;</span> <span class="mi">350</span><span class="p">],</span> <span class="n">equal_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Jsc, good ARC : 27.43 mA/cm^2
+Jsc, poor ARC : 23.48 mA/cm^2
+IQE curves agree: True
+</code></pre></div>
+<p><img alt="Output 6" src="../assets/nb/eqe_analysis_06.png" /></p>
+<p>This is the whole point of IQE. Two cells, electrically identical,
+differing only in their coating: their <strong>EQE curves differ and their
+<span class="arithmatex">\(J_{sc}\)</span> differs</strong>, but their <strong>IQE curves lie exactly on top of each
+other</strong>. So:</p>
+<ul>
+<li>EQE dropped <strong>and</strong> IQE dropped <span class="arithmatex">\(\rightarrow\)</span> an <strong>electrical</strong> problem
+  (lifetime, passivation, junction).</li>
+<li>EQE dropped but IQE unchanged <span class="arithmatex">\(\rightarrow\)</span> an <strong>optical</strong> problem
+  (coating, texture, shading).</li>
+</ul>
+<p>EQE tells you <em>how much current you get</em>; IQE tells you <em>why</em>.</p>
+<h2 id="7-spectral-response">7. Spectral response<a class="headerlink" href="#7-spectral-response" title="Permanent link">&para;</a></h2>
+<p>EQE is defined per <em>photon</em>, but an instrument measures <strong>current</strong> for a
+given <strong>optical power</strong>. That ratio is the <strong>spectral response</strong> <span class="arithmatex">\(SR\)</span>
+(also called spectral responsivity), in amps per watt:</p>
+<div class="arithmatex">\[
+SR(\lambda) = \text{EQE}(\lambda)\,\frac{q\lambda}{hc} \tag{12}
+\]</div>
+<div class="arithmatex">\[
+\text{EQE}(\lambda) = SR(\lambda)\,\frac{hc}{q\lambda} \tag{13}
+\]</div>
+<p>The two carry the same information; (13) is just (12) rearranged. The
+factor <span class="arithmatex">\(\lambda\)</span> comes straight from (1): one watt of red light contains
+more photons than one watt of blue light, so the same EQE yields more
+current per watt at longer wavelength. This is why <span class="arithmatex">\(SR\)</span> keeps rising
+across the plateau where EQE is flat, and why <strong><span class="arithmatex">\(SR\)</span> — not EQE — is the
+quantity a measurement actually produces</strong> (Section 10).</p>
+<div class="highlight"><pre><span></span><code><span class="n">wl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="n">eqe</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">eqe_spectrum</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">L_um</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">S_cm_s</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">SR</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">spectral_response_from_eqe</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">eqe</span><span class="p">)</span>      <span class="c1"># Eq. (12), A/W</span>
+
+<span class="c1"># The ideal limit: EQE = 1 at every wavelength</span>
+<span class="n">SR_ideal</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">spectral_response_from_eqe</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">wl</span><span class="p">))</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">eqe</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;EQE&#39;</span><span class="p">);</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;EQE — per photon&#39;</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">SR</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;this cell&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">SR_ideal</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;ideal, EQE = 1&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Spectral response (A/W)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;SR — per watt, Eq. (12)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Eq. (13) recovers EQE exactly</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Round trip SR -&gt; EQE exact:&quot;</span><span class="p">,</span>
+      <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">eh</span><span class="o">.</span><span class="n">eqe_from_spectral_response</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">SR</span><span class="p">),</span> <span class="n">eqe</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Round trip SR -&gt; EQE exact: True
+</code></pre></div>
+<p><img alt="Output 7" src="../assets/nb/eqe_analysis_07.png" /></p>
+<p>The dotted line is the physical ceiling: a perfect cell converting
+every photon still has an <span class="arithmatex">\(SR\)</span> that rises linearly with <span class="arithmatex">\(\lambda\)</span>, purely
+because of (1). Comparing a measured <span class="arithmatex">\(SR\)</span> against that ceiling is another
+way of reading EQE.</p>
+<h2 id="8-short-circuit-current-from-eqe">8. Short-circuit current from EQE<a class="headerlink" href="#8-short-circuit-current-from-eqe" title="Permanent link">&para;</a></h2>
+<p>EQE also predicts a headline device parameter. Each wavelength
+contributes photons at a rate <span class="arithmatex">\(\Phi_0(\lambda)\)</span> (the spectral photon flux
+of the illumination), of which a fraction EQE becomes collected charge:</p>
+<div class="arithmatex">\[
+J_{sc} = q \int \Phi_0(\lambda)\,\text{EQE}(\lambda)\, d\lambda \tag{14}
+\]</div>
+<p>Under standard test conditions, <span class="arithmatex">\(\Phi_0\)</span> is the AM1.5G reference
+spectrum. Equation (14) is what makes EQE quantitative rather than merely
+diagnostic — and it is also the basis of the calibration in Section 11.</p>
+<div class="highlight"><pre><span></span><code><span class="n">wl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">eqe</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">eqe_spectrum</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">L_um</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">S_cm_s</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">spectrum</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">am15g_simplified</span><span class="p">(</span><span class="n">wl</span><span class="p">)</span>                       <span class="c1"># W/(m^2 nm)</span>
+<span class="n">phi0</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">photon_flux_spectral</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">spectrum</span><span class="p">)</span>             <span class="c1"># photons/(s m^2 nm)</span>
+<span class="n">contribution</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">Q</span> <span class="o">*</span> <span class="n">phi0</span> <span class="o">*</span> <span class="n">eqe</span> <span class="o">*</span> <span class="mf">1e-1</span>                  <span class="c1"># mA/cm^2 per nm</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">4.2</span><span class="p">))</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">contribution</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span>
+                 <span class="n">label</span><span class="o">=</span><span class="s1">&#39;collected (contributes to $J_</span><span class="si">{sc}</span><span class="s1">$)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">eh</span><span class="o">.</span><span class="n">Q</span> <span class="o">*</span> <span class="n">phi0</span> <span class="o">*</span> <span class="mf">1e-1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span>
+         <span class="n">label</span><span class="o">=</span><span class="s1">&#39;available in the spectrum&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Current density per nm (mA cm$^{-2}$ nm$^{-1}$)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Which wavelengths supply the current, Eq. (14)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">jsc</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">jsc_from_eqe</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">eqe</span><span class="p">)</span>                           <span class="c1"># Eq. (14)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jsc over 300-1200 nm = </span><span class="si">{</span><span class="n">jsc</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mA/cm^2&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Jsc over 300-1200 nm = 27.43 mA/cm^2
+</code></pre></div>
+<p><img alt="Output 8" src="../assets/nb/eqe_analysis_08.png" /></p>
+<p>The gap between the two curves is the loss budget, resolved by
+wavelength — the area you would recover by fixing each loss mechanism.</p>
+<h2 id="9-reading-a-real-device-front-vs-rear">9. Reading a real device: front vs rear<a class="headerlink" href="#9-reading-a-real-device-front-vs-rear" title="Permanent link">&para;</a></h2>
+<p>Because wavelength selects depth (Section 2), the two ends of the curve
+interrogate opposite faces of the cell:</p>
+<table>
+<thead>
+<tr>
+<th>Region</th>
+<th>Probes</th>
+<th>Sensitive to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>300-500 nm</td>
+<td>front surface, emitter</td>
+<td>coating, front passivation, emitter doping</td>
+</tr>
+<tr>
+<td>500-900 nm</td>
+<td>base (bulk)</td>
+<td>overall optics, bulk quality</td>
+</tr>
+<tr>
+<td>900-1200 nm</td>
+<td>deep base, rear surface</td>
+<td>diffusion length <span class="arithmatex">\(L\)</span>, rear velocity <span class="arithmatex">\(S\)</span>, rear reflector</td>
+</tr>
+</tbody>
+</table>
+<p>A standard illustration is the aluminium back-surface-field (Al-BSF) cell
+versus the passivated emitter and rear cell (PERC). PERC adds a
+dielectric rear layer that both passivates the rear (lower <span class="arithmatex">\(S\)</span>) and
+reflects weakly absorbed light back into the cell. The difference should
+appear <strong>only in the near-IR</strong>.</p>
+<div align="center">
+   <img src="../assets/fig_albsf_vs_perc.jpg" width="640">
+</div>
+
+<div class="highlight"><pre><span></span><code><span class="n">wl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+
+<span class="c1"># Al-BSF-like: shorter diffusion length, fast rear recombination</span>
+<span class="n">eqe_albsf</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">eqe_spectrum</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">W_um</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">L_um</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">S_cm_s</span><span class="o">=</span><span class="mf">1000.0</span><span class="p">)</span>
+<span class="c1"># PERC-like: longer diffusion length, well-passivated rear</span>
+<span class="n">eqe_perc</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">eqe_spectrum</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">W_um</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">L_um</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">S_cm_s</span><span class="o">=</span><span class="mf">20.0</span><span class="p">)</span>
+
+<span class="n">R</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">arc_reflectance</span><span class="p">(</span><span class="n">wl</span><span class="p">)</span>                    <span class="c1"># identical front optics</span>
+<span class="n">iqe_albsf</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">iqe_from_eqe</span><span class="p">(</span><span class="n">eqe_albsf</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span>     <span class="c1"># Eq. (10)</span>
+<span class="n">iqe_perc</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">iqe_from_eqe</span><span class="p">(</span><span class="n">eqe_perc</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">eqe_albsf</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Al-BSF-like&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">eqe_perc</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;PERC-like&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;EQE&#39;</span><span class="p">);</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Efficiency&#39;</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">iqe_albsf</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Al-BSF-like&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">iqe_perc</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;PERC-like&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;IQE — gap is electrical&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mi">900</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.9&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jsc Al-BSF-like : </span><span class="si">{</span><span class="n">eh</span><span class="o">.</span><span class="n">jsc_from_eqe</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span><span class="w"> </span><span class="n">eqe_albsf</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mA/cm^2&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jsc PERC-like   : </span><span class="si">{</span><span class="n">eh</span><span class="o">.</span><span class="n">jsc_from_eqe</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span><span class="w"> </span><span class="n">eqe_perc</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mA/cm^2&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Jsc Al-BSF-like : 26.37 mA/cm^2
+Jsc PERC-like   : 28.37 mA/cm^2
+</code></pre></div>
+<p><img alt="Output 9" src="../assets/nb/eqe_analysis_09.png" /></p>
+<p>The curves are indistinguishable below about 700 nm and separate
+progressively across the shaded near-IR band — exactly the signature of a
+rear-side difference.
+Because both cells here share the same front optics, IQE separates by the
+same amount as EQE, confirming the cause is electrical rather than
+optical.</p>
+<h2 id="10-measuring-spectral-response-and-the-dsr-method">10. Measuring: spectral response and the DSR method<a class="headerlink" href="#10-measuring-spectral-response-and-the-dsr-method" title="Permanent link">&para;</a></h2>
+<p>EQE cannot be measured directly. What an instrument measures is current
+per unit optical power, i.e. <span class="arithmatex">\(SR\)</span> from Section 7, which is then converted
+to EQE with (13).</p>
+<p>One further complication: a solar cell's response can depend on how
+strongly it is already illuminated, because recombination is
+injection-dependent. Measuring a dark cell with a dim monochromatic beam
+would not describe the cell at operating conditions. The standard
+solution is a <strong>differential</strong> measurement:</p>
+<ol>
+<li>Hold the cell under steady white <strong>bias light</strong>, setting a realistic
+   injection level.</li>
+<li>Add a small, chopped <strong>monochromatic</strong> beam of wavelength <span class="arithmatex">\(\lambda\)</span>.</li>
+<li>Recover the resulting small AC current with a lock-in amplifier.</li>
+</ol>
+<p>The measured quantity is the <strong>differential spectral responsivity</strong>:</p>
+<div class="arithmatex">\[
+\tilde{s}(\lambda, E_{\text{bias}})
+= \frac{\Delta j_{sc}(\lambda)}{\Delta E_\lambda(\lambda)} \tag{15}
+\]</div>
+<div align="center">
+   <img src="../assets/fig_measurement_setup.jpg" width="660">
+</div>
+
+<p>The absolute scale of <span class="arithmatex">\(\Delta E_\lambda\)</span> is not known from the instrument
+alone, so a <strong>reference cell</strong> of known responsivity is measured under
+the same conditions and the unknown gain factors divide out — but only up
+to one constant, which Section 11 fixes.</p>
+<div class="highlight"><pre><span></span><code><span class="n">wl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+<span class="n">eqe_true</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">eqe_spectrum</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">W_um</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">L_um</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">S_cm_s</span><span class="o">=</span><span class="mf">100.0</span><span class="p">)</span>
+
+<span class="c1"># A realistic measurement: noise, plus an unknown overall calibration</span>
+<span class="c1"># scale factor left over from the reference-cell comparison, Eq. (15)</span>
+<span class="n">s_measured</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">synthetic_dsr_measurement</span><span class="p">(</span>
+    <span class="n">wl</span><span class="p">,</span> <span class="n">eqe_true</span><span class="p">,</span> <span class="n">noise_level</span><span class="o">=</span><span class="mf">0.015</span><span class="p">,</span> <span class="n">calibration_scale</span><span class="o">=</span><span class="mf">1.08</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">eqe_relative</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">eqe_from_spectral_response</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">s_measured</span><span class="p">)</span>   <span class="c1"># Eq. (13)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">s_measured</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Measured $</span><span class="se">\\</span><span class="s1">tilde</span><span class="si">{s}</span><span class="s1">$ (A/W)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;What the instrument records, Eq. (15)&#39;</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">eqe_true</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;true EQE&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">eqe_relative</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;relative EQE&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;EQE&#39;</span><span class="p">);</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;After converting with Eq. (13)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p><img alt="Output 10" src="../assets/nb/eqe_analysis_10.png" /></p>
+<h2 id="11-from-relative-to-absolute-eqe">11. From relative to absolute EQE<a class="headerlink" href="#11-from-relative-to-absolute-eqe" title="Permanent link">&para;</a></h2>
+<p>The converted curve has the right <em>shape</em> but the wrong <em>scale</em> — note
+that it exceeds 1, which is unphysical. The remaining unknown constant is
+removed by requiring that the EQE reproduce an independently measured
+short-circuit current, via (14):</p>
+<div class="arithmatex">\[
+f_{sc} = \frac{J_{sc,\text{exp}}}{J_{sc,\text{calc}}},
+\qquad
+\text{EQE}_{\text{abs}}(\lambda) = f_{sc}\cdot \text{EQE}_{\text{rel}}(\lambda) \tag{16}
+\]</div>
+<p>where <span class="arithmatex">\(J_{sc,\text{exp}}\)</span> comes from a solar simulator measurement and
+<span class="arithmatex">\(J_{sc,\text{calc}}\)</span> from integrating the relative EQE against the
+reference spectrum. A well-calibrated setup gives <span class="arithmatex">\(f_{sc}\)</span> close to 1 —
+the synthetic data below carries a deliberate 8% miscalibration, which
+(16) removes. A value far from 1 signals a measurement problem rather
+than a property of the cell.</p>
+<div class="highlight"><pre><span></span><code><span class="n">jsc_calc</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">jsc_from_eqe</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">eqe_relative</span><span class="p">)</span>      <span class="c1"># Eq. (14)</span>
+
+<span class="c1"># Independent solar-simulator measurement of the same cell</span>
+<span class="n">jsc_exp</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">jsc_from_eqe</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">eqe_true</span><span class="p">)</span>
+
+<span class="n">f_sc</span> <span class="o">=</span> <span class="n">jsc_exp</span> <span class="o">/</span> <span class="n">jsc_calc</span>                          <span class="c1"># Eq. (16)</span>
+<span class="n">eqe_absolute</span> <span class="o">=</span> <span class="n">f_sc</span> <span class="o">*</span> <span class="n">eqe_relative</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">6.8</span><span class="p">,</span> <span class="mf">4.2</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">eqe_true</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;true EQE&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">eqe_relative</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
+         <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;relative ($J_</span><span class="se">{{</span><span class="s1">sc</span><span class="se">}}</span><span class="s1">$ = </span><span class="si">{</span><span class="n">jsc_calc</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> mA/cm$^2$)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wl</span><span class="p">,</span> <span class="n">eqe_absolute</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+         <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;absolute (scaled by $f_</span><span class="se">{{</span><span class="s1">sc</span><span class="se">}}</span><span class="s1">$ = </span><span class="si">{</span><span class="n">f_sc</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;EQE&#39;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Scaling to absolute EQE, Eq. (16)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jsc measured   = </span><span class="si">{</span><span class="n">jsc_exp</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mA/cm^2&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jsc calculated = </span><span class="si">{</span><span class="n">jsc_calc</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mA/cm^2&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;scaling factor = </span><span class="si">{</span><span class="n">f_sc</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Jsc measured   = 27.43 mA/cm^2
+Jsc calculated = 29.57 mA/cm^2
+scaling factor = 0.928
+</code></pre></div>
+<p><img alt="Output 11" src="../assets/nb/eqe_analysis_11.png" /></p>
+<h2 id="12-linearity-and-bias-ramp-measurements">12. Linearity and bias-ramp measurements<a class="headerlink" href="#12-linearity-and-bias-ramp-measurements" title="Permanent link">&para;</a></h2>
+<p>If a cell is perfectly <strong>linear</strong>, its differential response <span class="arithmatex">\(\tilde{s}\)</span>
+does not depend on the bias level, and a single measurement suffices.
+Real cells can deviate. The rigorous definition integrates <span class="arithmatex">\(\tilde{s}\)</span>
+over bias irradiance up to one sun:</p>
+<div class="arithmatex">\[
+s_{\text{STC}}(\lambda) = \int_0^{1000\ \text{W/m}^2}
+\tilde{s}(\lambda, E_{\text{bias}})\; dE_{\text{bias}} \tag{17}
+\]</div>
+<p>Measuring that full integral at every wavelength is slow, so simplified
+procedures use a single bias point (commonly around
+<span class="arithmatex">\(300\ \text{W/m}^2\)</span>), which approximates (17) well for typical silicon
+cells. A <strong>bias ramp</strong> — sweeping <span class="arithmatex">\(E_{\text{bias}}\)</span> at a fixed wavelength
+— is how you check whether that shortcut is valid for a given device.</p>
+<div class="highlight"><pre><span></span><code><span class="n">E_bias</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>     <span class="c1"># W/m^2</span>
+<span class="n">s_stc</span> <span class="o">=</span> <span class="mf">0.42</span>                            <span class="c1"># A/W at the chosen wavelength</span>
+
+<span class="n">s_linear</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">bias_ramp_dsr</span><span class="p">(</span><span class="n">E_bias</span><span class="p">,</span> <span class="n">s_stc</span><span class="p">,</span> <span class="n">nonlinearity</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">s_nonlin</span> <span class="o">=</span> <span class="n">eh</span><span class="o">.</span><span class="n">bias_ramp_dsr</span><span class="p">(</span><span class="n">E_bias</span><span class="p">,</span> <span class="n">s_stc</span><span class="p">,</span> <span class="n">nonlinearity</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">6.8</span><span class="p">,</span> <span class="mf">4.2</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">E_bias</span><span class="p">,</span> <span class="n">s_linear</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;linear cell&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">E_bias</span><span class="p">,</span> <span class="n">s_nonlin</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;nonlinear cell&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;single-point simplification&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;one sun (STC)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Bias irradiance, $E_</span><span class="si">{bias}</span><span class="s1">$ (W/m$^2$)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\tilde</span><span class="si">{s}</span><span class="s1">$ (A/W)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Bias ramp at a fixed wavelength, Eq. (17)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">dev</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="n">s_nonlin</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">E_bias</span> <span class="o">-</span> <span class="mi">300</span><span class="p">))]</span> <span class="o">/</span> <span class="n">s_nonlin</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Nonlinear cell: measuring at 300 W/m^2 instead of 1000 W/m^2 &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;misestimates SR by </span><span class="si">{</span><span class="n">dev</span><span class="si">:</span><span class="s2">+.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Nonlinear cell: measuring at 300 W/m^2 instead of 1000 W/m^2 misestimates SR by -4.3%
+</code></pre></div>
+<p><img alt="Output 12" src="../assets/nb/eqe_analysis_12.png" /></p>
+<p>A flat line means the shortcut is safe. A sloping line means the
+single-point measurement carries a systematic error, which must either be
+corrected or reported.</p>
+<h2 id="13-assumptions-and-limitations">13. Assumptions and limitations<a class="headerlink" href="#13-assumptions-and-limitations" title="Permanent link">&para;</a></h2>
+<p>The models here are deliberately simple. They assume:</p>
+<ul>
+<li><strong>one-dimensional</strong> transport — no lateral current flow or finger
+  shading effects;</li>
+<li><strong>uniform material</strong> — constant <span class="arithmatex">\(D\)</span>, <span class="arithmatex">\(L\)</span> and doping with depth, so the
+  emitter is represented only by an empirical front-loss term;</li>
+<li>an <strong>analytic reflectance</strong> shape, not a thin-film interference
+  calculation, and no explicit light-trapping / multiple-pass optics;</li>
+<li>a <strong>coarse <span class="arithmatex">\(\alpha(\lambda)\)</span></strong> interpolation and an approximate AM1.5G
+  spectrum, adequate for shapes and trends but not for certification;</li>
+<li><strong>no series resistance</strong> or injection-dependent recombination beyond
+  the illustrative bias-ramp model of (17).</li>
+</ul>
+<p>They are sufficient to explain and interpret the shape of an EQE curve,
+which is the purpose here. Quantitative device work needs tabulated
+optical constants, the standard reference spectrum, and a numerical
+device simulator.</p>
+<h2 id="summary-of-equations">Summary of equations<a class="headerlink" href="#summary-of-equations" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Equation</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1)</td>
+<td><span class="arithmatex">\(E_{\text{phot}} = hc/\lambda\)</span></td>
+<td>photon energy</td>
+</tr>
+<tr>
+<td>(2)</td>
+<td><span class="arithmatex">\(\Phi = \Phi_0 e^{-\alpha z}\)</span></td>
+<td>Lambert-Beer absorption</td>
+</tr>
+<tr>
+<td>(3)</td>
+<td><span class="arithmatex">\(L_\alpha = 1/\alpha\)</span></td>
+<td>absorption length</td>
+</tr>
+<tr>
+<td>(4)</td>
+<td><span class="arithmatex">\(T_{\text{ext}} = 1 - R - A_{\text{ext}}\)</span></td>
+<td>light that reaches the absorber</td>
+</tr>
+<tr>
+<td>(5)</td>
+<td><span class="arithmatex">\(g = (1-R)\Phi_0\alpha e^{-\alpha z}\)</span></td>
+<td>generation rate</td>
+</tr>
+<tr>
+<td>(6)</td>
+<td><span class="arithmatex">\(L = \sqrt{D\tau}\)</span></td>
+<td>diffusion length</td>
+</tr>
+<tr>
+<td>(7)</td>
+<td><span class="arithmatex">\(\eta_c = \cosh(z/L) - (L/L_{\text{eff}})\sinh(z/L)\)</span></td>
+<td>collection efficiency</td>
+</tr>
+<tr>
+<td>(8)</td>
+<td><span class="arithmatex">\(L_{\text{eff}} = L\,\frac{S\sinh + D\cosh}{S\cosh + D\sinh}\)</span></td>
+<td>effective diffusion length</td>
+</tr>
+<tr>
+<td>(9)</td>
+<td><span class="arithmatex">\(\text{EQE} = \frac{1}{\Phi_0}\int_0^W g\,\eta_c\,dz\)</span></td>
+<td>external quantum efficiency</td>
+</tr>
+<tr>
+<td>(10)</td>
+<td><span class="arithmatex">\(\text{IQE} = \text{EQE}/(1-R)\)</span></td>
+<td>internal quantum efficiency</td>
+</tr>
+<tr>
+<td>(11)</td>
+<td><span class="arithmatex">\(\text{EQE} = T_{\text{ext}}\cdot\text{IQE}\)</span></td>
+<td>optics × electronics</td>
+</tr>
+<tr>
+<td>(12)</td>
+<td><span class="arithmatex">\(SR = \text{EQE}\;q\lambda/hc\)</span></td>
+<td>spectral response</td>
+</tr>
+<tr>
+<td>(13)</td>
+<td><span class="arithmatex">\(\text{EQE} = SR\;hc/q\lambda\)</span></td>
+<td>conversion back to EQE</td>
+</tr>
+<tr>
+<td>(14)</td>
+<td><span class="arithmatex">\(J_{sc} = q\int \Phi_0\,\text{EQE}\,d\lambda\)</span></td>
+<td>short-circuit current</td>
+</tr>
+<tr>
+<td>(15)</td>
+<td><span class="arithmatex">\(\tilde{s} = \Delta j_{sc}/\Delta E_\lambda\)</span></td>
+<td>differential spectral responsivity</td>
+</tr>
+<tr>
+<td>(16)</td>
+<td><span class="arithmatex">\(f_{sc} = J_{sc,\text{exp}}/J_{sc,\text{calc}}\)</span></td>
+<td>absolute scaling factor</td>
+</tr>
+<tr>
+<td>(17)</td>
+<td><span class="arithmatex">\(s_{\text{STC}} = \int_0^{1000} \tilde{s}\,dE_{\text{bias}}\)</span></td>
+<td>responsivity at STC</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
