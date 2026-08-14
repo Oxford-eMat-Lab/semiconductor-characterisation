@@ -1,0 +1,41 @@
+site_name: Semiconductor Characterisation Techniques
+site_description: Interactive notebooks explaining the physical principles behind semiconductor characterisation techniques.
+repo_url: https://github.com/YOUR_GH_USERNAME/semicon_characterisation
+repo_name: semicon_characterisation
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - toc.integrate
+
+nav:
+  - Home: index.md
+  - Transfer Length Method (TLM): tlm.md
+  - External Quantum Efficiency (EQE): eqe.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - toc:
+      permalink: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
