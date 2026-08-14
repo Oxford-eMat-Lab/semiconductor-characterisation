@@ -5,9 +5,6 @@ semiconductor / solar-cell characterisation techniques — starting from
 the basics and working through the equations, with short code examples
 and plots of model data.
 
-> Replace `YOUR_GH_USERNAME` below with the actual GitHub username/org
-> once this repository is pushed to GitHub, so the Colab and docs links
-> resolve correctly.
 
 ## Techniques
 
@@ -20,7 +17,7 @@ and plots of model data.
 
 Key equations and background for every technique are also published as a
 static site (built with MkDocs):
-**https://YOUR_GH_USERNAME.github.io/semicon_characterisation/**
+**https://oxford-emat-lab.github.io/semicon_characterisation/**
 
 The site is built from [`docs/`](docs/) and deployed automatically by
 [`.github/workflows/deploy-docs.yml`](.github/workflows/deploy-docs.yml)
@@ -186,27 +183,6 @@ cell.
 The GitHub Actions workflow regenerates the pages before deploying, so the
 site cannot drift from the notebooks.
 
-### Why not the mkdocs-jupyter plugin?
-
-[`mkdocs-jupyter`](https://github.com/danielfrg/mkdocs-jupyter) renders
-`.ipynb` files directly and is a perfectly good option. To use it instead,
-add it to `requirements-docs.txt` and set:
-
-```yaml
-plugins:
-  - mkdocs-jupyter:
-      include_source: true
-      execute: false          # notebooks are already executed
-
-nav:
-  - External Quantum Efficiency (EQE): EQE/eqe_analysis.ipynb
-```
-
-The converter is used here for two reasons. It produces plain markdown, so
-the site does not depend on the plugin API — relevant because MkDocs 2.0 is
-slated to drop plugin support entirely (which would also affect the
-Material theme). And it needs nothing beyond the Python standard library,
-so the docs build has no extra dependency.
 
 ## Figures
 
