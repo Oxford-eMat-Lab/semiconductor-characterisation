@@ -152,15 +152,22 @@ measurement so diagnostic.
 ## 3. Where do the incident photons go?
 
 Before any carrier physics, some photons never reach the absorber at all.
-Of the light arriving at the cell, a fraction $R$ is **reflected**, and a
-fraction $A_{\text{ext}}$ is **parasitically absorbed** in layers that
-generate no usable current (the anti-reflection coating, the metal
-fingers, the heavily doped emitter). What is left is transmitted into the
-absorber — the **external transmission**:
+Of the light arriving at the cell:
+
+- a fraction $R_{\text{ext}}$ is **reflected** straight back out — this is
+  the external reflectance you measure with a spectrophotometer;
+- a fraction $A_{\text{ext}}$ is **parasitically absorbed**, meaning
+  absorbed somewhere that generates no collectable current: the
+  anti-reflection coating, the metal fingers, the heavily doped emitter;
+- what remains is transmitted into the absorber. That fraction is the
+  **external transmission**:
 
 $$
-T_{\text{ext}}(\lambda) = 1 - R(\lambda) - A_{\text{ext}}(\lambda) \tag{4}
+T_{\text{ext}}(\lambda) = 1 - R_{\text{ext}}(\lambda) - A_{\text{ext}}(\lambda) \tag{4}
 $$
+
+The three add to one by construction — every incident photon is
+reflected, parasitically absorbed, or delivered to the absorber.
 
 <div align="center">
    <img src="../assets/fig_optical_losses.jpg" width="640">
@@ -174,13 +181,16 @@ what lets you tell an optical problem from an electrical one.
 ```python
 wl = np.linspace(300, 1200, 300)
 
-R = eh.arc_reflectance(wl)                  # front-surface reflectance
-T_ext = eh.external_transmission(wl)        # Eq. (4)
-A_ext = 1 - R - T_ext                       # parasitic absorption
+R_ext = eh.arc_reflectance(wl)              # external reflectance
+A_ext = eh.parasitic_absorptance(wl)        # lost in coating / emitter
+T_ext = eh.external_transmission(wl)        # Eq. (4): 1 - R_ext - A_ext
+
+print("R_ext + A_ext + T_ext = 1 everywhere:",
+      np.allclose(R_ext + A_ext + T_ext, 1.0))
 
 plt.figure(figsize=(6.5, 4))
-plt.stackplot(wl, R, A_ext, T_ext,
-              labels=['$R$  (reflected)',
+plt.stackplot(wl, R_ext, A_ext, T_ext,
+              labels=['$R_{ext}$  (reflected)',
                       '$A_{ext}$  (parasitically absorbed)',
                       '$T_{ext}$  (into the absorber)'],
               colors=['#d95f02', '#7570b3', '#1b9e77'], alpha=0.85)
@@ -189,6 +199,10 @@ plt.ylim(0, 1); plt.xlim(wl.min(), wl.max())
 plt.legend(loc='center', fontsize=9, framealpha=0.95)
 plt.title('Photon accounting at the front surface')
 plt.tight_layout(); plt.show()
+```
+
+```text
+R_ext + A_ext + T_ext = 1 everywhere: True
 ```
 
 ![Output 3](assets/nb/eqe_analysis_03.png)
@@ -303,8 +317,8 @@ ax1.set_xlabel('Wavelength (nm)'); ax1.set_ylabel('EQE', color='C0')
 ax1.set_ylim(0, 1.05); ax1.tick_params(axis='y', labelcolor='C0')
 
 ax2 = ax1.twinx()
-ax2.plot(wl, R, color='C1', ls='--', label='Reflectance $R$')
-ax2.set_ylabel('Reflectance', color='C1')
+ax2.plot(wl, R, color='C1', ls='--', label='Reflectance $R_{ext}$')
+ax2.set_ylabel('Reflectance $R_{ext}$', color='C1')
 ax2.set_ylim(0, 1.05); ax2.tick_params(axis='y', labelcolor='C1')
 
 ax1.annotate('front-surface\nlosses', xy=(350, 0.25), fontsize=9, ha='center')
@@ -324,7 +338,7 @@ The three regions of every silicon EQE curve:
   low. This region reports on **front surface quality**.
 - **Plateau (450-900 nm)**: light enters easily (ARC minimum) and is
   absorbed in the base, where collection is efficient. EQE approaches its
-  maximum. The gentle slope tracks the rise in $R$.
+  maximum. The gentle slope tracks the rise in $R_{\text{ext}}$.
 - **Near-IR (>950 nm)**: $\alpha$ collapses, so light is absorbed deep,
   weakly, or not at all. This region reports on **bulk lifetime and rear
   surface**.
@@ -337,24 +351,44 @@ EQE mixes two very different things: how much light *gets into* the cell
 reflects badly — with nothing wrong electrically.
 
 **IQE removes the optical loss.** It counts collected electrons per
-photon that actually entered the cell:
+photon that *entered the absorber* — so the reference population is not
+the incident light but $T_{\text{ext}}$ from (4):
 
 $$
-\text{IQE}(\lambda) = \frac{\text{EQE}(\lambda)}{1 - R(\lambda)} \tag{10}
-$$
-
-This is the form used in practice, because $R(\lambda)$ is measured with
-a spectrophotometer alongside the EQE. Accounting for parasitic
-absorption as well, using $T_{\text{ext}}$ from (4), gives the more
-complete statement:
-
-$$
-\text{EQE}(\lambda) = T_{\text{ext}}(\lambda)\cdot \text{IQE}(\lambda) \tag{11}
+\text{EQE}(\lambda) = T_{\text{ext}}(\lambda)\cdot \text{IQE}(\lambda)
+\tag{10}
 $$
 
 In words: **EQE = (how much light gets in) × (how well it is converted).**
-Since $R \ge 0$, IQE is always $\ge$ EQE, and an ideal absorber region
-would give $\text{IQE} \to 1$ wherever the light is fully absorbed.
+Rearranged, that is the definition of IQE:
+
+$$
+\text{IQE}(\lambda) = \frac{\text{EQE}(\lambda)}{T_{\text{ext}}(\lambda)}
+= \frac{\text{EQE}(\lambda)}{1 - R_{\text{ext}}(\lambda) - A_{\text{ext}}(\lambda)}
+\tag{11}
+$$
+
+**A caution about the form you will usually see.** In the laboratory
+$R_{\text{ext}}$ is easy to measure and $A_{\text{ext}}$ is not, so IQE is
+almost always evaluated as
+
+$$
+\text{IQE}(\lambda) \simeq \frac{\text{EQE}(\lambda)}{1 - R_{\text{ext}}(\lambda)}
+$$
+
+This is **not** the same quantity as (11); it is (11) with
+$A_{\text{ext}}$ set to zero, i.e. it charges every non-reflected photon
+to the absorber. Where the front layers absorb little the two agree, and
+across most of the spectrum they do. In the UV and blue, where the light
+is stopped inside the coating and emitter, $A_{\text{ext}}$ is large,
+$1 - R_{\text{ext}} > T_{\text{ext}}$, and the approximation therefore
+**under-estimates** IQE. The code below shows the size of that gap.
+
+Whichever form you use, say which one — a great deal of published
+disagreement between "IQE" curves is really disagreement about the
+denominator. Since $T_{\text{ext}} \le 1$, IQE is always $\ge$ EQE, and a
+perfectly collecting absorber gives $\text{IQE} \to 1$ wherever the light
+is fully absorbed.
 
 ```python
 wl = np.linspace(300, 1200, 300)
@@ -366,8 +400,14 @@ R_poor = eh.arc_reflectance(wl, R_min=0.18, R_uv=0.42)       # poor ARC
 eqe_good = eh.eqe_spectrum(wl, L_um=250, S_cm_s=100, reflectance=R_good)
 eqe_poor = eh.eqe_spectrum(wl, L_um=250, S_cm_s=100, reflectance=R_poor)
 
-iqe_good = eh.iqe_from_eqe(eqe_good, R_good)     # Eq. (10)
-iqe_poor = eh.iqe_from_eqe(eqe_poor, R_poor)
+# Eq. (11): divide by T_ext, not by (1 - R_ext)
+A_good = eh.parasitic_absorptance(wl, reflectance=R_good)
+A_poor = eh.parasitic_absorptance(wl, reflectance=R_poor)
+iqe_good = eh.iqe_from_eqe(eqe_good, R_good, A_good)
+iqe_poor = eh.iqe_from_eqe(eqe_poor, R_poor, A_poor)
+
+# the common laboratory approximation, for comparison
+iqe_approx = eh.iqe_from_eqe(eqe_good, R_good)
 
 fig, axes = plt.subplots(1, 2, figsize=(11, 4), sharey=True)
 
@@ -377,22 +417,29 @@ axes[0].set_title('EQE  — differs'); axes[0].set_ylabel('Efficiency')
 
 axes[1].plot(wl, iqe_good, lw=2, label='good ARC')
 axes[1].plot(wl, iqe_poor, lw=3, ls='--', label='poor ARC')
-axes[1].set_title('IQE — identical')
+axes[1].plot(wl, iqe_approx, lw=1.5, ls=':', color='C3',
+             label='approx.  EQE/(1$-R_{ext}$)')
+axes[1].set_title('IQE — identical (and the approximation)')
 
 for ax in axes:
-    ax.set_xlabel('Wavelength (nm)'); ax.set_ylim(0, 1.05); ax.legend(fontsize=9)
+    ax.set_xlabel('Wavelength (nm)'); ax.set_ylim(0, 1.05); ax.legend(fontsize=8)
 plt.tight_layout(); plt.show()
 
 print(f"Jsc, good ARC : {eh.jsc_from_eqe(wl, eqe_good):.2f} mA/cm^2")
 print(f"Jsc, poor ARC : {eh.jsc_from_eqe(wl, eqe_poor):.2f} mA/cm^2")
 print("IQE curves agree:",
       np.allclose(iqe_good[wl > 350], iqe_poor[wl > 350], equal_nan=True))
+i400 = np.argmin(abs(wl - 400))
+print(f"at 400 nm: IQE = {iqe_good[i400]:.3f}, "
+      f"approximation = {iqe_approx[i400]:.3f} "
+      f"({100*(1 - iqe_approx[i400]/iqe_good[i400]):.0f}% low)")
 ```
 
 ```text
-Jsc, good ARC : 27.43 mA/cm^2
-Jsc, poor ARC : 23.48 mA/cm^2
+Jsc, good ARC : 28.97 mA/cm^2
+Jsc, poor ARC : 24.82 mA/cm^2
 IQE curves agree: True
+at 400 nm: IQE = 1.000, approximation = 0.848 (15% low)
 ```
 
 ![Output 6](assets/nb/eqe_analysis_06.png)
@@ -509,7 +556,7 @@ print(f"Jsc over 300-1200 nm = {jsc:.2f} mA/cm^2")
 ```
 
 ```text
-Jsc over 300-1200 nm = 27.43 mA/cm^2
+Jsc over 300-1200 nm = 28.97 mA/cm^2
 ```
 
 ![Output 8](assets/nb/eqe_analysis_08.png)
@@ -547,8 +594,9 @@ eqe_albsf = eh.eqe_spectrum(wl, W_um=160, L_um=150, S_cm_s=1000.0)
 eqe_perc = eh.eqe_spectrum(wl, W_um=160, L_um=250, S_cm_s=20.0)
 
 R = eh.arc_reflectance(wl)                    # identical front optics
-iqe_albsf = eh.iqe_from_eqe(eqe_albsf, R)     # Eq. (10)
-iqe_perc = eh.iqe_from_eqe(eqe_perc, R)
+A = eh.parasitic_absorptance(wl, reflectance=R)
+iqe_albsf = eh.iqe_from_eqe(eqe_albsf, R, A)  # Eq. (11)
+iqe_perc = eh.iqe_from_eqe(eqe_perc, R, A)
 
 fig, axes = plt.subplots(1, 2, figsize=(11, 4), sharey=True)
 
@@ -570,8 +618,8 @@ print(f"Jsc PERC-like   : {eh.jsc_from_eqe(wl, eqe_perc):.2f} mA/cm^2")
 ```
 
 ```text
-Jsc Al-BSF-like : 26.37 mA/cm^2
-Jsc PERC-like   : 28.37 mA/cm^2
+Jsc Al-BSF-like : 27.48 mA/cm^2
+Jsc PERC-like   : 29.07 mA/cm^2
 ```
 
 ![Output 9](assets/nb/eqe_analysis_09.png)
@@ -692,8 +740,8 @@ print(f"scaling factor = {f_sc:.3f}")
 ```
 
 ```text
-Jsc measured   = 27.43 mA/cm^2
-Jsc calculated = 29.57 mA/cm^2
+Jsc measured   = 28.97 mA/cm^2
+Jsc calculated = 31.23 mA/cm^2
 scaling factor = 0.928
 ```
 
@@ -782,8 +830,8 @@ device simulator.
 | (7) | $\eta_c = \cosh(z/L) - (L/L_{\text{eff}})\sinh(z/L)$ | collection efficiency |
 | (8) | $L_{\text{eff}} = L\,\frac{S\sinh + D\cosh}{S\cosh + D\sinh}$ | effective diffusion length |
 | (9) | $\text{EQE} = \frac{1}{\Phi_0}\int_0^W g\,\eta_c\,dz$ | external quantum efficiency |
-| (10) | $\text{IQE} = \text{EQE}/(1-R)$ | internal quantum efficiency |
-| (11) | $\text{EQE} = T_{\text{ext}}\cdot\text{IQE}$ | optics × electronics |
+| (10) | $\text{EQE} = T_{\text{ext}}\cdot\text{IQE}$ | optics × electronics |
+| (11) | $\text{IQE} = \text{EQE}/T_{\text{ext}}$ | internal quantum efficiency |
 | (12) | $SR = \text{EQE}\;q\lambda/hc$ | spectral response |
 | (13) | $\text{EQE} = SR\;hc/q\lambda$ | conversion back to EQE |
 | (14) | $J_{sc} = q\int \Phi_0\,\text{EQE}\,d\lambda$ | short-circuit current |

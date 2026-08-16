@@ -192,7 +192,12 @@ def effective_diffusion_length_um(L_um, W_um, S_cm_s, D_cm2_s):
     Effective diffusion length L_eff, accounting for rear surface
     recombination velocity S, notebook Eq. (8):
 
-        L_eff = L * [S sinh(W/L) + D cosh(W/L)] / [S cosh(W/L) + D sinh(W/L)]
+        L_eff = L * [L S sinh(W/L) + D cosh(W/L)]
+                  / [L S cosh(W/L) + D sinh(W/L)]
+
+    Note the product L*S in both numerator and denominator: S has units
+    cm/s and D cm^2/s, so it is L*S - not S alone - that is commensurate
+    with D. Dropping the L makes the rear-surface term far too strong.
 
     L_um, W_um : diffusion length and cell/base thickness, in micrometres.
     S_cm_s : rear surface recombination velocity, cm/s.
@@ -201,8 +206,9 @@ def effective_diffusion_length_um(L_um, W_um, S_cm_s, D_cm2_s):
     L_cm = L_um * 1e-4
     W_cm = W_um * 1e-4
     x = W_cm / L_cm
-    num = S_cm_s * np.sinh(x) + D_cm2_s * np.cosh(x)
-    den = S_cm_s * np.cosh(x) + D_cm2_s * np.sinh(x)
+    LS = L_cm * S_cm_s                      # cm^2/s, commensurate with D
+    num = LS * np.sinh(x) + D_cm2_s * np.cosh(x)
+    den = LS * np.cosh(x) + D_cm2_s * np.sinh(x)
     L_eff_cm = L_cm * num / den
     return L_eff_cm * 1e4  # back to um
 
@@ -333,30 +339,37 @@ def arc_reflectance(wavelength_nm, R_min=0.03, lambda_min_nm=600.0,
 # ---------------------------------------------------------------------------
 # Internal quantum efficiency, notebook Eq. (10)-(11)
 # ---------------------------------------------------------------------------
-def iqe_from_eqe(eqe, reflectance):
+def iqe_from_eqe(eqe, reflectance, parasitic_absorptance=0.0):
     """
-    Internal quantum efficiency from a measured EQE and reflectance,
-    notebook Eq. (10):
+    Internal quantum efficiency from a measured EQE, notebook Eq. (10)-(11).
 
-        IQE(lambda) = EQE(lambda) / (1 - R(lambda))
+    IQE counts collected carriers per photon that **entered the absorber**,
+    so the denominator is the external transmission of Eq. (4):
 
-    IQE counts collected carriers per photon that *entered* the cell, so it
-    divides out the reflection loss and isolates the electrical behaviour
-    (absorption depth + carrier collection) from the front-surface optics.
+        T_ext = 1 - R_ext - A_ext
+        IQE   = EQE / T_ext
+
+    `parasitic_absorptance` is A_ext, the fraction absorbed in layers that
+    generate no collectable current (coating, fingers, heavily doped
+    emitter). Leaving it at 0 reduces this to the common laboratory form
+
+        IQE = EQE / (1 - R_ext)
+
+    which assumes every non-reflected photon reaches the absorber. That is
+    a good approximation over most of the spectrum, but where A_ext is
+    significant - the UV and blue, where the light is stopped in the front
+    layers - it **under-estimates** IQE, because 1 - R_ext > T_ext.
 
     eqe : EQE values (0-1).
-    reflectance : matching reflectance values (0-1), scalar or array.
-
-    Note: this common form charges all non-reflected light to the absorber.
-    Where parasitic absorption A_ext in the front layers is significant
-    (short wavelengths), use `external_transmission` and Eq. (11) instead,
-    otherwise IQE is under-estimated in the UV/blue.
+    reflectance : external reflectance R_ext (0-1), scalar or array.
+    parasitic_absorptance : A_ext (0-1), scalar or array. Default 0.
     """
     eqe = np.asarray(eqe, dtype=float)
     reflectance = np.asarray(reflectance, dtype=float)
-    denom = 1.0 - reflectance
+    parasitic_absorptance = np.asarray(parasitic_absorptance, dtype=float)
+    t_ext = 1.0 - reflectance - parasitic_absorptance
     with np.errstate(divide="ignore", invalid="ignore"):
-        iqe = np.where(denom > 1e-9, eqe / denom, np.nan)
+        iqe = np.where(t_ext > 1e-9, eqe / t_ext, np.nan)
     return iqe
 
 
@@ -365,13 +378,14 @@ def external_transmission(wavelength_nm, reflectance=None,
     """
     External transmission T_ext, notebook Eq. (4):
 
-        T_ext(lambda) = 1 - R(lambda) - A_ext(lambda)
+        T_ext(lambda) = 1 - R_ext(lambda) - A_ext(lambda)
 
-    i.e. the fraction of incident photons that actually reach the absorber,
-    after front-surface reflection R and parasitic absorption A_ext in the
-    coating / emitter. Here it is built as
-    (1 - R) * `front_surface_transmission`, consistent with the loss terms
-    used by `eqe_spectrum`, so that EQE = T_ext * IQE holds (Eq. 11).
+    i.e. the fraction of incident photons that actually reach the
+    absorber, after external reflection R_ext and parasitic absorption
+    A_ext in the coating / emitter. Here it is built as
+    (1 - R_ext) * `front_surface_transmission`, which is exactly the pair
+    of loss terms `eqe_spectrum` applies, so EQE = T_ext * IQE holds
+    identically for the modelled cell.
     """
     wavelength_nm = np.atleast_1d(np.asarray(wavelength_nm, dtype=float))
     if reflectance is None:
@@ -384,22 +398,42 @@ def external_transmission(wavelength_nm, reflectance=None,
     return np.clip((1.0 - R) * T_front, 0.0, 1.0)
 
 
-def iqe_spectrum(wavelength_nm, **kwargs):
+def parasitic_absorptance(wavelength_nm, reflectance=None,
+                           front_edge_nm=380.0, front_width_nm=45.0):
     """
-    Internal quantum efficiency of the modelled cell, computed as
-    EQE / (1 - R) (notebook Eq. 10) using the same model parameters as
-    `eqe_spectrum` (which accepts W_um, L_um, S_cm_s, D_cm2_s,
-    reflectance, front_edge_nm, front_width_nm).
+    A_ext, the parasitically absorbed fraction of the incident photons,
+    obtained from Eq. (4) as A_ext = 1 - R_ext - T_ext.
     """
     wavelength_nm = np.atleast_1d(np.asarray(wavelength_nm, dtype=float))
-    reflectance = kwargs.get("reflectance", None)
     if reflectance is None:
         R = arc_reflectance(wavelength_nm)
     else:
         R = np.broadcast_to(np.asarray(reflectance, dtype=float),
                             wavelength_nm.shape)
+    T_ext = external_transmission(wavelength_nm, reflectance=R,
+                                   front_edge_nm=front_edge_nm,
+                                   front_width_nm=front_width_nm)
+    return np.clip(1.0 - R - T_ext, 0.0, 1.0)
+
+
+def iqe_spectrum(wavelength_nm, **kwargs):
+    """
+    Internal quantum efficiency of the modelled cell: EQE / T_ext
+    (notebook Eq. 10-11), using the same model parameters as
+    `eqe_spectrum` (W_um, L_um, S_cm_s, D_cm2_s, reflectance,
+    front_edge_nm, front_width_nm).
+
+    Because `eqe_spectrum` applies exactly the losses that make up T_ext,
+    this returns the absorbed-and-collected fraction of the light that
+    entered the absorber - independent of the coating, as it should be.
+    """
+    wavelength_nm = np.atleast_1d(np.asarray(wavelength_nm, dtype=float))
+    t_kwargs = {k: kwargs[k] for k in ("reflectance", "front_edge_nm",
+                                       "front_width_nm") if k in kwargs}
+    T_ext = external_transmission(wavelength_nm, **t_kwargs)
     eqe = eqe_spectrum(wavelength_nm, **kwargs)
-    return iqe_from_eqe(eqe, R)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        return np.where(T_ext > 1e-9, eqe / T_ext, np.nan)
 
 
 # ---------------------------------------------------------------------------

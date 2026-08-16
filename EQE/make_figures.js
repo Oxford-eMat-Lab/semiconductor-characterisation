@@ -161,7 +161,7 @@ function textBox(slide, text, x, y, w, h, fill, opts = {}) {
 
   // reflected
   arrow(s, 2.68, 1.88, 0.62, -0.78, C.refl, 3);
-  label(s, "reflected  R", 3.35, 1.02, 1.6, { fontSize: 11.5, bold: true, color: C.refl });
+  label(s, "reflected  R" + "ₑₓₜ", 3.35, 1.02, 1.6, { fontSize: 11.5, bold: true, color: C.refl });
 
   // parasitic absorption (front layers)
   box(s, 1.0, ySurf, 6.2, 0.34, "E5E1F2", { line: C.para });
@@ -170,7 +170,7 @@ function textBox(slide, text, x, y, w, h, fill, opts = {}) {
 
   // transmitted into absorber
   arrow(s, 2.35, ySurf + 0.36, 0, 0.42, C.trans, 3);
-  label(s, "T" + "ₑₓₜ" + " = 1 − R − A" + "ₑₓₜ",
+  label(s, "T" + "ₑₓₜ" + " = 1 − R" + "ₑₓₜ" + " − A" + "ₑₓₜ",
     2.55, ySurf + 0.40, 2.2, { fontSize: 11.5, bold: true, color: C.trans });
 
   // absorber
@@ -186,13 +186,14 @@ function textBox(slide, text, x, y, w, h, fill, opts = {}) {
 
   // definitions panel
   box(s, 7.35, 2.80, 2.25, 1.87, C.panel, { line: "C7CDD4" });
-  label(s, "EQE  =  collected / incident", 7.48, 2.94, 2.05, { fontSize: 10.5, bold: true });
-  label(s, "IQE  =  collected / entered", 7.48, 3.28, 2.05, { fontSize: 10.5, bold: true });
-  plainLine(s, 7.48, 3.60, 1.98, 0, "C7CDD4", 1);
-  label(s, "IQE = EQE / (1 − R)      (10)", 7.48, 3.72, 2.05, { fontSize: 10, color: C.muted });
-  label(s, "EQE = T" + "ₑₓₜ" + " × IQE        (11)", 7.48, 4.06, 2.05, { fontSize: 10, color: C.muted });
-  label(s, "optics × electronics", 7.48, 4.38, 2.05, { fontSize: 10, italic: true, color: C.muted });
-
+  label(s, "EQE  =  collected / incident", 7.48, 2.92, 2.05, { fontSize: 10.5, bold: true });
+  label(s, "IQE  =  collected / entered", 7.48, 3.20, 2.05, { fontSize: 10.5, bold: true });
+  plainLine(s, 7.48, 3.50, 1.98, 0, "C7CDD4", 1);
+  label(s, "EQE = T" + "ₑₓₜ" + " × IQE        (10)", 7.48, 3.60, 2.05, { fontSize: 10, color: C.muted });
+  label(s, "IQE = EQE / T" + "ₑₓₜ" + "         (11)", 7.48, 3.90, 2.05, { fontSize: 10, color: C.muted });
+  label(s, "≈ EQE / (1 − R" + "ₑₓₜ" + ") only", 7.60, 4.18, 2.05, { fontSize: 9.5, color: C.muted, italic: true });
+  label(s, "where A" + "ₑₓₜ" + " ≈ 0", 7.60, 4.40, 2.05, { fontSize: 9.5, color: C.muted, italic: true });
+  
   label(s,
     "EQE counts every incident photon, so it is charged for reflection. " +
     "IQE divides that out and reports only how well the cell converts the light it actually receives.",
