@@ -240,13 +240,41 @@ $$
 
 $$
 L_{\text{eff}} = L\,
-\frac{S\sinh(W/L) + D\cosh(W/L)}{S\cosh(W/L) + D\sinh(W/L)} \tag{8}
+\frac{LS\sinh(W/L) + D\cosh(W/L)}{LS\cosh(W/L) + D\sinh(W/L)} \tag{8}
 $$
 
 where $W$ is the base thickness and $S$ the **rear surface recombination
 velocity**. Two knobs matter: a longer $L$ (better bulk material) and a
 smaller $S$ (better rear passivation) both raise $\eta_c$ deep in the
 cell.
+
+Note that $S$ has units of cm/s and $D$ of cm$^2$/s, so it is the product
+$LS$ — not $S$ alone — that is commensurate with $D$ in (8).
+
+### These are approximations
+
+Equations (7) and (8) are the closed-form solution of the **minority-carrier
+diffusion equation** in a quasi-neutral base, and they hold only under the
+assumptions that go with it: low injection, a field-free base, constant $D$,
+$\tau$ and doping, one dimension, and all collection happening at a single
+depletion-region edge. Real cells break every one of these — there are
+built-in fields from doping gradients, injection-dependent lifetime,
+band-gap narrowing, and light trapping that makes the generation profile
+non-exponential.
+
+A quantitative answer needs a full **drift-diffusion** calculation, which
+solves Poisson's equation together with the electron and hole continuity
+equations self-consistently (PC1D, Quokka3, Sentaurus, or an equivalent
+numerical solver). That is what you would use to fit a real measurement or
+to certify a device.
+
+The closed form is kept here because it is what makes the physics legible:
+it shows explicitly that only two material parameters, $L$ and $S$, set the
+long-wavelength response, and it reproduces the correct shape and trends.
+Use it to reason about *why* a curve looks the way it does, not to extract
+numbers. The standard derivation is in any device-physics text — for
+example Sze & Ng, *Physics of Semiconductor Devices*, or Green, *Solar
+Cells: Operating Principles, Technology and System Applications*.
 
 <div align="center">
    <img src="../assets/fig_collection_efficiency.jpg" width="620">
@@ -828,7 +856,7 @@ device simulator.
 | (5) | $g = (1-R)\Phi_0\alpha e^{-\alpha z}$ | generation rate |
 | (6) | $L = \sqrt{D\tau}$ | diffusion length |
 | (7) | $\eta_c = \cosh(z/L) - (L/L_{\text{eff}})\sinh(z/L)$ | collection efficiency |
-| (8) | $L_{\text{eff}} = L\,\frac{S\sinh + D\cosh}{S\cosh + D\sinh}$ | effective diffusion length |
+| (8) | $L_{\text{eff}} = L\,\frac{LS\sinh + D\cosh}{LS\cosh + D\sinh}$ | effective diffusion length |
 | (9) | $\text{EQE} = \frac{1}{\Phi_0}\int_0^W g\,\eta_c\,dz$ | external quantum efficiency |
 | (10) | $\text{EQE} = T_{\text{ext}}\cdot\text{IQE}$ | optics × electronics |
 | (11) | $\text{IQE} = \text{EQE}/T_{\text{ext}}$ | internal quantum efficiency |
