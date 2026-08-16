@@ -36,6 +36,14 @@ throughout. All physics functions live in
 [`eqe_helper.py`](https://github.com/Oxford-eMat-Lab/semiconductor-characterisation/blob/main/EQE/eqe_helper.py), so the notebook itself stays short;
 that module's docstrings point back to these equation numbers.
 
+Sources are cited as [[1]](#ref1), [[2]](#ref2), ... and listed in the
+[References](#references) section at the end. Click a number to jump to
+the entry; each entry carries a DOI or a permanent link. The general
+treatment throughout follows the standard texts
+[[1]](#ref1)[[2]](#ref2)[[3]](#ref3)[[4]](#ref4), and the measurement
+sections follow the metrology literature and standards
+[[5]](#ref5)[[20]](#ref20)[[21]](#ref21)[[22]](#ref22).
+
 ## 1. Photons and the useful wavelength range
 
 The energy carried by one photon is
@@ -45,12 +53,12 @@ E_{\text{phot}}(\lambda) = \frac{hc}{\lambda} \tag{1}
 $$
 
 with $h$ the Planck constant and $c$ the speed of light. Short wavelength
-= high energy.
+= high energy [[1]](#ref1)[[2]](#ref2).
 
 To generate an electron-hole pair, a photon needs at least the bandgap
-energy $E_g$. For silicon $E_g = 1.12\ \text{eV}$, which by (1)
-corresponds to $\lambda \approx 1107\ \text{nm}$ — the **absorption
-edge**. Longer wavelengths pass through without generating carriers, so
+energy $E_g$. For silicon $E_g = 1.12\ \text{eV}$ at 300 K
+[[9]](#ref9), which by (1) corresponds to
+$\lambda \approx 1107\ \text{nm}$ — the **absorption edge**. Longer wavelengths pass through without generating carriers, so
 the useful range for a silicon cell is roughly 300-1200 nm.
 
 ```python
@@ -83,7 +91,8 @@ $$
 \Phi(\lambda, z) = \Phi_0(\lambda)\, e^{-\alpha(\lambda)\, z} \tag{2}
 $$
 
-where $\alpha(\lambda)$ is the **absorption coefficient**. The depth at
+where $\alpha(\lambda)$ is the **absorption coefficient**
+[[1]](#ref1)[[4]](#ref4). The depth at
 which the flux has fallen to $1/e \approx 37\%$ is the **absorption
 length**:
 
@@ -93,9 +102,13 @@ $$
 
 Silicon has an *indirect* bandgap: absorption near $E_g$ needs phonon
 assistance, so $\alpha$ decreases gradually over hundreds of nm rather
-than cutting off sharply. Across 300-1200 nm it varies by **six orders of
+than cutting off sharply — the phonon-assisted structure of the silicon
+absorption edge was resolved spectroscopically by Macfarlane *et al.*
+[[6]](#ref6). Across 300-1200 nm it varies by **six orders of
 magnitude** — the single most important fact behind the shape of an EQE
-curve.
+curve. The $\alpha(\lambda)$ values used here follow the standard
+self-consistent optical data for intrinsic silicon
+[[7]](#ref7)[[8]](#ref8).
 
 ```python
 wl = np.linspace(280, 1200, 400)
@@ -167,7 +180,10 @@ T_{\text{ext}}(\lambda) = 1 - R_{\text{ext}}(\lambda) - A_{\text{ext}}(\lambda) 
 $$
 
 The three add to one by construction — every incident photon is
-reflected, parasitically absorbed, or delivered to the absorber.
+reflected, parasitically absorbed, or delivered to the absorber. This
+decomposition, and the need to keep $A_{\text{ext}}$ separate from
+$R_{\text{ext}}$, is set out by Basore [[11]](#ref11) and in the
+measurement literature [[5]](#ref5)[[22]](#ref22).
 
 <div align="center">
    <img src="../assets/fig_optical_losses.jpg" width="640">
@@ -208,7 +224,8 @@ R_ext + A_ext + T_ext = 1 everywhere: True
 ![Output 3](assets/nb/eqe_analysis_03.png)
 
 The anti-reflection coating works best near its design wavelength
-(~600 nm here), where almost everything gets in. In the UV, parasitic
+(~600 nm here), where almost everything gets in; the design of such
+coatings for silicon cells is treated by Zhao and Green [[10]](#ref10). In the UV, parasitic
 absorption dominates. At long wavelengths reflection rises again, because
 weakly absorbed light reaches the rear surface and can leave the cell.
 
@@ -230,8 +247,9 @@ $$
 L = \sqrt{D\tau} \tag{6}
 $$
 
-before recombining. The probability that a carrier generated at depth $z$
-is actually collected is the **collection efficiency**:
+before recombining [[2]](#ref2)[[4]](#ref4). The probability that a
+carrier generated at depth $z$ is actually collected is the **collection
+efficiency** [[4]](#ref4)[[11]](#ref11):
 
 $$
 \eta_c(z) = \cosh\!\left(\frac{z}{L}\right)
@@ -244,9 +262,12 @@ L_{\text{eff}} = L\,
 $$
 
 where $W$ is the base thickness and $S$ the **rear surface recombination
-velocity**. Two knobs matter: a longer $L$ (better bulk material) and a
-smaller $S$ (better rear passivation) both raise $\eta_c$ deep in the
-cell.
+velocity**. Equation (8) is the standard effective-diffusion-length form
+obtained by imposing the finite-$S$ boundary condition at the rear
+[[4]](#ref4)[[12]](#ref12). Two knobs matter: a longer $L$ (better bulk
+material) and a smaller $S$ (better rear passivation) both raise
+$\eta_c$ deep in the cell; the routes to a low $S$ are reviewed by Aberle
+[[13]](#ref13).
 
 Note that $S$ has units of cm/s and $D$ of cm$^2$/s, so it is the product
 $LS$ — not $S$ alone — that is commensurate with $D$ in (8).
@@ -255,7 +276,8 @@ $LS$ — not $S$ alone — that is commensurate with $D$ in (8).
 
 Equations (7) and (8) are the closed-form solution of the **minority-carrier
 diffusion equation** in a quasi-neutral base, and they hold only under the
-assumptions that go with it: low injection, a field-free base, constant $D$,
+assumptions that go with it [[1]](#ref1)[[2]](#ref2)[[4]](#ref4): low
+injection, a field-free base, constant $D$,
 $\tau$ and doping, one dimension, and all collection happening at a single
 depletion-region edge. Real cells break every one of these — there are
 built-in fields from doping gradients, injection-dependent lifetime,
@@ -264,17 +286,19 @@ non-exponential.
 
 A quantitative answer needs a full **drift-diffusion** calculation, which
 solves Poisson's equation together with the electron and hole continuity
-equations self-consistently (PC1D, Quokka3, Sentaurus, or an equivalent
-numerical solver). That is what you would use to fit a real measurement or
+equations self-consistently — PC1D [[14]](#ref14)[[15]](#ref15),
+Quokka [[16]](#ref16), Sentaurus, or an equivalent numerical solver.
+Recommended input parameters for such simulations are collected in
+[[17]](#ref17). That is what you would use to fit a real measurement or
 to certify a device.
 
 The closed form is kept here because it is what makes the physics legible:
 it shows explicitly that only two material parameters, $L$ and $S$, set the
 long-wavelength response, and it reproduces the correct shape and trends.
 Use it to reason about *why* a curve looks the way it does, not to extract
-numbers. The standard derivation is in any device-physics text — for
-example Sze & Ng, *Physics of Semiconductor Devices*, or Green, *Solar
-Cells: Operating Principles, Technology and System Applications*.
+numbers. The standard derivation is given in any device-physics text —
+see Sze and Ng [[2]](#ref2), Green [[3]](#ref3), Hovel [[4]](#ref4) or
+Nelson [[1]](#ref1).
 
 <div align="center">
    <img src="../assets/fig_collection_efficiency.jpg" width="620">
@@ -331,7 +355,8 @@ $$
 
 EQE is dimensionless and lies between 0 and 1. It is "external" because
 it is referenced to the photons arriving at the cell — reflection losses
-included, and therefore counted against the cell.
+included, and therefore counted against the cell
+[[1]](#ref1)[[5]](#ref5)[[22]](#ref22).
 
 ```python
 wl = np.linspace(300, 1200, 300)
@@ -380,7 +405,8 @@ reflects badly — with nothing wrong electrically.
 
 **IQE removes the optical loss.** It counts collected electrons per
 photon that *entered the absorber* — so the reference population is not
-the incident light but $T_{\text{ext}}$ from (4):
+the incident light but $T_{\text{ext}}$ from (4)
+[[11]](#ref11)[[22]](#ref22):
 
 $$
 \text{EQE}(\lambda) = T_{\text{ext}}(\lambda)\cdot \text{IQE}(\lambda)
@@ -397,8 +423,8 @@ $$
 $$
 
 **A caution about the form you will usually see.** In the laboratory
-$R_{\text{ext}}$ is easy to measure and $A_{\text{ext}}$ is not, so IQE is
-almost always evaluated as
+$R_{\text{ext}}$ is easy to measure and $A_{\text{ext}}$ is not
+[[5]](#ref5), so IQE is almost always evaluated as
 
 $$
 \text{IQE}(\lambda) \simeq \frac{\text{EQE}(\lambda)}{1 - R_{\text{ext}}(\lambda)}
@@ -414,7 +440,8 @@ $1 - R_{\text{ext}} > T_{\text{ext}}$, and the approximation therefore
 
 Whichever form you use, say which one — a great deal of published
 disagreement between "IQE" curves is really disagreement about the
-denominator. Since $T_{\text{ext}} \le 1$, IQE is always $\ge$ EQE, and a
+denominator. Basore's extended spectral analysis [[11]](#ref11) is the
+usual reference for handling the parasitic term explicitly. Since $T_{\text{ext}} \le 1$, IQE is always $\ge$ EQE, and a
 perfectly collecting absorber gives $\text{IQE} \to 1$ wherever the light
 is fully absorbed.
 
@@ -488,7 +515,8 @@ EQE tells you *how much current you get*; IQE tells you *why*.
 
 EQE is defined per *photon*, but an instrument measures **current** for a
 given **optical power**. That ratio is the **spectral response** $SR$
-(also called spectral responsivity), in amps per watt:
+(also called spectral responsivity), in amps per watt
+[[5]](#ref5)[[20]](#ref20)[[22]](#ref22):
 
 $$
 SR(\lambda) = \text{EQE}(\lambda)\,\frac{q\lambda}{hc} \tag{12}
@@ -557,7 +585,8 @@ J_{sc} = q \int \Phi_0(\lambda)\,\text{EQE}(\lambda)\, d\lambda \tag{14}
 $$
 
 Under standard test conditions, $\Phi_0$ is the AM1.5G reference
-spectrum. Equation (14) is what makes EQE quantitative rather than merely
+spectrum, tabulated in ASTM G173 [[18]](#ref18) and IEC 60904-3
+[[19]](#ref19). Equation (14) is what makes EQE quantitative rather than merely
 diagnostic — and it is also the basis of the calibration in Section 11.
 
 ```python
@@ -604,10 +633,11 @@ interrogate opposite faces of the cell:
 | 900-1200 nm | deep base, rear surface | diffusion length $L$, rear velocity $S$, rear reflector |
 
 A standard illustration is the aluminium back-surface-field (Al-BSF) cell
-versus the passivated emitter and rear cell (PERC). PERC adds a
-dielectric rear layer that both passivates the rear (lower $S$) and
-reflects weakly absorbed light back into the cell. The difference should
-appear **only in the near-IR**.
+versus the passivated emitter and rear cell (PERC)
+[[23]](#ref23)[[24]](#ref24). PERC adds a dielectric rear layer that both
+passivates the rear (lower $S$ [[13]](#ref13)) and reflects weakly
+absorbed light back into the cell. The difference should appear **only in
+the near-IR**.
 
 <div align="center">
    <img src="../assets/fig_albsf_vs_perc.jpg" width="640">
@@ -659,6 +689,78 @@ Because both cells here share the same front optics, IQE separates by the
 same amount as EQE, confirming the cause is electrical rather than
 optical.
 
+### 9.1 Everything on one axis
+
+The quantities defined so far are all dimensionless fractions between 0
+and 1, so they can be drawn together. Doing that shows the whole chain at
+once, because (10) can be split one step further. IQE itself is a product:
+light that entered still has to be *absorbed within the cell thickness*
+before a carrier can be collected. Writing that absorbed fraction as
+$A_{\text{abs}} = 1 - e^{-\alpha W}$ gives
+
+$$
+\text{EQE}(\lambda) = \underbrace{T_{\text{ext}}}_{\text{gets in}}
+\times \underbrace{A_{\text{abs}}}_{\text{gets absorbed}}
+\times \underbrace{\eta_c}_{\text{gets collected}} \tag{18}
+$$
+
+so $\text{IQE} = A_{\text{abs}}\,\eta_c$, and $\eta_c$ here is the
+generation-weighted average of (7) over the cell — one number per
+wavelength rather than per depth. Each factor fails in a different place,
+and the plot shows where:
+
+- $R_{\text{ext}}$ and $A_{\text{ext}}$ eat the UV, then $R_{\text{ext}}$
+  rises again in the near-IR as weakly absorbed light escapes;
+- $A_{\text{abs}}$ is pinned at 1 until $\alpha$ collapses past ~900 nm,
+  then falls off a cliff — this is a **thickness and light-trapping**
+  limit, not a material-quality one;
+- $\eta_c$ decays slowly across the whole range, because longer
+  wavelengths generate carriers deeper, further from the junction.
+
+Reading the gaps vertically at any wavelength gives the loss budget of the
+cell at that wavelength.
+
+```python
+wl, W = np.linspace(300, 1200, 400), 160.0
+
+eqe = eh.eqe_spectrum(wl, W_um=W, L_um=250, S_cm_s=100)
+R = eh.arc_reflectance(wl)                                  # reflected
+A = eh.parasitic_absorptance(wl, reflectance=R)             # absorbed, not useful
+T = eh.external_transmission(wl, reflectance=R)             # Eq. (4)
+iqe = eh.iqe_from_eqe(eqe, R, A)                            # Eq. (11)
+a_abs = 1 - np.exp(-eh.alpha_silicon(wl) * W * 1e-4)        # absorbed within W
+eta_c = np.where(a_abs > 1e-3, iqe / a_abs, np.nan)         # Eq. (18)
+
+fig, ax = plt.subplots(figsize=(8.4, 5))
+ax.fill_between(wl, eqe, color='C0', alpha=0.15)
+for y, kw in [(eqe, dict(c='C0', lw=2.6, label='EQE  (9)')),
+              (iqe, dict(c='C3', lw=2.6, label='IQE  (11)')),
+              (T, dict(c='0.25', lw=1.8, label='$T_{ext}$  (4)')),
+              (R, dict(c='C2', lw=1.4, ls='--', label='$R_{ext}$')),
+              (A, dict(c='C4', lw=1.4, ls='--', label='$A_{ext}$')),
+              (a_abs, dict(c='C1', lw=1.6, ls=':', label=r'$A_{abs}=1-e^{-\alpha W}$')),
+              (eta_c, dict(c='C5', lw=1.6, ls='-.', label=r'$\eta_c$  (7)'))]:
+    ax.plot(wl, y, **kw)
+
+ax.set_xlim(300, 1200); ax.set_ylim(0, 1.05); ax.grid(alpha=0.25)
+ax.set_xlabel('Wavelength (nm)'); ax.set_ylabel('Fraction (0-1)')
+ax.set_title(r'EQE $= T_{ext}\times A_{abs}\times \eta_c$ — every factor on one axis')
+ax.legend(ncol=4, fontsize=8.5, loc='lower center', framealpha=0.9)
+plt.tight_layout(); plt.show()
+
+print(f"max |EQE - T*A_abs*eta_c| = {np.nanmax(np.abs(eqe - T*a_abs*eta_c)):.1e}")
+```
+
+```text
+max |EQE - T*A_abs*eta_c| = 1.1e-16
+```
+
+![Output 10](assets/nb/eqe_analysis_10.png)
+
+The identity printed above is exact to machine precision, which is the
+check worth remembering: any factorisation of EQE you write down must
+multiply back to the measured curve.
+
 ## 10. Measuring: spectral response and the DSR method
 
 EQE cannot be measured directly. What an instrument measures is current
@@ -669,14 +771,16 @@ One further complication: a solar cell's response can depend on how
 strongly it is already illuminated, because recombination is
 injection-dependent. Measuring a dark cell with a dim monochromatic beam
 would not describe the cell at operating conditions. The standard
-solution is a **differential** measurement:
+solution is a **differential** measurement, introduced by Metzdorf
+[[21]](#ref21) and now prescribed by IEC 60904-8 [[20]](#ref20):
 
 1. Hold the cell under steady white **bias light**, setting a realistic
    injection level.
 2. Add a small, chopped **monochromatic** beam of wavelength $\lambda$.
 3. Recover the resulting small AC current with a lock-in amplifier.
 
-The measured quantity is the **differential spectral responsivity**:
+The measured quantity is the **differential spectral responsivity**
+[[20]](#ref20)[[21]](#ref21):
 
 $$
 \tilde{s}(\lambda, E_{\text{bias}})
@@ -690,7 +794,8 @@ $$
 The absolute scale of $\Delta E_\lambda$ is not known from the instrument
 alone, so a **reference cell** of known responsivity is measured under
 the same conditions and the unknown gain factors divide out — but only up
-to one constant, which Section 11 fixes.
+to one constant, which Section 11 fixes
+[[5]](#ref5)[[20]](#ref20)[[22]](#ref22).
 
 ```python
 wl = np.linspace(300, 1200, 150)
@@ -720,7 +825,7 @@ for ax in axes:
 plt.tight_layout(); plt.show()
 ```
 
-![Output 10](assets/nb/eqe_analysis_10.png)
+![Output 11](assets/nb/eqe_analysis_11.png)
 
 ## 11. From relative to absolute EQE
 
@@ -737,7 +842,9 @@ $$
 
 where $J_{sc,\text{exp}}$ comes from a solar simulator measurement and
 $J_{sc,\text{calc}}$ from integrating the relative EQE against the
-reference spectrum. A well-calibrated setup gives $f_{sc}$ close to 1 —
+reference spectrum [[18]](#ref18)[[19]](#ref19); this normalisation step
+is standard practice in cell calibration
+[[20]](#ref20)[[21]](#ref21)[[22]](#ref22). A well-calibrated setup gives $f_{sc}$ close to 1 —
 the synthetic data below carries a deliberate 8% miscalibration, which
 (16) removes. A value far from 1 signals a measurement problem rather
 than a property of the cell.
@@ -773,14 +880,14 @@ Jsc calculated = 31.23 mA/cm^2
 scaling factor = 0.928
 ```
 
-![Output 11](assets/nb/eqe_analysis_11.png)
+![Output 12](assets/nb/eqe_analysis_12.png)
 
 ## 12. Linearity and bias-ramp measurements
 
 If a cell is perfectly **linear**, its differential response $\tilde{s}$
 does not depend on the bias level, and a single measurement suffices.
 Real cells can deviate. The rigorous definition integrates $\tilde{s}$
-over bias irradiance up to one sun:
+over bias irradiance up to one sun [[20]](#ref20)[[21]](#ref21):
 
 $$
 s_{\text{STC}}(\lambda) = \int_0^{1000\ \text{W/m}^2}
@@ -790,8 +897,9 @@ $$
 Measuring that full integral at every wavelength is slow, so simplified
 procedures use a single bias point (commonly around
 $300\ \text{W/m}^2$), which approximates (17) well for typical silicon
-cells. A **bias ramp** — sweeping $E_{\text{bias}}$ at a fixed wavelength
-— is how you check whether that shortcut is valid for a given device.
+cells [[20]](#ref20). A **bias ramp** — sweeping $E_{\text{bias}}$ at a
+fixed wavelength — is how you check whether that shortcut is valid for a
+given device [[22]](#ref22).
 
 ```python
 E_bias = np.linspace(1, 1000, 200)     # W/m^2
@@ -819,7 +927,7 @@ print(f"Nonlinear cell: measuring at 300 W/m^2 instead of 1000 W/m^2 "
 Nonlinear cell: measuring at 300 W/m^2 instead of 1000 W/m^2 misestimates SR by -4.3%
 ```
 
-![Output 12](assets/nb/eqe_analysis_12.png)
+![Output 13](assets/nb/eqe_analysis_13.png)
 
 A flat line means the shortcut is safe. A sloping line means the
 single-point measurement carries a systematic error, which must either be
@@ -842,27 +950,182 @@ The models here are deliberately simple. They assume:
 
 They are sufficient to explain and interpret the shape of an EQE curve,
 which is the purpose here. Quantitative device work needs tabulated
-optical constants, the standard reference spectrum, and a numerical
-device simulator.
+optical constants [[7]](#ref7)[[8]](#ref8), the standard reference
+spectrum [[18]](#ref18)[[19]](#ref19), and a numerical device simulator
+[[14]](#ref14)[[16]](#ref16)[[17]](#ref17).
 
 ## Summary of equations
 
-| # | Equation | Meaning |
-|---|---|---|
-| (1) | $E_{\text{phot}} = hc/\lambda$ | photon energy |
-| (2) | $\Phi = \Phi_0 e^{-\alpha z}$ | Lambert-Beer absorption |
-| (3) | $L_\alpha = 1/\alpha$ | absorption length |
-| (4) | $T_{\text{ext}} = 1 - R - A_{\text{ext}}$ | light that reaches the absorber |
-| (5) | $g = (1-R)\Phi_0\alpha e^{-\alpha z}$ | generation rate |
-| (6) | $L = \sqrt{D\tau}$ | diffusion length |
-| (7) | $\eta_c = \cosh(z/L) - (L/L_{\text{eff}})\sinh(z/L)$ | collection efficiency |
-| (8) | $L_{\text{eff}} = L\,\frac{LS\sinh + D\cosh}{LS\cosh + D\sinh}$ | effective diffusion length |
-| (9) | $\text{EQE} = \frac{1}{\Phi_0}\int_0^W g\,\eta_c\,dz$ | external quantum efficiency |
-| (10) | $\text{EQE} = T_{\text{ext}}\cdot\text{IQE}$ | optics × electronics |
-| (11) | $\text{IQE} = \text{EQE}/T_{\text{ext}}$ | internal quantum efficiency |
-| (12) | $SR = \text{EQE}\;q\lambda/hc$ | spectral response |
-| (13) | $\text{EQE} = SR\;hc/q\lambda$ | conversion back to EQE |
-| (14) | $J_{sc} = q\int \Phi_0\,\text{EQE}\,d\lambda$ | short-circuit current |
-| (15) | $\tilde{s} = \Delta j_{sc}/\Delta E_\lambda$ | differential spectral responsivity |
-| (16) | $f_{sc} = J_{sc,\text{exp}}/J_{sc,\text{calc}}$ | absolute scaling factor |
-| (17) | $s_{\text{STC}} = \int_0^{1000} \tilde{s}\,dE_{\text{bias}}$ | responsivity at STC |
+| # | Equation | Meaning | Source |
+|---|---|---|---|
+| (1) | $E_{\text{phot}} = hc/\lambda$ | photon energy | [[1]](#ref1)[[2]](#ref2) |
+| (2) | $\Phi = \Phi_0 e^{-\alpha z}$ | Lambert-Beer absorption | [[1]](#ref1)[[4]](#ref4) |
+| (3) | $L_\alpha = 1/\alpha$ | absorption length | [[1]](#ref1)[[7]](#ref7) |
+| (4) | $T_{\text{ext}} = 1 - R - A_{\text{ext}}$ | light that reaches the absorber | [[11]](#ref11)[[22]](#ref22) |
+| (5) | $g = (1-R)\Phi_0\alpha e^{-\alpha z}$ | generation rate | [[1]](#ref1)[[4]](#ref4) |
+| (6) | $L = \sqrt{D\tau}$ | diffusion length | [[2]](#ref2)[[4]](#ref4) |
+| (7) | $\eta_c = \cosh(z/L) - (L/L_{\text{eff}})\sinh(z/L)$ | collection efficiency | [[4]](#ref4)[[11]](#ref11) |
+| (8) | $L_{\text{eff}} = L\,\frac{LS\sinh + D\cosh}{LS\cosh + D\sinh}$ | effective diffusion length | [[4]](#ref4)[[12]](#ref12) |
+| (9) | $\text{EQE} = \frac{1}{\Phi_0}\int_0^W g\,\eta_c\,dz$ | external quantum efficiency | [[1]](#ref1)[[4]](#ref4) |
+| (10) | $\text{EQE} = T_{\text{ext}}\cdot\text{IQE}$ | optics × electronics | [[11]](#ref11)[[22]](#ref22) |
+| (11) | $\text{IQE} = \text{EQE}/T_{\text{ext}}$ | internal quantum efficiency | [[11]](#ref11)[[5]](#ref5) |
+| (12) | $SR = \text{EQE}\;q\lambda/hc$ | spectral response | [[5]](#ref5)[[22]](#ref22) |
+| (13) | $\text{EQE} = SR\;hc/q\lambda$ | conversion back to EQE | [[5]](#ref5)[[20]](#ref20) |
+| (14) | $J_{sc} = q\int \Phi_0\,\text{EQE}\,d\lambda$ | short-circuit current | [[1]](#ref1)[[18]](#ref18) |
+| (15) | $\tilde{s} = \Delta j_{sc}/\Delta E_\lambda$ | differential spectral responsivity | [[20]](#ref20)[[21]](#ref21) |
+| (16) | $f_{sc} = J_{sc,\text{exp}}/J_{sc,\text{calc}}$ | absolute scaling factor | [[20]](#ref20)[[22]](#ref22) |
+| (17) | $s_{\text{STC}} = \int_0^{1000} \tilde{s}\,dE_{\text{bias}}$ | responsivity at STC | [[20]](#ref20)[[21]](#ref21) |
+| (18) | $\text{EQE} = T_{\text{ext}} A_{\text{abs}} \eta_c$ | full loss chain | [[11]](#ref11)[[1]](#ref1) |
+
+<a id="references"></a>
+
+## References
+
+These entries are the targets of the `[n]` markers used throughout the
+notebook; each carries a DOI or a permanent link. Textbook items give the
+standard derivations, journal items the specific results, and the standards
+define how the measurement must be performed.
+
+**Textbooks and general treatments**
+
+<a id="ref1"></a>
+**[1]** J. Nelson, *The Physics of Solar Cells*, Imperial College Press,
+London (2003). doi:[10.1142/p276](https://doi.org/10.1142/p276)
+
+<a id="ref2"></a>
+**[2]** S. M. Sze and K. K. Ng, *Physics of Semiconductor Devices*,
+3rd ed., Wiley, Hoboken (2007).
+doi:[10.1002/0470068329](https://doi.org/10.1002/0470068329)
+
+<a id="ref3"></a>
+**[3]** M. A. Green, *Solar Cells: Operating Principles, Technology and
+System Applications*, Prentice-Hall, Englewood Cliffs (1982).
+ISBN 0-13-822270-3
+
+<a id="ref4"></a>
+**[4]** H. J. Hovel, *Solar Cells*, Semiconductors and Semimetals Vol. 11,
+Academic Press, New York (1975). ISBN 978-0-12-752111-4
+
+<a id="ref5"></a>
+**[5]** D. K. Schroder, *Semiconductor Material and Device
+Characterization*, 3rd ed., Wiley-IEEE Press, Hoboken (2006).
+doi:[10.1002/0471749095](https://doi.org/10.1002/0471749095)
+
+**Optical properties of silicon**
+
+<a id="ref6"></a>
+**[6]** G. G. Macfarlane, T. P. McLean, J. E. Quarrington and V. Roberts,
+"Fine structure in the absorption-edge spectrum of Si",
+*Phys. Rev.* **111**, 1245-1254 (1958).
+doi:[10.1103/PhysRev.111.1245](https://doi.org/10.1103/PhysRev.111.1245)
+
+<a id="ref7"></a>
+**[7]** M. A. Green and M. J. Keevers, "Optical properties of intrinsic
+silicon at 300 K", *Prog. Photovolt: Res. Appl.* **3**, 189-192 (1995).
+doi:[10.1002/pip.4670030303](https://doi.org/10.1002/pip.4670030303)
+
+<a id="ref8"></a>
+**[8]** M. A. Green, "Self-consistent optical parameters of intrinsic
+silicon at 300 K including temperature coefficients",
+*Sol. Energy Mater. Sol. Cells* **92**, 1305-1310 (2008).
+doi:[10.1016/j.solmat.2008.06.009](https://doi.org/10.1016/j.solmat.2008.06.009)
+
+<a id="ref9"></a>
+**[9]** M. A. Green, "Intrinsic concentration, effective densities of
+states, and effective mass in silicon", *J. Appl. Phys.* **67**,
+2944-2954 (1990).
+doi:[10.1063/1.345414](https://doi.org/10.1063/1.345414)
+
+<a id="ref10"></a>
+**[10]** J. Zhao and M. A. Green, "Optimized antireflection coatings for
+high-efficiency silicon solar cells", *IEEE Trans. Electron Devices*
+**38**, 1925-1934 (1991).
+doi:[10.1109/16.119035](https://doi.org/10.1109/16.119035)
+
+**Quantum efficiency analysis, collection and recombination**
+
+<a id="ref11"></a>
+**[11]** P. A. Basore, "Extended spectral analysis of internal quantum
+efficiency", *Conf. Rec. 23rd IEEE Photovoltaic Specialists Conference*,
+147-152 (1993).
+doi:[10.1109/PVSC.1993.347063](https://doi.org/10.1109/PVSC.1993.347063)
+
+<a id="ref12"></a>
+**[12]** M. P. Godlewski, C. R. Baraona and H. W. Brandhorst,
+"Low-high junction theory applied to solar cells",
+*Conf. Rec. 10th IEEE Photovoltaic Specialists Conference* (1973).
+[ntrs.nasa.gov/citations/19740006676](https://ntrs.nasa.gov/citations/19740006676)
+
+<a id="ref13"></a>
+**[13]** A. G. Aberle, "Surface passivation of crystalline silicon solar
+cells: a review", *Prog. Photovolt: Res. Appl.* **8**, 473-487 (2000).
+doi:[10.1002/1099-159X(200009/10)8:5<473::AID-PIP337>3.0.CO;2-D](https://doi.org/10.1002/1099-159X(200009/10)8:5%3C473::AID-PIP337%3E3.0.CO;2-D)
+
+**Numerical device simulation**
+
+<a id="ref14"></a>
+**[14]** P. A. Basore, "Numerical modeling of textured silicon solar cells
+using PC-1D", *IEEE Trans. Electron Devices* **37**, 337-343 (1990).
+doi:[10.1109/16.46362](https://doi.org/10.1109/16.46362)
+
+<a id="ref15"></a>
+**[15]** D. A. Clugston and P. A. Basore, "PC1D version 5: 32-bit solar
+cell modeling on personal computers", *Conf. Rec. 26th IEEE Photovoltaic
+Specialists Conference*, 207-210 (1997).
+doi:[10.1109/PVSC.1997.654065](https://doi.org/10.1109/PVSC.1997.654065)
+
+<a id="ref16"></a>
+**[16]** A. Fell, "A free and fast three-dimensional/two-dimensional solar
+cell simulator featuring conductive boundary and quasi-neutrality
+approximations", *IEEE Trans. Electron Devices* **60**, 733-738 (2013).
+doi:[10.1109/TED.2012.2231415](https://doi.org/10.1109/TED.2012.2231415)
+
+<a id="ref17"></a>
+**[17]** A. Fell *et al.*, "Input parameters for the simulation of silicon
+solar cells in 2014", *IEEE J. Photovolt.* **5**, 1250-1263 (2015).
+doi:[10.1109/JPHOTOV.2015.2430016](https://doi.org/10.1109/JPHOTOV.2015.2430016)
+
+**Reference spectra, measurement standards and calibration**
+
+<a id="ref18"></a>
+**[18]** ASTM G173-03(2020), *Standard Tables for Reference Solar Spectral
+Irradiances: Direct Normal and Hemispherical on 37° Tilted Surface*,
+ASTM International, West Conshohocken.
+[store.astm.org/g0173-03r20.html](https://store.astm.org/g0173-03r20.html)
+
+<a id="ref19"></a>
+**[19]** IEC 60904-3:2019 (Edition 4.0), *Photovoltaic devices - Part 3:
+Measurement principles for terrestrial photovoltaic (PV) solar devices
+with reference spectral irradiance data*, IEC, Geneva.
+[webstore.iec.ch/en/publication/61084](https://webstore.iec.ch/en/publication/61084)
+
+<a id="ref20"></a>
+**[20]** IEC 60904-8:2014 (Edition 3.0), *Photovoltaic devices - Part 8:
+Measurement of spectral responsivity of a photovoltaic (PV) device*,
+IEC, Geneva.
+[webstore.iec.ch/en/publication/3879](https://webstore.iec.ch/en/publication/3879)
+
+<a id="ref21"></a>
+**[21]** J. Metzdorf, "Calibration of solar cells. 1: The differential
+spectral responsivity method", *Appl. Opt.* **26**, 1701-1708 (1987).
+doi:[10.1364/AO.26.001701](https://doi.org/10.1364/AO.26.001701)
+
+<a id="ref22"></a>
+**[22]** K. Emery, "Measurement and characterization of solar cells and
+modules", Ch. 16 in *Handbook of Photovoltaic Science and Engineering*
+(A. Luque and S. Hegedus, eds.), Wiley, Chichester (2003).
+doi:[10.1002/0470014008.ch16](https://doi.org/10.1002/0470014008.ch16)
+
+**Cell architectures used as examples**
+
+<a id="ref23"></a>
+**[23]** A. W. Blakers, A. Wang, A. M. Milne, J. Zhao and M. A. Green,
+"22.8% efficient silicon solar cell", *Appl. Phys. Lett.* **55**,
+1363-1365 (1989).
+doi:[10.1063/1.101596](https://doi.org/10.1063/1.101596)
+
+<a id="ref24"></a>
+**[24]** M. A. Green, "The Passivated Emitter and Rear Cell (PERC): From
+conception to mass production", *Sol. Energy Mater. Sol. Cells* **143**,
+190-197 (2015).
+doi:[10.1016/j.solmat.2015.06.055](https://doi.org/10.1016/j.solmat.2015.06.055)
