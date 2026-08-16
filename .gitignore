@@ -21,6 +21,5 @@ build_notebook.py
 # Staging area for files removed from the project. Delete when you are happy.
 _to_delete/
 
-
 #literature folder where knoweldge of techcniques is kept
 literature/
