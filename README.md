@@ -12,6 +12,7 @@ and plots of model data.
 |---|---|---|
 | Transfer Length Method (TLM) — contact resistance | [`TLM/tlm_analysis.ipynb`](TLM/tlm_analysis.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/YOUR_GH_USERNAME/semicon_characterisation/blob/main/TLM/tlm_analysis.ipynb) |
 | External Quantum Efficiency (EQE) — solar cell spectral response | [`EQE/eqe_analysis.ipynb`](EQE/eqe_analysis.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/YOUR_GH_USERNAME/semicon_characterisation/blob/main/EQE/eqe_analysis.ipynb) |
+| Kelvin Probe & Surface Photovoltage (KP/SPV) — work function and surface band bending | [`KPSPV/kpspv_analysis.ipynb`](KPSPV/kpspv_analysis.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/YOUR_GH_USERNAME/semicon_characterisation/blob/main/KPSPV/kpspv_analysis.ipynb) |
 
 ## Documentation site
 
@@ -44,9 +45,14 @@ semicon_characterisation/
 │   ├── make_figures.js         # builds figures.pptx from native PowerPoint shapes
 │   ├── export_figures.sh       # figures.pptx -> figures/*.jpg -> docs/assets/
 │   └── figures/                # exported diagram JPEGs (figures.pptx is local-only)
-└── EQE/
-    ├── eqe_analysis.ipynb      # the notebook - edit this directly
-    ├── eqe_helper.py           # all EQE physics functions used by the notebook
+├── EQE/
+│   ├── eqe_analysis.ipynb      # the notebook - edit this directly
+│   ├── eqe_helper.py           # all EQE physics functions used by the notebook
+│   ├── make_figures.js, export_figures.sh
+│   └── figures/
+└── KPSPV/
+    ├── kpspv_analysis.ipynb    # the notebook - edit this directly
+    ├── kpspv_helper.py         # all KP/SPV physics functions used by the notebook
     ├── make_figures.js, export_figures.sh
     └── figures/
 ```
@@ -72,7 +78,7 @@ Miniconda**. Either one works — pick whichever matches your machine.
 
 In both cases, launch Jupyter from the repository root. Jupyter sets each
 notebook's working directory to the folder containing it, so
-`import eqe_helper` / `import tlm_helper` and the `./figures/...` image
+`import eqe_helper` / `import tlm_helper` / `import kpspv_helper` and the `./figures/...` image
 paths resolve automatically when you open either notebook.
 
 ### macOS — `uv`
@@ -166,8 +172,8 @@ this only works once the repository is public on GitHub and the
 
 ## Building the documentation site locally
 
-The technique pages on the site **are** the notebooks: `docs/eqe.md` and
-`docs/tlm.md` are generated from the `.ipynb` files by
+The technique pages on the site **are** the notebooks: `docs/eqe.md`,
+`docs/tlm.md` and `docs/kpspv.md` are generated from the `.ipynb` files by
 [`tools/nb2md.py`](tools/nb2md.py), so the published page carries the same
 explanations, numbered equations, code cells and figures. Only
 `docs/index.md` is hand-written.
@@ -178,14 +184,15 @@ pip install -r requirements-docs.txt
 ./tools/build_docs.sh          # regenerate pages, then mkdocs build --strict
 ```
 
-Do not edit `docs/eqe.md` or `docs/tlm.md` directly — they are overwritten.
+Do not edit `docs/eqe.md`, `docs/tlm.md` or `docs/kpspv.md` directly — they are
+overwritten.
 Edit the notebook, run its cells so the outputs are stored, then re-run
 `tools/build_docs.sh`.
 
 Two things the converter looks for in a notebook:
 
 - **Cell tags.** A cell tagged `hide-in-docs` is skipped on the website —
-  both notebooks use this on their Colab setup cell. In VS Code, open the
+  all three notebooks use this on their Colab setup cell. In VS Code, open the
   cell's `...` menu → *Add Cell Tag*; in JupyterLab it is the property
   inspector (the cog in the right sidebar).
 - **Blank lines between `$$` blocks.** Two display equations written back
@@ -229,11 +236,21 @@ it. The last slide of each deck documents this workflow.
 | 4 | `fig_tlm_plot.jpg` | what each feature of the fitted line gives |
 | 5 | `fig_tlm_measurement.jpg` | four-wire sweep on one contact pair |
 
+`KPSPV/figures.pptx`:
+
+| Slide | Exported as | Shows |
+|---|---|---|
+| 1 | `fig_kpspv_bands_cpd.jpg` | Fermi-level alignment and the contact potential difference |
+| 2 | `fig_kpspv_instrument.jpg` | the vibrating capacitor, backing voltage and off-null detection |
+| 3 | `fig_kpspv_surface_bands.jpg` | dielectric charge, interface states and semiconductor band bending |
+| 4 | `fig_kpspv_spv_bands.jpg` | dark vs illuminated bands, and the surface photovoltage |
+| 5 | `fig_kpspv_setup.jpg` | the macro-scale bench: enclosure, stage, lamp, reference sample |
+
 After editing a deck, re-export the JPEGs used by the notebook and the
 docs site:
 
 ```bash
-cd TLM        # or cd EQE
+cd TLM        # or cd EQE, or cd KPSPV
 ./export_figures.sh      # needs LibreOffice + poppler-utils + ImageMagick
 ```
 

@@ -23,3 +23,5 @@ _to_delete/
 
 #literature folder where knoweldge of techcniques is kept
 literature/
+# Private build briefs - kept in the Claude project context, not the repo.
+prompts/
