@@ -9,12 +9,13 @@
 # Kelvin Probe and Surface Photovoltage
 
 A Kelvin probe measures a voltage between a vibrating metal plate and a
-sample it never touches. That voltage is a **work function difference**.
+sample it never touches. That voltage is the **contact potential
+difference** (CPD), and it is a difference of **work functions**.
 On a semiconductor the work function is not a fixed material constant: it
 contains a term set by the doping and a term set by however the bands are
 bent at the surface. Shine light on the sample and the bands flatten, so
-the change in the reading — the **surface photovoltage** — isolates the
-surface term on its own.
+the change in the reading — the **surface photovoltage** (SPV) —
+isolates the surface term on its own.
 
 That is the whole technique. It is contactless, needs no vacuum and no
 sample preparation, and it is one of the few ways to watch what a surface
@@ -131,7 +132,8 @@ and the only place it can sit is on the two facing surfaces. The plates end
 up equally and oppositely charged, and there is now a field in the gap.
 
 The potential difference across that gap is the **contact potential
-difference**:
+difference**, written CPD throughout and denoted $V_{\text{CPD}}$ in the
+equations. It is what a Kelvin probe reports:
 
 $$
 V_{\text{CPD}} = \frac{\Phi_{\text{sample}} - \Phi_{\text{probe}}}{q} \tag{2}

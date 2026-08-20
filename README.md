@@ -5,14 +5,13 @@ semiconductor / solar-cell characterisation techniques — starting from
 the basics and working through the equations, with short code examples
 and plots of model data.
 
-
 ## Techniques
 
 | Technique | Notebook | Open in Colab |
 |---|---|---|
-| Transfer Length Method (TLM) — contact resistance | [`TLM/tlm_analysis.ipynb`](TLM/tlm_analysis.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/YOUR_GH_USERNAME/semicon_characterisation/blob/main/TLM/tlm_analysis.ipynb) |
-| External Quantum Efficiency (EQE) — solar cell spectral response | [`EQE/eqe_analysis.ipynb`](EQE/eqe_analysis.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/YOUR_GH_USERNAME/semicon_characterisation/blob/main/EQE/eqe_analysis.ipynb) |
-| Kelvin Probe & Surface Photovoltage (KP/SPV) — work function and surface band bending | [`KPSPV/kpspv_analysis.ipynb`](KPSPV/kpspv_analysis.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/YOUR_GH_USERNAME/semicon_characterisation/blob/main/KPSPV/kpspv_analysis.ipynb) |
+| Transfer Length Method (TLM) — contact resistance | [`TLM/tlm_analysis.ipynb`](TLM/tlm_analysis.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Oxford-eMat-Lab/semiconductor-characterisation/blob/main/TLM/tlm_analysis.ipynb) |
+| External Quantum Efficiency (EQE) — solar cell spectral response | [`EQE/eqe_analysis.ipynb`](EQE/eqe_analysis.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Oxford-eMat-Lab/semiconductor-characterisation/blob/main/EQE/eqe_analysis.ipynb) |
+| Kelvin Probe & Surface Photovoltage (KP/SPV) — work function and surface band bending | [`KPSPV/kpspv_analysis.ipynb`](KPSPV/kpspv_analysis.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Oxford-eMat-Lab/semiconductor-characterisation/blob/main/KPSPV/kpspv_analysis.ipynb) |
 
 ## Documentation site
 
@@ -25,42 +24,14 @@ The site is built from [`docs/`](docs/) and deployed automatically by
 on every push to `main` that touches `docs/` or `mkdocs.yml`. To enable
 it: **Settings → Pages → Source: GitHub Actions** (one-time repo setting).
 
-## Repository structure
+## How each technique is organised
 
-```
-semicon_characterisation/
-├── README.md
-├── mkdocs.yml                  # docs site config
-├── requirements.txt            # notebook dependencies
-├── requirements-docs.txt       # docs site dependencies
-├── docs/                       # MkDocs pages (index, tlm.md, eqe.md, assets/)
-├── .github/workflows/
-│   └── deploy-docs.yml         # builds + deploys the MkDocs site to GitHub Pages
-├── tools/
-│   ├── nb2md.py                # notebook -> MkDocs markdown converter
-│   ├── build_docs.py           # regenerate the notebook-derived pages + build
-│   └── build_docs.sh           # thin shell wrapper around build_docs.py
-├── TLM/
-│   ├── tlm_analysis.ipynb      # the notebook - edit this directly
-│   ├── tlm_helper.py           # all TLM physics + fitting functions
-│   ├── make_figures.js         # builds figures.pptx from native PowerPoint shapes
-│   ├── export_figures.sh       # figures.pptx -> figures/*.jpg -> docs/assets/
-│   └── figures/                # exported diagram JPEGs (figures.pptx is local-only)
-├── EQE/
-│   ├── eqe_analysis.ipynb      # the notebook - edit this directly
-│   ├── eqe_helper.py           # all EQE physics functions used by the notebook
-│   ├── make_figures.js, export_figures.sh
-│   └── figures/
-└── KPSPV/
-    ├── kpspv_analysis.ipynb    # the notebook - edit this directly
-    ├── kpspv_helper.py         # all KP/SPV physics functions used by the notebook
-    ├── make_figures.js, export_figures.sh
-    └── figures/
-```
-
-Both techniques follow the same layout: the **notebook** itself, a
-**helper module** holding every physics and fitting function, and a
-**PowerPoint figure deck** built from native shapes.
+Every technique lives in its own folder and follows the same layout: the
+**notebook** itself, a **helper module** holding every physics and fitting
+function, and a **PowerPoint figure deck** built from native shapes. The
+figure deck (`figures.pptx`) is not tracked — the exported JPEGs in
+`<TECHNIQUE>/figures/` are; `export_figures.sh` regenerates them, and the
+deck's last slide documents that workflow.
 
 **The `.ipynb` is the source of truth — edit it directly**, in VS Code,
 JupyterLab or wherever you like. Run the cells so the outputs are saved
@@ -167,9 +138,7 @@ already provides numpy, scipy, matplotlib and pandas.
 Colab opens the notebook file on its own, *without* the rest of the
 repository, so the first cell of each notebook clones this repo and
 switches into its folder to make the helper module and `figures/`
-available. Run the cells in order and it is handled automatically — but
-this only works once the repository is public on GitHub and the
-`YOUR_GH_USERNAME` placeholder in that cell has been replaced.
+available. Run the cells in order and it is handled automatically.
 
 ## Building the documentation site locally
 
@@ -211,64 +180,10 @@ Two things the converter looks for in a notebook:
 The GitHub Actions workflow regenerates the pages before deploying, so the
 site cannot drift from the notebooks.
 
-
-## Figures
-
-Each technique's diagrams live in a `figures.pptx`, one per slide, built
-from **native PowerPoint shapes** (rectangles, arrows, text boxes) rather
-than flat images — so they can be edited directly in PowerPoint.
-
-**`figures.pptx` is deliberately not tracked by git** (it is in
-`.gitignore`): it is your local working copy. What the repository and the
-website actually use are the exported JPEGs, so those are what get
-committed. If you ever need the deck back, `node make_figures.js` rebuilds
-it. The last slide of each deck documents this workflow.
-
-`EQE/figures.pptx`:
-
-| Slide | Exported as | Shows |
-|---|---|---|
-| 1 | `fig_cell_structure.jpg` | c-Si cell cross-section, depth axis |
-| 2 | `fig_optical_losses.jpg` | photon accounting; EQE vs IQE |
-| 3 | `fig_collection_efficiency.jpg` | penetration depth vs collection |
-| 4 | `fig_albsf_vs_perc.jpg` | Al-BSF vs PERC rear side |
-| 5 | `fig_measurement_setup.jpg` | DSR measurement schematic |
-
-`TLM/figures.pptx`:
-
-| Slide | Exported as | Shows |
-|---|---|---|
-| 1 | `fig_tlm_resistance_chain.jpg` | the series chain behind a two-probe reading |
-| 2 | `fig_tlm_structure.jpg` | the TLM test pattern, top view |
-| 3 | `fig_tlm_crowding.jpg` | current crowding and the transfer length |
-| 4 | `fig_tlm_plot.jpg` | what each feature of the fitted line gives |
-| 5 | `fig_tlm_measurement.jpg` | four-wire sweep on one contact pair |
-
-`KPSPV/figures.pptx`:
-
-| Slide | Exported as | Shows |
-|---|---|---|
-| 1 | `fig_kpspv_bands_cpd.jpg` | Fermi-level alignment and the contact potential difference |
-| 2 | `fig_kpspv_instrument.jpg` | the vibrating capacitor, backing voltage and off-null detection |
-| 3 | `fig_kpspv_surface_bands.jpg` | dielectric charge, interface states and semiconductor band bending |
-| 4 | `fig_kpspv_spv_bands.jpg` | dark vs illuminated bands, and the surface photovoltage |
-| 5 | `fig_kpspv_setup.jpg` | the macro-scale bench: enclosure, stage, lamp, reference sample |
-
-After editing a deck, re-export the JPEGs used by the notebook and the
-docs site:
-
-```bash
-cd TLM        # or cd EQE, or cd KPSPV
-./export_figures.sh      # needs LibreOffice + poppler-utils + ImageMagick
-```
-
-The script writes `<TECHNIQUE>/figures/*.jpg` and copies them to
-`docs/assets/` (figure names are prefixed per technique so the two decks
-cannot overwrite each other there). To regenerate the deck itself from
-source instead, run `node make_figures.js` in that folder, then re-run the
-export.
-
 ## License
 
-Add a license (e.g. MIT) before publishing, if this repository is meant
-to be open-source.
+Creative Commons Attribution-NonCommercial 4.0 International —
+see [`LICENSE`](LICENSE).
+
+You may share and adapt this material, with attribution, for
+non-commercial purposes.
