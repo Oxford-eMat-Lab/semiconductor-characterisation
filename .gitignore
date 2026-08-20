@@ -8,10 +8,7 @@ __pycache__/
 .venv/
 site/
 
-# Local-only working copies. The exported .jpg files in <TECH>/figures/ and
-# docs/assets/ are the tracked artefacts; the decks that produce them stay on
-# your machine. Regenerate one with `node make_figures.js` if you lose it.
-figures.pptx
+
 
 # The scripts that originally generated the notebooks. The .ipynb files are
 # now the source of truth and are edited directly, so these are kept local

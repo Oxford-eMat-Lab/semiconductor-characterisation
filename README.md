@@ -30,9 +30,10 @@ it: **Settings → Pages → Source: GitHub Actions** (one-time repo setting).
 Every technique lives in its own folder and follows the same layout: the
 **notebook** itself, a **helper module** holding every physics and fitting
 function, and a **PowerPoint figure deck** built from native shapes. The
-figure deck (`figures.pptx`) is not tracked — the exported JPEGs in
-`<TECHNIQUE>/figures/` are; `export_figures.sh` regenerates them, and the
-deck's last slide documents that workflow.
+deck (`figures.pptx`) is tracked, so you can open it and edit any diagram
+directly. `export_figures.sh` re-renders the slides to `<TECHNIQUE>/figures/`
+and copies them to `docs/assets/` — both are needed, and the deck's last
+slide documents that workflow.
 
 **The `.ipynb` is the source of truth — edit it directly**, in VS Code,
 JupyterLab or wherever you like. Run the cells so the outputs are saved
