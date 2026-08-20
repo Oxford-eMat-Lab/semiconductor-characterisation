@@ -35,6 +35,7 @@ TECHNIQUES = [
     ("EQE",   "eqe_analysis",   "eqe"),
     ("TLM",   "tlm_analysis",   "tlm"),
     ("KPSPV", "kpspv_analysis", "kpspv"),
+    ("CGV",   "cgv_analysis",   "cgv"),
 ]
 
 ASSETS_DIR = "docs/assets/nb"

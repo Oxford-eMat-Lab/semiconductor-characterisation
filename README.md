@@ -12,6 +12,7 @@ and plots of model data.
 | Transfer Length Method (TLM) — contact resistance | [`TLM/tlm_analysis.ipynb`](TLM/tlm_analysis.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Oxford-eMat-Lab/semiconductor-characterisation/blob/main/TLM/tlm_analysis.ipynb) |
 | External Quantum Efficiency (EQE) — solar cell spectral response | [`EQE/eqe_analysis.ipynb`](EQE/eqe_analysis.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Oxford-eMat-Lab/semiconductor-characterisation/blob/main/EQE/eqe_analysis.ipynb) |
 | Kelvin Probe & Surface Photovoltage (KP/SPV) — work function and surface band bending | [`KPSPV/kpspv_analysis.ipynb`](KPSPV/kpspv_analysis.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Oxford-eMat-Lab/semiconductor-characterisation/blob/main/KPSPV/kpspv_analysis.ipynb) |
+| Capacitance-Voltage & Conductance-Voltage (C-V/G-V) — doping profile and interface traps | [`CGV/cgv_analysis.ipynb`](CGV/cgv_analysis.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Oxford-eMat-Lab/semiconductor-characterisation/blob/main/CGV/cgv_analysis.ipynb) |
 
 ## Documentation site
 
@@ -50,8 +51,9 @@ Miniconda**. Either one works — pick whichever matches your machine.
 
 In both cases, launch Jupyter from the repository root. Jupyter sets each
 notebook's working directory to the folder containing it, so
-`import eqe_helper` / `import tlm_helper` / `import kpspv_helper` and the `./figures/...` image
-paths resolve automatically when you open either notebook.
+`import eqe_helper` / `import tlm_helper` / `import kpspv_helper` /
+`import cgv_helper` and the `./figures/...` image paths resolve
+automatically when you open either notebook.
 
 ### macOS — `uv`
 
@@ -143,7 +145,7 @@ available. Run the cells in order and it is handled automatically.
 ## Building the documentation site locally
 
 The technique pages on the site **are** the notebooks: `docs/eqe.md`,
-`docs/tlm.md` and `docs/kpspv.md` are generated from the `.ipynb` files by
+`docs/tlm.md`, `docs/kpspv.md` and `docs/cgv.md` are generated from the `.ipynb` files by
 [`tools/nb2md.py`](tools/nb2md.py), so the published page carries the same
 explanations, numbered equations, code cells and figures. Only
 `docs/index.md` is hand-written.
@@ -161,15 +163,15 @@ it, kept so CI and shell users can carry on calling the same thing.
 Serving publishes under the site's base path, so the local URL is
 <http://127.0.0.1:8000/semiconductor-characterisation/> — not the bare root.
 
-Do not edit `docs/eqe.md`, `docs/tlm.md` or `docs/kpspv.md` directly — they are
-overwritten.
+Do not edit `docs/eqe.md`, `docs/tlm.md`, `docs/kpspv.md` or `docs/cgv.md`
+directly — they are overwritten.
 Edit the notebook, run its cells so the outputs are stored, then re-run
 `tools/build_docs.py`.
 
 Two things the converter looks for in a notebook:
 
 - **Cell tags.** A cell tagged `hide-in-docs` is skipped on the website —
-  all three notebooks use this on their Colab setup cell. In VS Code, open the
+  all four notebooks use this on their Colab setup cell. In VS Code, open the
   cell's `...` menu → *Add Cell Tag*; in JupyterLab it is the property
   inspector (the cog in the right sidebar).
 - **Blank lines between `$$` blocks.** Two display equations written back
