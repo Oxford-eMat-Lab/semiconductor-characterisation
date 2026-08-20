@@ -28,6 +28,7 @@ nav:
   - Transfer Length Method (TLM): tlm.md
   - External Quantum Efficiency (EQE): eqe.md
   - Kelvin Probe & Surface Photovoltage (KP/SPV): kpspv.md
+  - Capacitance-Voltage & Conductance-Voltage (C-V/G-V): cgv.md
 
 markdown_extensions:
   - admonition
