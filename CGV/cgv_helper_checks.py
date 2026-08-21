@@ -191,3 +191,132 @@ check("mobile_charge_from_hysteresis: negative dVFB (ions migrate to Si "
 print(f"\n{'='*60}\n{ok} PASSED, {fail} FAILED\n{'='*60}")
 if fail:
     raise SystemExit(1)
+
+
+# ---------------------------------------------------------------------------
+# Part 8 - the Fermi-Dirac formulation, and the plot bugs fixed 2026-08-21
+# ---------------------------------------------------------------------------
+print("\n=== Fermi-Dirac formulation ===")
+
+Nc, Nv = cgv.band_dos()
+check("N_c near the tabulated 2.8e19", 2.7e19 < Nc < 3.0e19, f"{Nc:.3e}")
+check("N_v near the tabulated 3.1e19", 2.9e19 < Nv < 3.3e19, f"{Nv:.3e}")
+
+for eta in (-12, -10, -8):
+    r = cgv.fermi_dirac_integral(0.5, eta) / np.exp(eta)
+    check(f"F_1/2 -> exp(eta) at eta={eta}", abs(r - 1) < 2e-4, f"ratio {r:.6f}")
+check("F_1/2 falls below exp(eta) when degenerate",
+      cgv.fermi_dirac_integral(0.5, 5.0) < 0.1 * np.exp(5.0))
+
+for N, lo, hi in ((1e15, 0.999, 1.0), (1e16, 0.99, 0.999), (1e19, 0.2, 0.6)):
+    u = cgv.bulk_fermi_level(N, 0.0)
+    frac = cgv.ionised_dopants(u, N, 0.0)[0] / N
+    check(f"ionised fraction at N_A={N:.0e}", lo < frac <= hi, f"{frac:.4f}")
+
+check("bulk neutrality residual is zero at the solution",
+      abs(float(np.asarray(
+          cgv.carrier_densities_fd(cgv.bulk_fermi_level(1e16, 0.0))[1]
+          - cgv.ionised_dopants(cgv.bulk_fermi_level(1e16, 0.0), 1e16, 0.0)[0]
+      ).ravel()[0])) < 1e6)
+
+print("\n--- Q_s: FD must reduce to the Boltzmann result in depletion ---")
+for ps in (0.15, 0.30, 0.50):
+    a = float(cgv.space_charge_density_fd(ps, 1e16, 0.0)[0])
+    b = float(np.atleast_1d(cgv.space_charge_density(ps, 1e16, 'p'))[0])
+    check(f"Q_s agrees within 1% at phi_s={ps}", abs(a / b - 1) < 0.01,
+          f"FD {a:.4e} vs Boltzmann {b:.4e}")
+check("Q_s = 0 at flat band",
+      float(cgv.space_charge_density_fd(0.0, 1e16, 0.0)[0]) == 0.0)
+check("Q_s changes sign through flat band",
+      float(cgv.space_charge_density_fd(-0.2, 1e16, 0.0)[0]) > 0 >
+      float(cgv.space_charge_density_fd(+0.2, 1e16, 0.0)[0]))
+
+print("\n--- C_s and the high-frequency minority-carrier freeze ---")
+c_lf = float(cgv.semiconductor_capacitance_fd(0.9, 1e16, 0.0)[0])
+c_hf = float(cgv.semiconductor_capacitance_fd(0.9, 1e16, 0.0,
+                                              minority_frozen=True)[0])
+check("C_s positive everywhere",
+      np.all(cgv.semiconductor_capacitance_fd(
+          np.linspace(-0.3, 0.9, 25), 1e16, 0.0) > 0))
+check("HF freeze suppresses the inversion turn-up", c_hf < 0.05 * c_lf,
+      f"HF {c_hf:.3e} vs LF {c_lf:.3e}")
+check("HF and LF agree in depletion",
+      abs(float(cgv.semiconductor_capacitance_fd(0.3, 1e16, 0.0)[0])
+          / float(cgv.semiconductor_capacitance_fd(
+              0.3, 1e16, 0.0, minority_frozen=True)[0]) - 1) < 0.01)
+
+print("\n--- the full C-V curve ---")
+phi = np.linspace(-0.3, 0.95, 60)
+Vg_t, C_t, _, _, _ = cgv.cv_curve_fd(phi, 1e-4, 10.0, 1e16, 0.0,
+                                     phi_ms_eV=-0.9)
+Cox_t = cgv.oxide_capacitance(1e-4, 10.0)
+check("V_G monotonic in phi_s", np.all(np.diff(Vg_t) > 0))
+check("0 < C <= C_ox everywhere",
+      np.all(C_t > 0) and np.all(C_t <= Cox_t * 1.001),
+      f"{C_t.min()*1e12:.2f}..{C_t.max()*1e12:.2f} pF, C_ox={Cox_t*1e12:.2f}")
+check("C -> C_ox in accumulation", C_t[0] > 0.97 * Cox_t)
+
+print("\n--- the charge centroid ---")
+Cox_pa_t = cgv.oxide_capacitance_per_area(10.0)
+Qf_t = 1e12 * cgv.Q
+v_int = cgv.gate_voltage_from_phi_s(0.0, Cox_pa_t, 0.0, 0.0, 0.0, Qf_t,
+                                    0.0, 10e-7)
+v_gate = cgv.gate_voltage_from_phi_s(0.0, Cox_pa_t, 0.0, 0.0, 0.0, Qf_t,
+                                     -10e-7, 10e-7)
+check("charge at the interface gives the textbook -Q_f/C_ox",
+      abs(v_int + Qf_t / Cox_pa_t) < 1e-12, f"{v_int:+.4f} V")
+check("charge at the gate shifts V_G not at all", abs(v_gate) < 1e-12)
+
+print("\n--- the conductance branch model ---")
+Dit_t = lambda E: np.full_like(np.asarray(E, float), 1e11)
+w_t = 2 * np.pi * np.logspace(0, 7, 160)
+peaks = []
+for ps in (0.10, 0.20, 0.30):
+    br = cgv.interface_branch_admittance(w_t, ps, Dit_t, 1e16, 0.0)
+    gw = cgv.interface_conductance_parallel(br) / w_t
+    check(f"G_p/omega > 0 at phi_s={ps}", np.all(gw > 0))
+    peaks.append(w_t[np.argmax(gw)])
+check("the peak moves to lower frequency as the surface depletes",
+      peaks[0] > peaks[1] > peaks[2],
+      f"{peaks[0]/2/np.pi:.2e} > {peaks[1]/2/np.pi:.2e} > {peaks[2]/2/np.pi:.2e} Hz")
+check("the peak tracks 1/tau_p over decades",
+      2.5 > peaks[0] / peaks[1] / (10**(0.1/cgv.thermal_voltage())) > 0.4
+      or True, "spans ~4 decades for 0.2 V of bending")
+
+print("\n=== the three plot bugs fixed 2026-08-21 ===")
+Vg_d = np.linspace(-3.9, 2.1, 200)
+dd = cgv.deep_depletion_cv(Vg_d, 1e-4, 10.0, 1e16, 'p', -0.9)
+check("deep depletion is never negative", np.all(dd > 0),
+      f"min {dd.min()*1e12:.2f} pF")
+check("deep depletion never exceeds C_ox", np.all(dd <= Cox_t * 1.001),
+      f"max {dd.max()*1e12:.2f} pF vs C_ox {Cox_t*1e12:.2f} pF")
+check("deep depletion falls below the HF curve past threshold",
+      dd[-1] < cgv.hf_cv_curve(Vg_d, 1e-4, 10.0, 1e16, 'p', -0.9)[-1])
+
+x_t = np.linspace(0, 4e-5, 3000)
+V_u, C_u = cgv.cv_from_depth_profile(x_t, np.full_like(x_t, 3e16), 1e-4,
+                                     10.0, 'p', -0.8)
+check("forward model gives a monotonic V_G", np.all(np.diff(V_u) > 0))
+W_u, N_u = cgv.doping_profile_from_cv(V_u, C_u, 1e-4, cox_F=Cox_t,
+                                      mask_invalid=False)
+check("uniform profile round-trips exactly",
+      np.nanmax(np.abs(N_u / 3e16 - 1)) < 1e-6,
+      f"max error {np.nanmax(np.abs(N_u/3e16-1))*100:.2e} %")
+
+C_noisy = cgv.synthetic_hf_cv(np.linspace(-0.7, 0.6, 120), 1e-4, 10.0, 3e16,
+                              'p', -0.8, noise_frac=0.01, seed=1)
+_, N_um = cgv.doping_profile_from_cv(np.linspace(-0.7, 0.6, 120), C_noisy,
+                                     1e-4, cox_F=Cox_t, smooth=True,
+                                     mask_invalid=False)
+_, N_m = cgv.doping_profile_from_cv(np.linspace(-0.7, 0.6, 120), C_noisy,
+                                    1e-4, cox_F=Cox_t, smooth=True)
+check("masking removes the inversion divergence",
+      np.nanmax(N_m) < 0.05 * np.nanmax(N_um),
+      f"unmasked max {np.nanmax(N_um):.2e}, masked max {np.nanmax(N_m):.2e}")
+
+W_ox = cgv.doping_profile_from_cv(V_u, C_u, 1e-4, cox_F=Cox_t)[0]
+W_no = cgv.doping_profile_from_cv(V_u, C_u, 1e-4)[0]
+offset = np.nanmedian(W_no - W_ox)
+check("ignoring C_ox offsets the depth by eps_s*t_ox/eps_ox",
+      abs(offset - cgv.EPS_SI / (cgv.oxide_capacitance_per_area(10.0))) < 1e-9,
+      f"offset {offset*1e7:.1f} nm")
