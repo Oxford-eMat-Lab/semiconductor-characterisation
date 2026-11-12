@@ -66,7 +66,7 @@ def apply_rewrites(text, rewrites):
 
 def convert(nb_path, md_path, assets_dir, assets_url, rewrites, repo_url,
             branch="main"):
-    with open(nb_path) as f:
+    with open(nb_path, encoding="utf-8") as f:
         nb = json.load(f)
 
     os.makedirs(assets_dir, exist_ok=True)
@@ -140,7 +140,7 @@ def convert(nb_path, md_path, assets_dir, assets_url, rewrites, repo_url,
 
     body = "\n\n".join(parts).rstrip("\n") + "\n"
 
-    with open(md_path, "w") as f:
+    with open(md_path, "w", encoding="utf-8", newline="\n") as f:
         f.write(body)
 
     print(f"{nb_path} -> {md_path}  ({n_img} figures -> {assets_dir}/)")

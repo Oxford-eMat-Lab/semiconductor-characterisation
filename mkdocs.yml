@@ -29,6 +29,7 @@ nav:
   - External Quantum Efficiency (EQE): eqe.md
   - Kelvin Probe & Surface Photovoltage (KP/SPV): kpspv.md
   - Capacitance-Voltage & Conductance-Voltage (C-V/G-V): cgv.md
+  - Effective Carrier Lifetime (Sinton photoconductance): lifetime.md
 
 markdown_extensions:
   - admonition

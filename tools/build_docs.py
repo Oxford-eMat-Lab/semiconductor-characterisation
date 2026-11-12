@@ -9,8 +9,8 @@ Pure Python and cross-platform, so it needs no bash. `tools/build_docs.sh`
 is a thin wrapper around this file, which keeps CI (and anyone on a shell)
 working without a second copy of the logic to keep in step.
 
-docs/index.md is hand-written; docs/eqe.md, docs/tlm.md and docs/kpspv.md
-are generated from the notebooks and must not be edited directly - edit the
+docs/index.md is hand-written; docs/eqe.md, docs/tlm.md, docs/kpspv.md,
+docs/cgv.md and docs/lifetime.md are generated from the notebooks and must not be edited directly - edit the
 notebook and run this again.
 
 Adding a technique is one entry in TECHNIQUES below.
@@ -36,6 +36,7 @@ TECHNIQUES = [
     ("TLM",   "tlm_analysis",   "tlm"),
     ("KPSPV", "kpspv_analysis", "kpspv"),
     ("CGV",   "cgv_analysis",   "cgv"),
+    ("LIFETIME", "lifetime_analysis", "lifetime"),
 ]
 
 ASSETS_DIR = "docs/assets/nb"
